@@ -74,3 +74,16 @@ n 变为 1 所需的最小替换次数是多少？
 输出: 2
 解释: 13 = 4 + 9.
 ```
+
+6.实现 strStr() 函数
+```c
+示例 1:
+
+输入: haystack = "hello", needle = "ll"
+输出: 2
+
+示例 2:
+
+输入: haystack = "aaaaa", needle = "bba"
+输出: -1
+```
