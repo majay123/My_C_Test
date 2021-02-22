@@ -1,0 +1,188 @@
+{
+    "recordId": "644805a4777b4c09a88c8ebee59b352c",
+    "skillId": "2019041100000140",
+    "requestId": "644805a4777b4c09a88c8ebee59b352c",
+    "nlu": {
+      "skillId": "2019041100000140",
+      "res": "tasks",
+      "input": "删除早上8点的闹钟",
+      "inittime": 8.55712890625,
+      "loadtime": 3.078125,
+      "skill": "提醒",
+      "skillVersion": "37",
+      "source": "aidui",
+      "systime": 10.153076171875,
+      "semantics": {
+        "request": {
+          "slots": [
+            {
+              "pos": [
+                0,
+                1
+              ],
+              "rawvalue": "删除",
+              "name": "操作",
+              "rawpinyin": "shan chu",
+              "value": "删除"
+            },
+            {
+              "pos": [
+                2,
+                5
+              ],
+              "rawvalue": "早上8点",
+              "name": "时间",
+              "rawpinyin": "zao shang 8 dian",
+              "value": "08:00:00"
+            },
+            {
+              "pos": [
+                2,
+                3
+              ],
+              "rawvalue": "早上",
+              "name": "时间段",
+              "rawpinyin": "zao shang",
+              "value": "早上"
+            },
+            {
+              "pos": [
+                7,
+                8
+              ],
+              "rawvalue": "闹钟",
+              "name": "对象",
+              "rawpinyin": "nao zhong",
+              "value": "闹钟"
+            },
+            {
+              "name": "intent",
+              "value": "删除提醒"
+            }
+          ],
+          "task": "提醒",
+          "confidence": 1,
+          "slotcount": 5
+        }
+      },
+      "version": "2019.1.15.20:40:58",
+      "timestamp": 1605080848
+    },
+    "skill": "提醒",
+    "dm": {
+      "input": "删除早上8点的闹钟",
+      "shouldEndSession": true,
+      "task": "提醒",
+      "widget": {
+        "widgetName": "default",
+        "duiWidget": "list",
+        "itemsPerPage": 4,
+        "segment": [
+          {
+            "pinyin": "shang yi ye",
+            "name": "上一页"
+          },
+          {
+            "pinyin": "xia yi ye",
+            "name": "下一页"
+          },
+          {
+            "pinyin": "di yi ge",
+            "name": "第一个"
+          },
+          {
+            "pinyin": "di er ge",
+            "name": "第二个"
+          },
+          {
+            "pinyin": "di san ge",
+            "name": "第三个"
+          },
+          {
+            "pinyin": "di si ge",
+            "name": "第四个"
+          },
+          {
+            "pinyin": "yi yi",
+            "name": "11"
+          },
+          {
+            "pinyin": "shi shi",
+            "name": "11"
+          },
+          {
+            "pinyin": "yao yao",
+            "name": "11"
+          },
+          {
+            "pinyin": "yi shi yi",
+            "name": "11"
+          },
+          {
+            "pinyin": "yi er",
+            "name": "12"
+          },
+          {
+            "pinyin": "shi er",
+            "name": "12"
+          },
+          {
+            "pinyin": "yao er",
+            "name": "12"
+          },
+          {
+            "pinyin": "yi shi er",
+            "name": "12"
+          },
+          {
+            "pinyin": "ling ling",
+            "name": "00"
+          },
+          {
+            "pinyin": "ling ba",
+            "name": "08"
+          },
+          {
+            "pinyin": "ling ba",
+            "name": "08"
+          }
+        ],
+        "count": 1,
+        "totalPages": 100,
+        "name": "default",
+        "currentPage": 1,
+        "type": "list",
+        "dataSource": "api",
+        "all_cnt": 2,
+        "content": [
+          {
+            "subTitle": "11月12日",
+            "extra": {
+              "date": "20201112",
+              "vid": "11776908056919346716",
+              "time": "08:00:00",
+              "object": "闹钟"
+            },
+            "title": "08:00:00",
+            "recent_tsp": 1605139200
+          }
+        ]
+      },
+      "intentName": "删除提醒",
+      "runSequence": "commandFirst",
+      "nlg": "好的，已为你删除11月12日早上八点的闹钟",
+      "intentId": "5f8519469c3ab4000133243b",
+      "command": {
+        "param": {
+          "extra": "{\"content\":[{\"operation\":\"创建\",\"date\":\"20201112\",\"time\":\"08:00:00\",\"absuolutely\":true,\"recent_tsp\":1605139200,\"timestamp\":1605139200,\"vid\":\"11776908056919346716\",\"object\":\"闹钟\",\"period\":\"早上\"}]}",
+          "object": "闹钟"
+        },
+        "api": "ai.dui.dskdm.reminder.remove"
+      },
+      "taskId": "5caeba8b573028000d22d764",
+      "status": 1
+    },
+    "contextId": "606213b53a5140a9abb2ac29e9315ce6",
+    "sessionId": "606213b53a5140a9abb2ac29e9315ce6",
+    "speakUrl": "https://dds-ack.dui.ai/runtime/v1/cache/644805a4777b4c09a88c8ebee59b352c?productId=278576556"
+  }

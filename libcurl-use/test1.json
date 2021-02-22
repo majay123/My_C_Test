@@ -1,0 +1,106 @@
+{
+    "recordId": "15df3a50a88d4370bcb726ffea2f2948",
+    "skillId": "2019041100000140",
+    "requestId": "15df3a50a88d4370bcb726ffea2f2948",
+    "nlu": {
+      "skillId": "2019041100000140",
+      "res": "tasks",
+      "input": "删除找早上7点的闹钟",
+      "inittime": 47.543212890625,
+      "loadtime": 37.33984375,
+      "skill": "提醒",
+      "skillVersion": "37",
+      "source": "aidui",
+      "systime": 160.05297851562,
+      "semantics": {
+        "request": {
+          "slots": [
+            {
+              "pos": [
+                2,
+                2
+              ],
+              "rawvalue": "找",
+              "name": "操作",
+              "rawpinyin": "zhao",
+              "value": "显示"
+            },
+            {
+              "pos": [
+                3,
+                6
+              ],
+              "rawvalue": "早上7点",
+              "name": "时间",
+              "rawpinyin": "zao shang 7 dian",
+              "value": "07:00:00"
+            },
+            {
+              "pos": [
+                3,
+                4
+              ],
+              "rawvalue": "早上",
+              "name": "时间段",
+              "rawpinyin": "zao shang",
+              "value": "早上"
+            },
+            {
+              "pos": [
+                8,
+                9
+              ],
+              "rawvalue": "闹钟",
+              "name": "对象",
+              "rawpinyin": "nao zhong",
+              "value": "闹钟"
+            },
+            {
+              "name": "intent",
+              "value": "查询提醒"
+            }
+          ],
+          "task": "提醒",
+          "confidence": 1,
+          "slotcount": 5
+        }
+      },
+      "version": "2019.1.15.20:40:58",
+      "timestamp": 1605080819
+    },
+    "skill": "提醒",
+    "dm": {
+      "input": "删除找早上7点的闹钟",
+      "shouldEndSession": true,
+      "task": "提醒",
+      "widget": {
+        "widgetName": "default",
+        "duiWidget": "list",
+        "itemsPerPage": 4,
+        "count": 0,
+        "name": "default",
+        "totalPages": 100,
+        "currentPage": 1,
+        "type": "list",
+        "dataSource": "api",
+        "all_cnt": 2,
+        "content": {}
+      },
+      "intentName": "查询提醒",
+      "runSequence": "commandFirst",
+      "nlg": "明天早上七点你还未设置任何闹钟哦",
+      "intentId": "5f8519469c3ab40001332439",
+      "command": {
+        "param": {
+          "extra": "{\"content\":{}}",
+          "object": "闹钟"
+        },
+        "api": "ai.dui.dskdm.reminder.query"
+      },
+      "taskId": "5caeba8b573028000d22d764",
+      "status": 1
+    },
+    "contextId": "19330f63426d4f549f5e1e3af253ff9d",
+    "sessionId": "19330f63426d4f549f5e1e3af253ff9d",
+    "speakUrl": "https://dds-ack.dui.ai/runtime/v1/cache/15df3a50a88d4370bcb726ffea2f2948?productId=278576556"
+  }

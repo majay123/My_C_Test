@@ -1,0 +1,43 @@
+{
+    "code": 100000,
+    "desc": "success!",
+    "message": "成功！",
+    "rows": [
+        {
+            "musicId": "6991040D8SA",
+            "musicName": "明爱暗恋补习社",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/18/8dbeababb0a23209a445073f370cbed7.jpg?m",
+            "singerName": "许靖韵,李靖筠,郭奕芯,杨天宇"
+        },
+        {
+            "musicId": "69906500114",
+            "musicName": "你的痕迹（《怪兽猎人》主题曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/296557df1dbc5107106ff32c54b9aef6.jpg?m",
+            "singerName": "马栗"
+        },
+        {
+            "musicId": "6005973R1PZ",
+            "musicName": "Baby It's You",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/b45f1f4ec130600b1060baf237d99080.jpg?m",
+            "singerName": "London Grammar"
+        },
+        {
+            "musicId": "6005662R7QM",
+            "musicName": "东石\u0028“透南风” Live / Taipei Arena / 2018\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/5e9fae02b912ff2869876edd13edce69.jpg?m",
+            "singerName": "伍佰 & China Blue"
+        },
+        {
+            "musicId": "6008460PKGL",
+            "musicName": "适合夏天的情歌",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/30/d7421d5a916e53fae55a9422fc8bfaec.jpg?m",
+            "singerName": "徐炳超"
+        },
+        {
+            "musicId": "69535601331",
+            "musicName": "你的王牌\u0028电视剧《G小调进行曲》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/608e36c5b8f559201ea73829b8b0a52a.jpg?m",
+            "singerName": "喻大维,刘成瑞,孙一杰,赵一桉,朱涵驿"
+        }
+    ]
+}

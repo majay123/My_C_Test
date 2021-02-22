@@ -1,0 +1,1208 @@
+{
+    "code": 100000,
+    "desc": "success!",
+    "message": "成功！",
+    "rows": [
+        {
+            "musicId": "6991040D8SA",
+            "musicName": "明爱暗恋补习社",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/18/8dbeababb0a23209a445073f370cbed7.jpg?m",
+            "singerName": "许靖韵,李靖筠,郭奕芯,杨天宇"
+        },
+        {
+            "musicId": "69934700022",
+            "musicName": "做我的英雄",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/9fbc241ff4635c19e1cd61a6717b3efa.jpg?m",
+            "singerName": "冯提莫"
+        },
+        {
+            "musicId": "6008460PKFX",
+            "musicName": "Do it",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/18/c8a5fd1fdb92eaab08d57ae988a08ff7.jpg?m",
+            "singerName": "张富翰BingouZ,CLOUDWANG 王云"
+        },
+        {
+            "musicId": "69921700958",
+            "musicName": "夜雨雾\u0028网络剧《非常目击》主题曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/41b886dd5836d2202d587a46aa470d7a.jpg?m",
+            "singerName": "张赫宣"
+        },
+        {
+            "musicId": "69918301459",
+            "musicName": "Mountain Dude",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/18/ef1cc381a5f20f36a650368972e38ed1.jpg?m",
+            "singerName": "LINION,雷擎"
+        },
+        {
+            "musicId": "69918301466",
+            "musicName": "新世界",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/3ada4158f8a55a64fc95d34793ee6ae0.jpg?m",
+            "singerName": "告五人,阿爆"
+        },
+        {
+            "musicId": "69906500113",
+            "musicName": "你的痕迹（《怪兽猎人》主题曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/296557df1dbc5107106ff32c54b9aef6.jpg?m",
+            "singerName": "书亚信"
+        },
+        {
+            "musicId": "69918600530",
+            "musicName": "讨厌的你",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/d7800a700bb35857871c74d9fa2260aa.jpg?m",
+            "singerName": "左立"
+        },
+        {
+            "musicId": "69906500114",
+            "musicName": "你的痕迹（《怪兽猎人》主题曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/296557df1dbc5107106ff32c54b9aef6.jpg?m",
+            "singerName": "马栗"
+        },
+        {
+            "musicId": "6005973R1PZ",
+            "musicName": "Baby It's You",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/b45f1f4ec130600b1060baf237d99080.jpg?m",
+            "singerName": "London Grammar"
+        },
+        {
+            "musicId": "6005973R1Q1",
+            "musicName": "don't be sad",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/f5a1455b653e8fc0a5065fb890ee7c26.jpg?m",
+            "singerName": "Tate McRae"
+        },
+        {
+            "musicId": "60078705110",
+            "musicName": "娱乐世代",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/fa3b21ef00cb750caeb0fc7bae0daa9d.jpg?m",
+            "singerName": "汪苏泷"
+        },
+        {
+            "musicId": "60057010987",
+            "musicName": "Bunny",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/a90f729cbabd0173079bc2da6e1c0648.jpg?m",
+            "singerName": "张楚寒"
+        },
+        {
+            "musicId": "69936800026",
+            "musicName": "BOOM",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/13/85e15a7d7c45bb3bf219c80d7eeb12c1.jpg?m",
+            "singerName": "王菊,马伯骞"
+        },
+        {
+            "musicId": "6991040D8SC",
+            "musicName": "我们都想旅行",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/e7d9ae7c19a85af200b1ee79b2ccc2de.jpg?m",
+            "singerName": "洪卓立"
+        },
+        {
+            "musicId": "69906713236",
+            "musicName": "我知道我不要",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/f42a47a1760bf73f01ab04b9d740ce63.jpg?m",
+            "singerName": "歪歪歪"
+        },
+        {
+            "musicId": "60057761493",
+            "musicName": "和你走过好多街",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/6fafab372e5f1754c2f1d833eb310e2e.jpg?m",
+            "singerName": "张博涵"
+        },
+        {
+            "musicId": "6005973R1WU",
+            "musicName": "Entrepreneur",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/e0afe7e706eee6c87685044bca5375a9.jpg?m",
+            "singerName": "Pharrell Williams,Jay-Z"
+        },
+        {
+            "musicId": "6005973R1P2",
+            "musicName": "Baby",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/0cac1d2ea65871321834ee45f5d8a1f0.jpg?m",
+            "singerName": "Madison Beer"
+        },
+        {
+            "musicId": "69916801567",
+            "musicName": "可不可以你也刚好喜欢我 \u0028电影《可不可以，你也刚好喜欢我》宣传曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/0d4f068a37b0cf12fa8f9141d6ca9a47.jpg?m",
+            "singerName": "Fuying & Sam"
+        },
+        {
+            "musicId": "63388708937",
+            "musicName": "二十一日赋",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/21/8d0545b77001483d228af5442fc221e7.jpg?m",
+            "singerName": "一棵小葱张晓涵"
+        },
+        {
+            "musicId": "69926101117",
+            "musicName": "晚是没有你的安",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/6edc579bdc1ecc83cb2305328cab5761.jpg?m",
+            "singerName": "于潼"
+        },
+        {
+            "musicId": "63274311796",
+            "musicName": "情人节你快乐吗",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/06/30/4479bae8b320e054e18c9acf6dfb38b4.jpg?m",
+            "singerName": "高振铭"
+        },
+        {
+            "musicId": "69906713320",
+            "musicName": "Get In Line",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/21/920741e098e47ae7e0527584f971d2dd.jpg?m",
+            "singerName": "龚敬文"
+        },
+        {
+            "musicId": "6005973R2D1",
+            "musicName": "The Plan \u0028电影《信条》主题曲\u0029\u0028Clean\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/23/c0c3c8cf71654d95a675028097b60562.jpg?m",
+            "singerName": "Travis Scott"
+        },
+        {
+            "musicId": "6005752J445",
+            "musicName": "Mama \u0028feat. Lil Yachty\u0029\u0028Explicit\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/23/a8ce5f8851963b0dd88f45224c379026.jpg?m",
+            "singerName": "Dough-Boy,Lil Yachty"
+        },
+        {
+            "musicId": "69924000062",
+            "musicName": "用喜欢的方式过一生",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/dd4900242d883d2c4cbc0c9ba7affc1d.jpg?m",
+            "singerName": "杨威"
+        },
+        {
+            "musicId": "69906713222",
+            "musicName": "不谈恋爱又能怎样",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/06/24/cde1cffc9a183b8f276469c23b6ef23f.jpg?m",
+            "singerName": "CICI陈幼氰"
+        },
+        {
+            "musicId": "60057010984",
+            "musicName": "等着你说",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/22/4cbf5183baa84033132cd98516b1b322.jpg?m",
+            "singerName": "烧饼,刘人语"
+        },
+        {
+            "musicId": "69921701052",
+            "musicName": "送别\u0028网剧《非常目击》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/21/f3727eb9a478971ade4ad5f935d1f4b1.jpg?m",
+            "singerName": "许艺娜"
+        },
+        {
+            "musicId": "69906713323",
+            "musicName": "First Sight",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/1baf2657691199a530ba3473a3622ec0.jpg?m",
+            "singerName": "王子异"
+        },
+        {
+            "musicId": "60076263512",
+            "musicName": "不忘相思",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/1106a4c54f65f6e6d98b1b9a95042554.jpg?m",
+            "singerName": "阿兰"
+        },
+        {
+            "musicId": "63274311798",
+            "musicName": "在我最需要拥抱的时候",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/67759cd355d4b5ed29d640f94db267c1.jpg?m",
+            "singerName": "陈红鲤"
+        },
+        {
+            "musicId": "6005973R27G",
+            "musicName": "Alone Again",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/8a6798bc35edb9df3bd459957cfa2cec.jpg?m",
+            "singerName": "Halo"
+        },
+        {
+            "musicId": "69921701053",
+            "musicName": "断肠水",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/3c1b736695e30ad4ea41a602e9c99f2e.jpg?m",
+            "singerName": "于毅"
+        },
+        {
+            "musicId": "69948300063",
+            "musicName": "回光 \u0028网络剧《太古神王》片尾曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/13da021112c560321bc6987646e787b7.jpg?m",
+            "singerName": "江映蓉"
+        },
+        {
+            "musicId": "6008460PKFZ",
+            "musicName": "孤独替女孩打伞",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/20ddc79e878c4b172d36094183b827e7.jpg?m",
+            "singerName": "小阿七"
+        },
+        {
+            "musicId": "69906713335",
+            "musicName": "Bussdown Your Soul \u0028feat. Barney Bones\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/26/c0536e4e9b4eb0439798dc9fac38dd79.jpg?m",
+            "singerName": "AUGUST 08,Barney Bones"
+        },
+        {
+            "musicId": "69936800027",
+            "musicName": "HARD TO SAY GOODBYE",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/13/85e15a7d7c45bb3bf219c80d7eeb12c1.jpg?m",
+            "singerName": "王菊"
+        },
+        {
+            "musicId": "6005973R219",
+            "musicName": "睡眠精灵",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/f3235154bd2e94e822bf5d5205edf930.jpg?m",
+            "singerName": "梗年"
+        },
+        {
+            "musicId": "60068401956",
+            "musicName": "爱得其所",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/a6446bc17143b780693e02820b64d1b2.jpg?m",
+            "singerName": "谢子淇"
+        },
+        {
+            "musicId": "69535601328",
+            "musicName": "有我在\u0028电视剧《G小调进行曲》片尾曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/608e36c5b8f559201ea73829b8b0a52a.jpg?m",
+            "singerName": "侯东"
+        },
+        {
+            "musicId": "60078705111",
+            "musicName": "讲个笑话",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/5fc977101e3011c2e0ddaa279563278f.jpg?m",
+            "singerName": "汪苏泷,谢可寅"
+        },
+        {
+            "musicId": "6005860T70F",
+            "musicName": "不晚",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/c30e50a4401c661391a8f646a7e4d8a0.jpg?m",
+            "singerName": "田馥甄"
+        },
+        {
+            "musicId": "69926101128",
+            "musicName": "愿君亦怜我",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/de708e1883a93b6ac89363fd5e2d339f.jpg?m",
+            "singerName": "ANU,赵方婧"
+        },
+        {
+            "musicId": "6005973R3QE",
+            "musicName": "Beso",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/77388f2e1718f94166f5a54741743720.jpg?m",
+            "singerName": "CNCO"
+        },
+        {
+            "musicId": "60057761508",
+            "musicName": "谜底\u0028电视剧《追凶500天》片尾曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/da6e3e0bc6f0b83773eb05eee5f993fa.jpg?m",
+            "singerName": "杨永聪"
+        },
+        {
+            "musicId": "6005662R7QM",
+            "musicName": "东石\u0028“透南风” Live / Taipei Arena / 2018\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/5e9fae02b912ff2869876edd13edce69.jpg?m",
+            "singerName": "伍佰 & China Blue"
+        },
+        {
+            "musicId": "6008460PKGL",
+            "musicName": "适合夏天的情歌",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/30/d7421d5a916e53fae55a9422fc8bfaec.jpg?m",
+            "singerName": "徐炳超"
+        },
+        {
+            "musicId": "69535601331",
+            "musicName": "你的王牌\u0028电视剧《G小调进行曲》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/608e36c5b8f559201ea73829b8b0a52a.jpg?m",
+            "singerName": "喻大维,刘成瑞,孙一杰,赵一桉,朱涵驿"
+        },
+        {
+            "musicId": "6005973R25C",
+            "musicName": "爱你",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/31/8e9c8422a974abfd1eab5639a15fe68f.jpg?m",
+            "singerName": "刘学甫"
+        },
+        {
+            "musicId": "69906713374",
+            "musicName": "偷心",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/30/27067b66fe07e68c24d884e2bb0b501b.jpg?m",
+            "singerName": "狮童乐队"
+        },
+        {
+            "musicId": "69921701061",
+            "musicName": "陷落\u0028电视剧《旗袍美探》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/01/f1a1af1e84e15ce22a816830db82f86e.jpg?m",
+            "singerName": "多亮"
+        },
+        {
+            "musicId": "69936800029",
+            "musicName": "你要不要先回家\u0028Go Home, huh\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/42c1259c60fdb824d80b0f8972cccd2c.jpg?m",
+            "singerName": "吴映洁"
+        },
+        {
+            "musicId": "69921701122",
+            "musicName": "一程",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/04200fd4b444f91878bf7c5032cdce90.jpg?m",
+            "singerName": "于毅,勾雪莹"
+        },
+        {
+            "musicId": "69906713322",
+            "musicName": "家门 feat. 绿绣眼 Zos",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/074048d2b3ef75145f336ac3eaef9186.jpg?m",
+            "singerName": "Who Cares 胡凯儿,绿绣眼 Zos"
+        },
+        {
+            "musicId": "6005662RKPD",
+            "musicName": "像孩子一样长大",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/f8da1ec98a58941fa8c6022e2163ccf3.jpg?m",
+            "singerName": "Sunnee杨芸晴,Z.TAO黄子韬"
+        },
+        {
+            "musicId": "69905304001",
+            "musicName": "Pretty Please",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/e9fa48e2fefc3af7f7b39b15644f225e.jpg?m",
+            "singerName": "王嘉尔"
+        },
+        {
+            "musicId": "6005973R2XV",
+            "musicName": "Lasting Lover",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/058886d3e654af3338372f87371e9d7c.jpg?m",
+            "singerName": "Sigala,James Arthur"
+        },
+        {
+            "musicId": "6991040D8SD",
+            "musicName": "农民 Remake",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/1910b48f6cf338e6103257b389786564.jpg?m",
+            "singerName": "吴浩康,农夫"
+        },
+        {
+            "musicId": "63793703977",
+            "musicName": "海雾\u0028《怒海狂蛛》电影主题曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/809e911e690bc3bd26e9106ed4ec860a.jpg?m",
+            "singerName": "F.I.R.,皇毅Spark"
+        },
+        {
+            "musicId": "69906500115",
+            "musicName": "破风的自由\u0028电视剧《拾光里的我们》片尾曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/901512a9ad03f5a351acffcb8f489f33.jpg?m",
+            "singerName": "朱星杰"
+        },
+        {
+            "musicId": "63372901742",
+            "musicName": "没有人的孤岛 \u0028电视剧《平凡的荣耀》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/05/c0a8596a3738da3d5ed058090c57ae7f.jpg?m",
+            "singerName": "李琦"
+        },
+        {
+            "musicId": "69948100009",
+            "musicName": "谁（电视剧《仲夏满天心》片尾曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/ad8d32e140d37c59d35757d4848ab1f1.jpg?m",
+            "singerName": "吉克隽逸"
+        },
+        {
+            "musicId": "69535601345",
+            "musicName": "爱你的习惯",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/984e899d37effa22f465fafb060ee6f2.jpg?m",
+            "singerName": "甜筒,恋与白侍从"
+        },
+        {
+            "musicId": "69924700429",
+            "musicName": "现在就出发\u00282020年山西省第六次旅游发展大会主题曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/869a62759aefb72ce7996b394bc14bcc.jpg?m",
+            "singerName": "毛阿敏"
+        },
+        {
+            "musicId": "69921701124",
+            "musicName": "一千零一种爱",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/e0ff694afeb04404715c2e27cf51f3de.jpg?m",
+            "singerName": "于毅"
+        },
+        {
+            "musicId": "6008460PKHX",
+            "musicName": "假如",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/2c57dd37ceb2b0aaf1b69b8def260a4c.jpg?m",
+            "singerName": "许一鸣"
+        },
+        {
+            "musicId": "60057011013",
+            "musicName": "我在星期八等你",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/16fd8e4e8f58a1f20e56c5ddebdf09c9.jpg?m",
+            "singerName": "李莎旻子"
+        },
+        {
+            "musicId": "63480000910",
+            "musicName": "爱情都去哪儿了（电影《荞麦疯长》推广曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/7d6e8f61be656fceb86fb96191d327f8.jpg?m",
+            "singerName": "王铮亮"
+        },
+        {
+            "musicId": "6005752J9FD",
+            "musicName": "次元壁",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/ce318af32ef495ea6fa10b038a156095.jpg?m",
+            "singerName": "林欣彤"
+        },
+        {
+            "musicId": "69905201097",
+            "musicName": "这就是爱情 \u0028电视剧《我好喜欢你》片头曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/18/c07bcdce42e5c845c7f41bcfcd85d21b.jpg?m",
+            "singerName": "丫蛋蛋,沈虫虫"
+        },
+        {
+            "musicId": "60076263509",
+            "musicName": "Haruko Akagi",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/18/773b68a9a64887859575129ef302090e.jpg?m",
+            "singerName": "Joy Ginger"
+        },
+        {
+            "musicId": "69908712026",
+            "musicName": "余烬",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/265302d7f6c6f2998258041512c24b87.jpg?m",
+            "singerName": "冯建宇"
+        },
+        {
+            "musicId": "6005973R1SR",
+            "musicName": "Somebody",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/02/28/c7e70ddc7818741b12d4a18d829736e4.jpg?m",
+            "singerName": "Drew Love,The Chainsmokers"
+        },
+        {
+            "musicId": "6005973R1L9",
+            "musicName": "No More Waywardness \u0028电影《可不可以，你也刚好喜欢我》背景音乐\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/49191b2653a268d75d1d5a2d322e2c32.jpg?m",
+            "singerName": "简孟颐"
+        },
+        {
+            "musicId": "6005662QVDZ",
+            "musicName": "苏州河 \u0028电影《八佰》片尾曲中国版\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/11/7d49872f91e9e136532aadf3ad83cd78.jpg?m",
+            "singerName": "Andrea Bocelli,那英"
+        },
+        {
+            "musicId": "6005662QV8P",
+            "musicName": "让我们在一起吧",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/13/09e84b757e5bfcf4dea310ee4c2a2ff8.jpg?m",
+            "singerName": "LULU 黄路梓茵"
+        },
+        {
+            "musicId": "69917704442",
+            "musicName": "陌生的婚礼",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/21/2a33c5e61aac8394bbdbec801b14d7c4.jpg?m",
+            "singerName": "贰佰"
+        },
+        {
+            "musicId": "69906713285",
+            "musicName": "What If",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/b6ec2b4e2b2e22c2e916d2f2faacecca.jpg?m",
+            "singerName": "晃浪"
+        },
+        {
+            "musicId": "69906713292",
+            "musicName": "茶底世界\u0028Live\u0029 - \u0028上海2019.12.01\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/26/de8b999cd58aec61af4bca0c9cd2fbac.jpg?m",
+            "singerName": "丢火车乐队"
+        },
+        {
+            "musicId": "69906713293",
+            "musicName": "晚安\u0028Live\u0029 - \u0028天津2019.11.08\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/26/de8b999cd58aec61af4bca0c9cd2fbac.jpg?m",
+            "singerName": "丢火车乐队"
+        },
+        {
+            "musicId": "69906713240",
+            "musicName": "Unsaveable",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/26/30cb5eabcd219999dd5077d38a5d819b.jpg?m",
+            "singerName": "热斑"
+        },
+        {
+            "musicId": "6005973R270",
+            "musicName": "不爱自己的人",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/26/a73b25b29e59a7895f4f00dc0e95d6a4.jpg?m",
+            "singerName": "蔡佩轩"
+        },
+        {
+            "musicId": "69906713370",
+            "musicName": "甜",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/1cd9399568ebadde09d272e2f7387f36.jpg?m",
+            "singerName": "王喂马"
+        },
+        {
+            "musicId": "6005662R7VC",
+            "musicName": "For Whom The Bell Tolls\u0028Live\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/98f376e816f12a32c39710b643bb928d.jpg?m",
+            "singerName": "Metallica,San Francisco Symphony"
+        },
+        {
+            "musicId": "69906713377",
+            "musicName": "生逢灿烂",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/30/3c4718b0180b28dd5e70828b8275b2dc.jpg?m",
+            "singerName": "鹿先森乐队"
+        },
+        {
+            "musicId": "69906713383",
+            "musicName": "你的诗行",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/30/3c4718b0180b28dd5e70828b8275b2dc.jpg?m",
+            "singerName": "鹿先森乐队"
+        },
+        {
+            "musicId": "69921701055",
+            "musicName": "窥望\u0028电视剧《旗袍美探》片尾曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/01/f1a1af1e84e15ce22a816830db82f86e.jpg?m",
+            "singerName": "萨吉"
+        },
+        {
+            "musicId": "63793703976",
+            "musicName": "美丽的时刻\u0028《奇幻书店》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/6f01c58fe313f73d6fa0a9c0610710a9.jpg?m",
+            "singerName": "阎奕格"
+        },
+        {
+            "musicId": "6005662RKQD",
+            "musicName": "J.S. Bach: Goldberg Variations, BWV 988 - Aria",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/07/10/567e2b40e292dc5a02e8c2249e6aaf97.jpg?m",
+            "singerName": "郎朗"
+        },
+        {
+            "musicId": "69905304021",
+            "musicName": "Dancing on My Own（2020中国好声音第3期）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/30a13609501f6b975e987ff1b2fc6bd7.jpg?m",
+            "singerName": "高睿"
+        },
+        {
+            "musicId": "69918301448",
+            "musicName": "抱着你",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/041bded9f35eb22c3b87ae965516397e.jpg?m",
+            "singerName": "岑宁儿"
+        },
+        {
+            "musicId": "69918301449",
+            "musicName": "舞女",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/8aeb2d8f9b9800b5529d112b9a2d308a.jpg?m",
+            "singerName": "岑宁儿"
+        },
+        {
+            "musicId": "6005752J9MB",
+            "musicName": "Marshmallow",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/09/de9559c8613e600d4588a68ef8b9110d.jpg?m",
+            "singerName": "あいみょん"
+        },
+        {
+            "musicId": "63273403117",
+            "musicName": "紧箍咒",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/ebfc05b495bcfa26f4f53c51fd99795f.jpg?m",
+            "singerName": "宋秉洋"
+        },
+        {
+            "musicId": "69909900089",
+            "musicName": "相遇",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/fced0d0dfc63c0f80ae33867d11badcc.jpg?m",
+            "singerName": "时代少年团"
+        },
+        {
+            "musicId": "69910600158",
+            "musicName": "今晚我们一起吃饭",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/21/a09a0e2bfe38e7c4ceeb6ce615fd2265.jpg?m",
+            "singerName": "谢春花"
+        },
+        {
+            "musicId": "6008460PKHD",
+            "musicName": "千字文",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/01/2781b0915c847fbb88963598f9385995.jpg?m",
+            "singerName": "窦唯,朝简"
+        },
+        {
+            "musicId": "69932900018",
+            "musicName": "摩托",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/06/aa921ddff6bb7b05e43676c6dbc76666.jpg?m",
+            "singerName": "冯提莫"
+        },
+        {
+            "musicId": "60057011011",
+            "musicName": "荷花谣",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/53061b34ee5436e04f65adf27c46a877.jpg?m",
+            "singerName": "王小玮"
+        },
+        {
+            "musicId": "6008460PKFW",
+            "musicName": "Love Me Too",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/fd2b3ff3e94d9f58efe93a06ed3ebba9.jpg?m",
+            "singerName": "池约翰,Shelby Natasha"
+        },
+        {
+            "musicId": "63372901741",
+            "musicName": "心火\u0028《平凡的荣耀》电视剧原声带主题曲片尾曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/ab57701b78a789d3d4aed0e8828a4456.jpg?m",
+            "singerName": "周笔畅"
+        },
+        {
+            "musicId": "69948300065",
+            "musicName": "思念成荒 \u0028电视剧《太古神王》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/bc4915a560733dbb6f5f5c71b934086f.jpg?m",
+            "singerName": "曾惜,排骨教主"
+        },
+        {
+            "musicId": "63897300033",
+            "musicName": "水姑娘",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/77ec3c1fd782c7b3f4897b4507c61565.jpg?m",
+            "singerName": "王小玮"
+        },
+        {
+            "musicId": "69931138616",
+            "musicName": "counter culture",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/26/445bee760ad000a48693701cb87460dc.jpg?m",
+            "singerName": "大森靖子"
+        },
+        {
+            "musicId": "63273403125",
+            "musicName": "KungChiKiTa（JO1 ver.）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/5c72e66a91664b4f698e653fc4e70378.jpg?m",
+            "singerName": "JO1"
+        },
+        {
+            "musicId": "6005662RYD5",
+            "musicName": "24H",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/9e17f87457ea008091cfd78445acf7e2.jpg?m",
+            "singerName": "SEVENTEEN"
+        },
+        {
+            "musicId": "69931138592",
+            "musicName": "あのねこの话 feat. クボタカイ",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/77dfaa2d2f2e5e422f7adf1aa06bfc1a.jpg?m",
+            "singerName": "迷悠奈"
+        },
+        {
+            "musicId": "69931138621",
+            "musicName": "トゥモロー最强说!!",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/e17c43bf6b46ddc084e64a64c708c266.jpg?m",
+            "singerName": "超ときめき♡宣伝部"
+        },
+        {
+            "musicId": "6005973R4GF",
+            "musicName": "Golden Goose",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/4f30ca00e5f95b21e697d322e60e6847.jpg?m",
+            "singerName": "A.C.E"
+        },
+        {
+            "musicId": "6005662R97F",
+            "musicName": "All Of Me",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/5f53bc525ff1b225c777d774a5cab010.jpg?m",
+            "singerName": "The Score,Travis Barker"
+        },
+        {
+            "musicId": "6005973R1S4",
+            "musicName": "Save The Day\u00282020\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/21/4c1eec1fb31305876585e676d0927e7b.jpg?m",
+            "singerName": "Mariah Carey,Lauryn Hill"
+        },
+        {
+            "musicId": "6005973R1WT",
+            "musicName": "Fire",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/fe564cb6d61789909cadde9e5b1b418c.jpg?m",
+            "singerName": "Ytram,Elderbrook,Martin Garrix"
+        },
+        {
+            "musicId": "6005973R2F1",
+            "musicName": "House With No Mirrors",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/abde90506336f3d9a1460ba11ca48349.jpg?m",
+            "singerName": "Sasha Sloan"
+        },
+        {
+            "musicId": "6005662R9T9",
+            "musicName": "Reflection \u00282020\u0029（电影《花木兰》主题曲重置版）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/c7b3d6c3de9f33227fb5f3e766fdf086.jpg?m",
+            "singerName": "Christina Aguilera"
+        },
+        {
+            "musicId": "69918301469",
+            "musicName": "Love In My Pocket",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/07/09/ceaf32ec61ca635eb6126df617e7efaf.jpg?m",
+            "singerName": "Rich Brian"
+        },
+        {
+            "musicId": "6005973R53E",
+            "musicName": "Over Now\u0028Explicit\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/4d1e7f8960313b9d44ed3592dabe0800.jpg?m",
+            "singerName": "Calvin Harris,The Weeknd"
+        },
+        {
+            "musicId": "6005752J83M",
+            "musicName": "THE PLAN",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/1be9255ad78597bd5b758e447c1d6db3.jpg?m",
+            "singerName": "Travis Scott"
+        },
+        {
+            "musicId": "6005752J88U",
+            "musicName": "OMG What's Happening",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/06/0eca025ac1206d710f91c32e49d6e8a8.jpg?m",
+            "singerName": "Ava Max"
+        },
+        {
+            "musicId": "6005662QZA9",
+            "musicName": "Free \u0028电影《独一无二的伊万》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/23/8d090100b763d17ddb36d89333c3a8de.jpg?m",
+            "singerName": "Charlie Puth"
+        },
+        {
+            "musicId": "69948100014",
+            "musicName": "浮生若梦（电视剧《欢乐英雄》插曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/2aa491b781f00fa7a2894566e5ad9b56.jpg?m",
+            "singerName": "彭佳慧"
+        },
+        {
+            "musicId": "6005860T62A",
+            "musicName": "U",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/ea92d17340245b525883ee960dc76320.jpg?m",
+            "singerName": "刘以豪"
+        },
+        {
+            "musicId": "69535601327",
+            "musicName": "心之所向\u0028电视剧《G小调进行曲》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/608e36c5b8f559201ea73829b8b0a52a.jpg?m",
+            "singerName": "梁心颐"
+        },
+        {
+            "musicId": "6005662R7H5",
+            "musicName": "My! Cyndi!",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/d405ef0edc25b13f9428b8000bf19e52.jpg?m",
+            "singerName": "王心凌"
+        },
+        {
+            "musicId": "69925200046",
+            "musicName": "刻在我心底的名字 \u0028电影《刻在你心底的名字》主题曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/ca437893733b112794ffe6de8fa4676c.jpg?m",
+            "singerName": "卢广仲"
+        },
+        {
+            "musicId": "60070101888",
+            "musicName": "祝我幸福",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/a6034ce232a62aac6df20a864c9f0c70.jpg?m",
+            "singerName": "家家"
+        },
+        {
+            "musicId": "63372901743",
+            "musicName": "境遇 \u0028电视剧《平凡的荣耀》片头曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/ed263e0d91dead2ba5e759b06ef1b818.jpg?m",
+            "singerName": "曹格"
+        },
+        {
+            "musicId": "60084804606",
+            "musicName": "安然之歌\u0028电影《大约在冬季》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/448a4335a7ba45dee688762fe55f4e15.jpg?m",
+            "singerName": "齐秦"
+        },
+        {
+            "musicId": "6005662RRKW",
+            "musicName": "自己 \u0028电影《花木兰》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/29/f37f9a20f73baeee4270a7de28b2bab4.jpg?m",
+            "singerName": "李玟"
+        },
+        {
+            "musicId": "6005860T62B",
+            "musicName": "或是一首歌",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/21/ad0b5af7890b634ae25bea49e1056709.jpg?m",
+            "singerName": "田馥甄"
+        },
+        {
+            "musicId": "69916801569",
+            "musicName": "烟火 \u0028电视剧《我的青春没在怕》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/0ce6c61c06d4e7d4e4524ff91f0e2729.jpg?m",
+            "singerName": "蔡黄汝"
+        },
+        {
+            "musicId": "60070101889",
+            "musicName": "不营业的日常",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/f425724b399680f7b1f6847785caecdf.jpg?m",
+            "singerName": "刘若英"
+        },
+        {
+            "musicId": "69906713281",
+            "musicName": "敬你",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/20/6ce8b3ae0607efe16dd974d5f200fe91.jpg?m",
+            "singerName": "万茜"
+        },
+        {
+            "musicId": "63681001144",
+            "musicName": "望穿秋水",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/18/bafaa8224d5c010740d530d8c0e7051d.jpg?m",
+            "singerName": "陈雪凝"
+        },
+        {
+            "musicId": "60084301431",
+            "musicName": "有时",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/5cf9682aa929869cdff03a2a946e86e2.jpg?m",
+            "singerName": "陈翔"
+        },
+        {
+            "musicId": "69948100008",
+            "musicName": "仲夏满天心（电视剧《仲夏满天心》同名主题曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/27/7258895ecfeb7788ede573529fed4fcc.jpg?m",
+            "singerName": "郁可唯"
+        },
+        {
+            "musicId": "63372901744",
+            "musicName": "他\u0028《平凡的荣耀》电视剧原声带插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/06/215c66e93997fdc9f8bb5e48aca9ce4c.jpg?m",
+            "singerName": "徐秉龙"
+        },
+        {
+            "musicId": "60076263513",
+            "musicName": "You Got The Magic",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/30/681efa450c486c6c42e856abb7b93300.jpg?m",
+            "singerName": "胡彦斌"
+        },
+        {
+            "musicId": "60076263505",
+            "musicName": "酷盖",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/18/1172c903a0f1213d25d9bd27295b5134.jpg?m",
+            "singerName": "大张伟"
+        },
+        {
+            "musicId": "69921701057",
+            "musicName": "迷惑\u0028电视剧《旗袍美探》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/01/f1a1af1e84e15ce22a816830db82f86e.jpg?m",
+            "singerName": "叶炫清"
+        },
+        {
+            "musicId": "69948100016",
+            "musicName": "小红象（电视剧《仲夏满天心》插曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/9b1c21b58f8ac8095721bd3fa6180e96.jpg?m",
+            "singerName": "杨超越"
+        },
+        {
+            "musicId": "63681001148",
+            "musicName": "醒来",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/31/2fca88b9b546256ee423dd0c8d26a625.jpg?m",
+            "singerName": "刘美麟"
+        },
+        {
+            "musicId": "60078705112",
+            "musicName": "每月5号",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/55f0dfe3d67ede9fd39feaadb3330ea3.jpg?m",
+            "singerName": "汪苏泷"
+        },
+        {
+            "musicId": "6008460PKG4",
+            "musicName": "冷",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/8c33a70ffe7e2801254c2c10aff67a79.jpg?m",
+            "singerName": "Cristian李浩宇"
+        },
+        {
+            "musicId": "6005860T707",
+            "musicName": "预知梦",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/24/a5639eeea07d7e38dd8e1562a7241ae9.jpg?m",
+            "singerName": "黄隽智"
+        },
+        {
+            "musicId": "60057010992",
+            "musicName": "愿望清单",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/26/021fc95ac046c67cf214a4927c434fdb.jpg?m",
+            "singerName": "李莎旻子"
+        },
+        {
+            "musicId": "6005752J841",
+            "musicName": "诺曼底",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/02/ebba113a08e0c59d7c3c9201b7d12f0c.jpg?m",
+            "singerName": "唐汉霄"
+        },
+        {
+            "musicId": "69911900113",
+            "musicName": "偷走寂寞的人",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/a61768aec7c011988008815fa10dc7ef.jpg?m",
+            "singerName": "吴奇"
+        },
+        {
+            "musicId": "69918600545",
+            "musicName": "敬杯茶",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/03/9c6024e0750488b18ddcc44017ee2efe.jpg?m",
+            "singerName": "猴子军团"
+        },
+        {
+            "musicId": "6005973R472",
+            "musicName": "笼中鸟Remix",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/9367c152d4ce257e81e3f5074c29877f.jpg?m",
+            "singerName": "谢天笑,黄礼格"
+        },
+        {
+            "musicId": "69910600159",
+            "musicName": "失重感",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/682aa569892bfa35a14bcc70a6756501.jpg?m",
+            "singerName": "谢春花"
+        },
+        {
+            "musicId": "69918600540",
+            "musicName": "腾格里HAYA",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/eea5f1dc9f34fb0af6f862e39de1364a.jpg?m",
+            "singerName": "HAYA乐团"
+        },
+        {
+            "musicId": "63495618149",
+            "musicName": "黑色铅笔",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/314c5599963ac6646ad7b18fffc74a1b.jpg?m",
+            "singerName": "很大胃"
+        },
+        {
+            "musicId": "6005973R471",
+            "musicName": "成为我的春天吧",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/a23a96f67cc3146696d0c729c6b7731d.jpg?m",
+            "singerName": "王紫萱"
+        },
+        {
+            "musicId": "69948300067",
+            "musicName": "雾\u0028《太古神王》网络剧插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/09/20a0d13863ed2360b3bf511f6c6b59f4.jpg?m",
+            "singerName": "温岚"
+        },
+        {
+            "musicId": "69908712111",
+            "musicName": "Answer\u0028合唱版\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/5d443053a2455914e960d739e977c034.jpg?m",
+            "singerName": "刘子瑞,刘耀元"
+        },
+        {
+            "musicId": "6005860T70G",
+            "musicName": "趁我还保持冷静",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/0eddf29045871a4d3b1ae6db8b69753c.jpg?m",
+            "singerName": "夏妍"
+        },
+        {
+            "musicId": "63261202992",
+            "musicName": "哼",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/58b3d8ffecc5d019fb2beca2e5b2ec60.jpg?m",
+            "singerName": "张远"
+        },
+        {
+            "musicId": "60057010994",
+            "musicName": "小尖尖",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/d50059cb49ca441cfa28e1e21b764b55.jpg?m",
+            "singerName": "韩红,薛之谦"
+        },
+        {
+            "musicId": "60054704163",
+            "musicName": "乘风破浪",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/11804d0dddc42c73406f56220484f261.jpg?m",
+            "singerName": "袁咏琳"
+        },
+        {
+            "musicId": "6005973R5Z8",
+            "musicName": "Bad Habits\u0028Clean\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/10/33f9534d731aa9fe8bea3bfde0aa8bd0.jpg?m",
+            "singerName": "Usher"
+        },
+        {
+            "musicId": "6008460PKHU",
+            "musicName": "无期勿扰",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/48857daa3a80297402e476acbe764a3c.jpg?m",
+            "singerName": "Cristian李浩宇"
+        },
+        {
+            "musicId": "6005662RZ0D",
+            "musicName": "Chemicals",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/10/1708b120a24a5703416104cc7ec3c30d.jpg?m",
+            "singerName": "The Vamps"
+        },
+        {
+            "musicId": "64049302583",
+            "musicName": "我的心里呀",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/7d4fc5fa389281c55d2a659df6ca5298.jpg?m",
+            "singerName": "鼓鼓 吕思纬"
+        },
+        {
+            "musicId": "69926101154",
+            "musicName": "青丝",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/d0cb8b079f2888964eb25ad009cfe61b.jpg?m",
+            "singerName": "唐伯虎Annie"
+        },
+        {
+            "musicId": "69908712057",
+            "musicName": "甜蜜的你",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/25/265302d7f6c6f2998258041512c24b87.jpg?m",
+            "singerName": "冯建宇"
+        },
+        {
+            "musicId": "6005860T73Z",
+            "musicName": "给妳们Dear ALL",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/a22ddc9dcc1f650f82d30366324f0c6d.jpg?m",
+            "singerName": "万芳"
+        },
+        {
+            "musicId": "6008460PKJ6",
+            "musicName": "LOSER",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/09/58df61606cfe64585b99422fa508e3d7.jpg?m",
+            "singerName": "MiniG迷你机"
+        },
+        {
+            "musicId": "69925400157",
+            "musicName": "无尘（电影《酒剑》人物曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/21/978b5744c57e5fba77332b556f88af08.jpg?m",
+            "singerName": "宋尚聪"
+        },
+        {
+            "musicId": "6005662RZ1A",
+            "musicName": "Everybody Wants You\u0028Clean\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/10/70af27de8e93710ad0a48f793d0cc245.jpg?m",
+            "singerName": "Johnny Orlando"
+        },
+        {
+            "musicId": "6008460PKJ4",
+            "musicName": "First Time",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/09/71ba01832612bc2afb5745debaa66e5c.jpg?m",
+            "singerName": "CLOUDWANG 王云,罗汉Lohan,嘿人李逵Noisemakers"
+        },
+        {
+            "musicId": "69918301474",
+            "musicName": "常愿意",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/09/087a48c64a6e8a3b2d42bfadde5de5ff.jpg?m",
+            "singerName": "岑宁儿"
+        },
+        {
+            "musicId": "69921701126",
+            "musicName": "盗爱",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/09/69b2237e6bf87f5203e5118b78b52763.jpg?m",
+            "singerName": "于毅"
+        },
+        {
+            "musicId": "60070101890",
+            "musicName": "黑色柳丁",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/09/9d568de3a438872038384cd4763991fa.jpg?m",
+            "singerName": "黄奕儒,李芷婷"
+        },
+        {
+            "musicId": "69921701059",
+            "musicName": "You Know\u0028电视剧《旗袍美探》插曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/01/f1a1af1e84e15ce22a816830db82f86e.jpg?m",
+            "singerName": "高嘉朗"
+        },
+        {
+            "musicId": "60076263514",
+            "musicName": "所有的我",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/30/bdc79d53ae6842b10ee14843eab62ac3.jpg?m",
+            "singerName": "歌浴森"
+        },
+        {
+            "musicId": "6005973R52N",
+            "musicName": "as long as you care",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/10/ed6cf9b1731d68e26a0201c1a4ac0e83.jpg?m",
+            "singerName": "Ruel"
+        },
+        {
+            "musicId": "6005752J9T2",
+            "musicName": "节奏先生",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/09/1926f6fd4d50383ba0d38c6665bd3f57.jpg?m",
+            "singerName": "潘玮柏"
+        },
+        {
+            "musicId": "69908712089",
+            "musicName": "向你靠近\u0028互动连续剧《我们一起合租吧》主题曲\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/30/7c0fb8aebf1a68566dcd079e61e2e2e5.jpg?m",
+            "singerName": "徐嘉苇"
+        },
+        {
+            "musicId": "60076263516",
+            "musicName": "追光的人",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/10/cf1556f71661a9a7be5b50c35a6c36fc.jpg?m",
+            "singerName": "曹芙嘉,陈焱FanCY"
+        },
+        {
+            "musicId": "69534875003",
+            "musicName": "姿态",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/10/92e7beb18aea2ed6c8f12fd7a485d791.jpg?m",
+            "singerName": "陆定昊"
+        },
+        {
+            "musicId": "6008460PKJY",
+            "musicName": "洒脱人类",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/10/16887b46ea30bfb18c6362e1bbb6765c.jpg?m",
+            "singerName": "kiki郑羽淇"
+        },
+        {
+            "musicId": "6008460PKFY",
+            "musicName": "不爱我",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/19/02e73a1f3758d0a33cb14686da19bf53.jpg?m",
+            "singerName": "薛之谦"
+        },
+        {
+            "musicId": "69906500116",
+            "musicName": "穿越时光遇见你（影视剧《拾光里的我们》插曲）",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/10/98d3e07efc36a2c829c189afba5eb8c1.jpg?m",
+            "singerName": "尹姝贻"
+        },
+        {
+            "musicId": "6005860T73Y",
+            "musicName": "讽刺的情书",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/05ec76440076717a67b15522a3c8e378.jpg?m",
+            "singerName": "田馥甄"
+        },
+        {
+            "musicId": "6005752J9DP",
+            "musicName": "我从没见过你",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/42f38d5191676dee227ceb89536da7f5.jpg?m",
+            "singerName": "齐一"
+        },
+        {
+            "musicId": "63388708939",
+            "musicName": "懂了",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/31/c8d9b9671773028052ae09ddb1ac6dea.jpg?m",
+            "singerName": "董又霖"
+        },
+        {
+            "musicId": "6008460PKHR",
+            "musicName": "叮咚",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/04/f96d503101ee0b74bd2978fbcf431488.jpg?m",
+            "singerName": "Click#15"
+        },
+        {
+            "musicId": "63372901745",
+            "musicName": "彻底",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/06/5496f5c94eaf0f8c35797b3a74d5efe9.jpg?m",
+            "singerName": "居来提"
+        },
+        {
+            "musicId": "69917704455",
+            "musicName": "戏",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/07/77bc6690759e7ab804c90384178a57bd.jpg?m",
+            "singerName": "曾轶可"
+        },
+        {
+            "musicId": "69905303984",
+            "musicName": "一滴泪的时间 \u00282020中国好声音第2期\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/08/28/d5ad3dccd0264da10d314ec3bf6232b1.jpg?m",
+            "singerName": "赵紫骅"
+        },
+        {
+            "musicId": "60057011012",
+            "musicName": "费洛蒙小姐",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/09/08/3a2f2f53b71a19f5060204162e375cee.jpg?m",
+            "singerName": "吴青峰"
+        },
+        {
+            "musicId": "63267800805",
+            "musicName": "山水相恋",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/m/2020/03/13/3c09980f1f79072b12864c0f91ffcf01.jpg?m",
+            "singerName": "朱一龙,江疏影"
+        },
+        {
+            "musicId": "6005752CCM1",
+            "musicName": "陪你旅行的人",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/03/12/50b37071ba023c324a58140f760dce1f.jpg?m",
+            "singerName": "向洋Nathan"
+        },
+        {
+            "musicId": "63267800807",
+            "musicName": "平凡与伟大",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/m/2020/03/11/41db5463a715108c0b9906ce3e007239.jpg?m",
+            "singerName": "SNH48"
+        },
+        {
+            "musicId": "63267800808",
+            "musicName": "我们是共产党员",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/m/2020/03/11/be43156315d4430b0b2c75ded6ec9515.jpg?m",
+            "singerName": "韩磊"
+        },
+        {
+            "musicId": "69917704301",
+            "musicName": "Question Mark",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/s/2020/03/13/456746abf5c56e6047be4c9d686697ed.jpg?m",
+            "singerName": "吴栩维Noshvia"
+        },
+        {
+            "musicId": "63274311733",
+            "musicName": "梦魇",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/m/2020/03/12/fa7c71168b50effc01dd8ad4ac0a27e6.jpg?m",
+            "singerName": "BBT"
+        },
+        {
+            "musicId": "63273403085",
+            "musicName": "Who Is Your Girl\u0028青春有你2\u0029",
+            "picUrl": "http://open.migu.cn:8100/material/pics/album/m/2020/03/13/5672daf3d7565617eb132785ab79cca9.jpg?m",
+            "singerName": "SNH48_7SENSES"
+        }
+    ],
+    "total": 603
+}

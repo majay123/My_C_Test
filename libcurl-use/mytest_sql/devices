@@ -1,0 +1,29 @@
+I: Bus=0019 Vendor=0001 Product=0001 Version=0100
+N: Name="gpio-keys"
+P: Phys=gpio-keys-polled/input2
+S: Sysfs=/devices/ats3609-gpiokeys.11/input/input0
+U: Uniq=
+H: Handlers=kbd event0 
+B: PROP=0
+B: EV=100003
+B: KEY=4 0 0 0 0 0 0
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="ats3609_onoff"
+P: Phys=ats3609_onoff/input0
+S: Sysfs=/devices/pmu_onoff.0/input/input1
+U: Uniq=
+H: Handlers=kbd event1 
+B: PROP=0
+B: EV=100003
+B: KEY=100000 0 0 0
+
+I: Bus=0018 Vendor=dead Product=beef Version=28bb
+N: Name="gt9xx"
+P: Phys=D=: Sysfs=/devices/virtual/input/input2
+U: Uniq=
+H: Handlers=event2 
+B: PROP=2
+B: EV=b
+B: KEY=400 0 0 0 0 0 0 0 0 0 0
+B: ABS=2650000 0
