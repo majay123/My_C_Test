@@ -64,6 +64,7 @@ void *thread_one_fun(void *arg)
 {
     int sval1 = 0;
     int sval2 = 0;
+    int test_string;
     
     sem_getvalue(&sem_id1, &sval1);
     sem_getvalue(&sem_id1, &sval2);
