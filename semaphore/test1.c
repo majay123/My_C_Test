@@ -147,5 +147,5 @@ int main1(int argc, char **argv)
 
     printf("main .....\n");
 
-    return 1;
+    return 0;
 }

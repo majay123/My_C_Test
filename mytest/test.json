@@ -1,0 +1,447 @@
+{
+    "cmd": "getconditions",
+    "params": {
+        "sce": {
+            "睡眠": {
+                "dev_type": 4,
+                "ID": "1",
+                "type": "RS485",
+                "payload": "7F1EFFFF0200007E"
+            },
+            "会客": {
+                "dev_type": 4,
+                "ID": "2",
+                "type": "RS485",
+                "payload": "7F1EFFFF0300007E"
+            },
+            "明亮": {
+                "dev_type": 4,
+                "ID": "3",
+                "type": "RS485",
+                "payload": "7F1EFFFF0300007E"
+            },
+            "阅读": {
+                "dev_type": 4,
+                "ID": "4",
+                "type": "RS485",
+                "payload": "7F1EFFFF0400007E"
+            },
+            "休闲": {
+                "dev_type": 4,
+                "ID": "5",
+                "type": "RS485",
+                "payload": "7F1EFFFF0500007E"
+            },
+            "影音": {
+                "dev_type": 4,
+                "ID": "6",
+                "type": "RS485",
+                "payload": "7F1EFFFF0600007E"
+            },
+            "浪漫": {
+                "dev_type": 4,
+                "type": "RS485",
+                "payload": "7F1EFFFF0800007E"
+            },
+            "温馨": {
+                "dev_type": 4,
+                "type": "RS485",
+                "payload": "7F1EFFFF0900007E"
+            },
+            "拔卡": {
+                "dev_type": 4,
+                "type": "RS485",
+                "payload": "7F1EFFFF0A00007E"
+            },
+            "迎宾": {
+                "dev_type": 4,
+                "type": "RS485",
+                "payload": "7F1EFFFF0000007E"
+            },
+            "插卡": {
+                "dev_type": 4,
+                "type": "RS485",
+                "payload": "7F1EFFFF0100007E"
+            },
+            "勿扰": {
+                "dev_type": 4,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F25FFFF0100007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F24FFFF0100007E"
+                }
+            },
+            "清理": {
+                "dev_type": 4,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F21FFFF0100007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F20FFFF0100007E"
+                }
+            },
+            "稍后": {
+                "dev_type": 4,
+                "type": "RS485",
+                "payload": "7F2CFFFF0000007E"
+            },
+            "SOS": {
+                "dev_type": 4,
+                "type": "RS485",
+                "payload": "7F28FFFF0000007E"
+            }
+        },
+        "dev": {
+            "洗手间灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0D00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0D00647E"
+                }
+            },
+            "厕所灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0D00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0D00647E"
+                }
+            },
+            "镜前灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0F00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0F00647E"
+                }
+            },
+            "卫生间灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0D00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0D00647E"
+                }
+            },
+            "卫浴灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0D00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0D00647E"
+                }
+            },
+            "排风扇": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0E00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0E00647E"
+                }
+            },
+            "排气扇": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0E00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0E00647E"
+                }
+            },
+            "雾化玻璃": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0F00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0F00647E"
+                }
+            },
+            "灯带": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0600007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0600647E"
+                }
+            },
+            "廊灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0700007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0700647E"
+                }
+            },
+            "房灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0800007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0800647E"
+                }
+            },
+            "房顶灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0900007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0900647E"
+                }
+            },
+            "筒灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0A00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0A00647E"
+                }
+            },
+            "射灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0B00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0B00647E"
+                }
+            },
+            "床头灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFFOC00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF0C00647E"
+                }
+            },
+            "吧灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1000007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1000647E"
+                }
+            },
+            "夜灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1100007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1100647E "
+                }
+            },
+            "阳台灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1200007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1200647E"
+                }
+            },
+            "左阅读灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1300007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1300647E"
+                }
+            },
+            "右阅读灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1400007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1400647E"
+                }
+            },
+            "客厅灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1500007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1500647E"
+                }
+            },
+            "餐厅灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1600007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1600647E"
+                }
+            },
+            "卧室灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1700007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1700647E"
+                }
+            },
+            "厨房灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1800007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF1800647E"
+                }
+            },
+            "窗帘": {
+                "dev_type": 2,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F14FFFF0100007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F14FFFF0100027E"
+                },
+                "ACTION_STOP": {
+                    "type": "RS485",
+                    "payload": "7F14FFFF0100017E"
+                }
+            },
+            "电视灯带": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF3500007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF3500647E"
+                }
+            },
+            "右壁灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF3400007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF3400647E"
+                }
+            },
+            "电视": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF2F00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF2F00647E"
+                }
+            },
+            "左壁灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF2E00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF2E00647E"
+                }
+            },
+            "床头灯带": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF3600007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF3600647E"
+                }
+            },
+            "阅读灯": {
+                "dev_type": 1,
+                "ACTION_CLOSE": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF2B00007E"
+                },
+                "ACTION_OPEN": {
+                    "type": "RS485",
+                    "payload": "7F10FFFF2B00647E"
+                }
+            }
+        }
+    }
+}
