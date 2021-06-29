@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:38:35
  * @LastEditors  : MCD
- * @LastEditTime : 2021-06-29 17:19:26
+ * @LastEditTime : 2021-06-29 17:37:41
  * @FilePath     : /My_C_Test/point_test/point.c
  * @Description  : 
  * 
@@ -137,6 +137,7 @@ int main(int argc, char const *argv[])
     {
         print_mcd("%p", &g_dev_test.device_info[i]);
         print_mcd("%s, %s, %ld, %d", g_dev_test.device_info[i].name, g_dev_test.device_info[i].deviceId,i, g_dev_test.device_info[i].online_state);   
+        
     }
     
     exit(0);
