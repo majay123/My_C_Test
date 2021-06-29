@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:39:45
  * @LastEditors  : MCD
- * @LastEditTime : 2021-06-29 13:22:40
+ * @LastEditTime : 2021-06-29 16:00:46
  * @FilePath     : /My_C_Test/point_test/common.h
  * @Description  : 
  * 
@@ -63,6 +63,7 @@
 #define SCENE_TYPE_LEN          (16)
 #define START_INDEX             (0)
 #define SENSOR_DATA_LEN         (8)
+#define MSG_CONTENT_SIZE        (1024)
 
 
 typedef enum
@@ -182,14 +183,20 @@ typedef struct
     int size;
 }mqtt_msg_apps_t;
 
+
+/*!
+ * \brief
+ * 应用消息结构定义
+ */
 typedef struct
 {
-    uint8_t code;       //mqtt msg code
-    bool aciton;        //0 bind start, 1 bind stop
-    uint8_t join_time;  //start search device, 0 is stop search, < 0 is search time
-    uint8_t startIndex; //MQTT_MSGCODE_GET_ALL_DEV_REQ MQTT_MSGCODE_GET_ALL_SCENE_REQ
-    uint8_t itemCount;  //MQTT_MSGCODE_GET_ALL_DEV_REQ MQTT_MSGCODE_GET_ALL_SCENE_REQ
-}mqtt_msg_t;
+    /*! 消息类型 */
+    int  type;
+    /*! 消息内容 */
+    char content[MSG_CONTENT_SIZE];
+    /*! 发送者进程pid */
+    pid_t sender_pid;
+}msg_apps_t;
 
 typedef struct
 {
