@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:39:45
  * @LastEditors  : MCD
- * @LastEditTime : 2021-06-29 16:00:46
+ * @LastEditTime : 2021-06-30 10:16:47
  * @FilePath     : /My_C_Test/point_test/common.h
  * @Description  : 
  * 
@@ -146,13 +146,14 @@ typedef struct
     do                                                                                     			\
     {                                                                                      			\
         char ctime[30] = { 0 };																		\
+        char ctime1[30] = { 0 };																	\
         struct tm tm1 = { 0 };																		\
         struct timespec ts; 																		\
         clock_gettime(CLOCK_REALTIME, &ts); 														\
         localtime_r(&ts.tv_sec,&tm1);																\
         strftime(ctime,sizeof(ctime),"%Y-%m-%d %H:%M:%S",&tm1); 									\
-        snprintf(ctime,sizeof(ctime),"%s.%.3ld",ctime,ts.tv_nsec/1000/1000);	                	\
-        printf("\033[31m[-mcd-]\033[0m:%s,%d--- " format "\n", __FILE__, __LINE__, ##arg); 	\
+        snprintf(ctime1,sizeof(ctime),"%s.%.3ld",ctime,ts.tv_nsec/1000/1000);	                	\
+        printf("\033[31m[--mcd--][%s]\033[0m:%s,%s,%d--- " format "\n", ctime1,__FILE__,__func__,__LINE__, ##arg); 	\
     } while (0)
 #else
     #define print_mcd(format, arg...)   do {} while (0)
@@ -267,7 +268,7 @@ typedef struct
     bool isHomepage;
     char name[DEVICE_NAME_LEN];
     char type[SCENE_TYPE_LEN];
-    char sceneId[DEVICE_NAME_LEN]
+    char sceneId[DEVICE_NAME_LEN];
 }scene_info_t;
 
 typedef struct 

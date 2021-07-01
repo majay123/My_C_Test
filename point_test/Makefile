@@ -17,7 +17,7 @@ LOCAL_LDFLAGS := -lpthread  -lm -L./
 LOCAL_CFLAGS += -Wno-multichar -fno-exceptions -ffunction-sections -fdata-sections -funwind-tables \
 			-fno-short-enums -fno-builtin-sin -fno-strict-volatile-bitfields -fmessage-length=0 \
 			-fgcse-after-reload -frerun-cse-after-loop -frename-registers -fomit-frame-pointer \
-			-fno-strict-aliasing -flto
+			-fno-strict-aliasing -flto -m32
 LOCAL_LDFLAGS += -Wl,--gc-sections -Wl,--no-undefined
 
 # **********************************************
