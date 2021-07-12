@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:38:35
  * @LastEditors  : MCD
- * @LastEditTime : 2021-06-30 16:52:40
+ * @LastEditTime : 2021-07-01 17:11:49
  * @FilePath     : /My_C_Test/point_test/point.c
  * @Description  : 
  * 
@@ -116,7 +116,16 @@ int main(int argc, char const *argv[])
     int array[20] = {0};
     int *ptr = array;
     int i = 0;
-    int *pi, a;
+    int *pi, a = 0;
+
+    // pi = &a;
+    // *pi = 3;
+    *pi = 3;
+    // &a = pi;
+
+    print_mcd("%d, %d", a, *pi);
+
+    return 0;
     *pi = 314;
     print_mcd("%d", *pi);
     for ( i = 0; i < 20; i++)
