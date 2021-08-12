@@ -1,0 +1,18 @@
+
+CROSS_COMPILE:= arm-openwrt-linux-uclibcgnueabi-
+ARCH:= arm
+
+CC:= $(CROSS_COMPILE)gcc
+LD:= $(CROSS_COMPILE)ld 
+
+KERNELDIR = /home/mcd/MyWorkSpace/Hope_Work/Z4_Project/S5_3609D/trunk/owl/out/ats3609_actroot_ls360h_evb_ats3609d/kernel
+
+PWD := $(shell pwd)
+
+obj-m += module_hello.o
+
+all:
+	make -C $(KERNELDIR) M=$(PWD) modules
+
+clean:
+	make -C $(KERNELDIR) M=$(PWD) clean
