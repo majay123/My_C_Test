@@ -2,6 +2,26 @@
     "files.associations": {
         "pthread.h": "c",
         "stdio.h": "c",
-        "errno.h": "c"
-    }
+        "errno.h": "c",
+        "cassert": "c",
+        "cctype": "c",
+        "cfloat": "c",
+        "climits": "c",
+        "cmath": "c",
+        "cstdarg": "c",
+        "cstdint": "c",
+        "cstdio": "c",
+        "cstdlib": "c",
+        "type_traits": "c",
+        "limits": "c",
+        "*.tcc": "c",
+        "cstdbool": "c",
+        "typeinfo": "c",
+        "fs.h": "c"
+    },
+    "cSpell.words": [
+        "kfree",
+        "kzalloc",
+        "printk"
+    ]
 }
