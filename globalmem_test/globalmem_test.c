@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-08-13 11:01:48
  * @LastEditors  : MCD
- * @LastEditTime : 2021-08-16 14:05:34
+ * @LastEditTime : 2021-08-17 10:26:34
  * @FilePath     : /My_C_Test/globalmem_test/globalmem_test.c
  * @Description  : 
  * 
@@ -59,6 +59,7 @@ module_param(globalmem_major, int, S_IRUGO);
 struct globalmem_dev {
     struct cdev cdev;
     unsigned char mem[GLOBALMEM_SIZE];
+    struct mutex mutex;
 };
 
 struct globalmem_dev *globalmem_devp;
@@ -87,7 +88,9 @@ globalmem_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
     struct globalmem_dev *dev = filp->private_data;
     switch (cmd) {
     case MEM_CLEAR:
+        mutex_lock(&dev->mutex);
         memset(dev->mem, 0, GLOBALMEM_SIZE);
+        mutex_unlock(&dev->mutex);
         printk(KERN_ALERT "globalmem is set to zero\n");
         break;
 
@@ -112,6 +115,8 @@ globalmem_read(struct file *filp, char __user *buf, size_t size, loff_t *ppos)
     if (count > GLOBALMEM_SIZE - p)
         count = GLOBALMEM_SIZE - p;
 
+    mutex_lock(&dev->mutex);
+
     if (copy_to_user(buf, dev->mem + p, count))
         ret = -EFAULT;
     else {
@@ -119,6 +124,8 @@ globalmem_read(struct file *filp, char __user *buf, size_t size, loff_t *ppos)
         ret = count;
         printk(KERN_ALERT "read %u bytes(s) from %lu\n", count, p);
     }
+
+    mutex_unlock(&dev->mutex);
 
     return ret;
 }
@@ -136,6 +143,8 @@ globalmem_write(struct file *filp, const char __user *buf, size_t size, loff_t *
 
     if (count > GLOBALMEM_SIZE - p)
         count = GLOBALMEM_SIZE - p;
+    
+    mutex_lock(&dev->mutex);
 
     if (copy_from_user(dev->mem + p, buf, count))
         ret = -EFAULT;
@@ -144,6 +153,7 @@ globalmem_write(struct file *filp, const char __user *buf, size_t size, loff_t *
         ret = count;
         printk(KERN_ALERT, "written %u bytes(s) from %lu\n", count, p);
     }
+    mutex_unlock(&dev->mutex);
 
     return ret;
 }
@@ -234,6 +244,7 @@ globalmem_init(void)
 
     for (i = 0; i < DEVICE_NUM; i++) {
         /* code */
+        mutex_init(&(globalmem_devp + i)->mutex);
         globalmem_setup_cdev(globalmem_devp + i, i);
     }
 
