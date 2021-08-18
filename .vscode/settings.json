@@ -17,7 +17,8 @@
         "*.tcc": "c",
         "cstdbool": "c",
         "typeinfo": "c",
-        "fs.h": "c"
+        "fs.h": "c",
+        "libaio.h": "c"
     },
     "cSpell.words": [
         "kfree",
