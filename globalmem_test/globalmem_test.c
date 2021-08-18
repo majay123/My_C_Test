@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-08-13 11:01:48
  * @LastEditors  : MCD
- * @LastEditTime : 2021-08-17 10:26:34
+ * @LastEditTime : 2021-08-17 13:34:06
  * @FilePath     : /My_C_Test/globalmem_test/globalmem_test.c
  * @Description  : 
  * 
@@ -229,7 +229,7 @@ globalmem_init(void)
     if (globalmem_major)
         ret = register_chrdev_region(devno, DEVICE_NUM, "globalmem");
     else {
-        ret = alloc_chrdev_region(&devno, 0, DEVICE_NUM, "globalmen");
+        ret = alloc_chrdev_region(&devno, 0, DEVICE_NUM, "globalmem");
         globalmem_major = MAJOR(devno);
     }
     
