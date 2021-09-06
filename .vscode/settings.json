@@ -18,7 +18,10 @@
         "cstdbool": "c",
         "typeinfo": "c",
         "fs.h": "c",
-        "libaio.h": "c"
+        "libaio.h": "c",
+        "eide_rs485.h": "c",
+        "rs485_dispatch.h": "c",
+        "stdlib.h": "c"
     },
     "cSpell.words": [
         "kfree",

@@ -50,3 +50,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+libcurl-use/getinmemory/main
+CRC16_MODBUS/crc16
+CRC16_MODBUS/crc16
+CRC16_MODBUS/crc16
