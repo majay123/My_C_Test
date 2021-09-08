@@ -1,6 +1,61 @@
 syntax = "proto3";
 
-msessage SearchRequest {
+message StudentMsg {
+    string name = 1;
+    uint32 age = 2;
+    uint32 class_num = 3;
+    string address = 4;
+}
+
+message SearchRequest {
     string query = 1;
-    
+    int32 page_number = 2;
+    int32 result_per_page = 3;
+    enum Corpus {
+        // option allow_alias = true;
+        UNIVERSAL = 0;
+        WEB = 1;
+        IMAGES = 2;
+        LOCAL = 3;
+        NEWS = 4;
+        PRODUCTDS = 5;
+        VIDEO = 6;
+    }
+    Corpus corpus = 4;
+}
+
+message SearchResponse {
+    message Result {
+        string url = 1;
+        string title = 2;
+        repeated string snippet = 3;
+    }
+    repeated Result results = 1;
+}
+
+// message Result {
+//     string url = 1;
+//     string title = 2;
+//     repeated string snippet = 3;
+// }
+
+message SomeOtherMessage {
+    SearchResponse.Result results = 1;
+}
+
+//深度嵌套
+message Outer {
+    message MiddleAA {
+        message Inner {
+            int64 ival = 1;
+            bool booly = 2;
+        }
+    }
+
+    message MiddleBB {
+        message Inner {
+            int32  ival = 1;
+            bool booly = 2;
+        }
+    }
 }
