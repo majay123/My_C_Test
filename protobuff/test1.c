@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-09-09 15:34:06
  * @LastEditors  : MCD
- * @LastEditTime : 2021-09-09 15:34:07
+ * @LastEditTime : 2021-09-09 15:51:42
  * @FilePath     : /My_C_Test/protobuff/test1.c
  * @Description  : 
  * 
@@ -42,7 +42,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include "dmessage.pb-c.h"
+// #include "dmessage.pb-c.h"
 
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(arr) (sizeof(arr)/sizeof(arr)[0])
