@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-09-06 13:08:36
  * @LastEditors  : MCD
- * @LastEditTime : 2021-09-08 16:18:54
+ * @LastEditTime : 2021-09-09 12:47:23
  * @FilePath     : /My_C_Test/protobuff/main.c
  * @Description  : 
  * 
@@ -120,7 +120,7 @@ static void _search_respone_proto_test(void)
         }
         free(pack_sr.results);
 
-         print_mcd("free memory ok");
+        print_mcd("free memory ok");
 
         unpack_sr = search_response__unpack(NULL, size, buf);
 
