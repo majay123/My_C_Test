@@ -21,7 +21,8 @@
         "libaio.h": "c",
         "eide_rs485.h": "c",
         "rs485_dispatch.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "algorithm": "c"
     },
     "cSpell.words": [
         "kfree",

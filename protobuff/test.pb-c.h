@@ -76,12 +76,13 @@ struct  SearchResponse__Result
   ProtobufCMessage base;
   char *url;
   char *title;
+  int32_t page_number;
   size_t n_snippet;
   char **snippet;
 };
 #define SEARCH_RESPONSE__RESULT__INIT \
  { PROTOBUF_C_MESSAGE_INIT (&search_response__result__descriptor) \
-    , (char *)protobuf_c_empty_string, (char *)protobuf_c_empty_string, 0,NULL }
+    , (char *)protobuf_c_empty_string, (char *)protobuf_c_empty_string, 0, 0,NULL }
 
 
 struct  SearchResponse

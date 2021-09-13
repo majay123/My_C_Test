@@ -454,7 +454,7 @@ const ProtobufCMessageDescriptor search_request__descriptor =
   (ProtobufCMessageInit) search_request__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor search_response__result__field_descriptors[3] =
+static const ProtobufCFieldDescriptor search_response__result__field_descriptors[4] =
 {
   {
     "url",
@@ -481,8 +481,20 @@ static const ProtobufCFieldDescriptor search_response__result__field_descriptors
     0,NULL,NULL    /* reserved1,reserved2, etc */
   },
   {
-    "snippet",
+    "page_number",
     3,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_INT32,
+    0,   /* quantifier_offset */
+    offsetof(SearchResponse__Result, page_number),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "snippet",
+    4,
     PROTOBUF_C_LABEL_REPEATED,
     PROTOBUF_C_TYPE_STRING,
     offsetof(SearchResponse__Result, n_snippet),
@@ -494,14 +506,15 @@ static const ProtobufCFieldDescriptor search_response__result__field_descriptors
   },
 };
 static const unsigned search_response__result__field_indices_by_name[] = {
-  2,   /* field[2] = snippet */
+  2,   /* field[2] = page_number */
+  3,   /* field[3] = snippet */
   1,   /* field[1] = title */
   0,   /* field[0] = url */
 };
 static const ProtobufCIntRange search_response__result__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 3 }
+  { 0, 4 }
 };
 const ProtobufCMessageDescriptor search_response__result__descriptor =
 {
@@ -511,7 +524,7 @@ const ProtobufCMessageDescriptor search_response__result__descriptor =
   "SearchResponse__Result",
   "",
   sizeof(SearchResponse__Result),
-  3,
+  4,
   search_response__result__field_descriptors,
   search_response__result__field_indices_by_name,
   1,  search_response__result__number_ranges,

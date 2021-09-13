@@ -28,7 +28,8 @@ message SearchResponse {
     message Result {
         string url = 1;
         string title = 2;
-        repeated string snippet = 3;
+        int32 page_number = 3;
+        repeated string snippet = 4;
     }
     repeated Result results = 1;
 }

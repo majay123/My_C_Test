@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:39:45
  * @LastEditors  : MCD
- * @LastEditTime : 2021-06-30 10:16:47
- * @FilePath     : /My_C_Test/point_test/common.h
+ * @LastEditTime : 2021-09-09 17:04:27
+ * @FilePath     : /My_C_Test/include/common.h
  * @Description  : 
  * 
  * ******************************************
@@ -138,8 +138,22 @@ typedef struct
 }_db_rs485_ms_t;
 
 
+
+
 #define PRINT_MCD_ENABLE 1
 
+
+#ifndef COMMON_DEBUG
+#define COMMON_DEBUG 0
+#endif
+
+#if COMMON_DEBUG == 1
+    #define print_common(format, arg...)   do { printf("\033[31m[REQUIRE common]\033[0m:%s,%d--- "format"\n",__FILE__,__LINE__, ## arg);} while (0)
+    #define print_log(format, arg...)   do { printf("\033[31m[REQUIRE log]\033[0m:%s,%d--- "format"\n",__FILE__,__LINE__, ## arg);} while (0)
+#else
+    #define print_common(format, arg...)   NULL
+    #define print_log(format, arg...)   NULL
+#endif
 
 #if PRINT_MCD_ENABLE == 1
     #define print_mcd(format, arg...)                                                          \

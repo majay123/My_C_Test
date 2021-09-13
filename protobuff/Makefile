@@ -3,16 +3,14 @@
 # **********************************************
 TARGET := protobuff
 
+CC ?= gcc
+
 LOCAL_INCS := . ./include \
 				../include
 LOCAL_SRCS := .
 
-CC ?= gcc
-EXTR_CFLAGS:= $(shell protoc --c_out=. *.proto)
-
-LOCAL_CFLAGS :=
-LOCAL_LDFLAGS := -L./lib -Wl,-rpath,./lib -lprotobuf-c -lpthread -lm  
-#附加C编译选项
+LOCAL_CFLAGS := -g
+LOCAL_LDFLAGS := -L./lib -Wl,-rpath,./lib -lrt -lpthread -lprotobuf-c -lm
 
 # **********************************************
 # Common CFLAGS & LDFLAGS
@@ -20,10 +18,8 @@ LOCAL_LDFLAGS := -L./lib -Wl,-rpath,./lib -lprotobuf-c -lpthread -lm
 LOCAL_CFLAGS += -Wno-multichar -fno-exceptions -ffunction-sections -fdata-sections -funwind-tables \
 			-fno-short-enums -fno-builtin-sin -fno-strict-volatile-bitfields -fmessage-length=0 \
 			-fgcse-after-reload -frerun-cse-after-loop -frename-registers -fomit-frame-pointer \
-			-fno-strict-aliasing -flto  
+			-fno-strict-aliasing -flto
 LOCAL_LDFLAGS += -Wl,--gc-sections -Wl,--no-undefined
-
-# $(CC) $(CFLAGS) $^  -o $@  ./lib/libtest.a
 
 # **********************************************
 # Common Makefile Rules (C Source Files)
@@ -61,5 +57,4 @@ endif
 clean :
 	rm -rf $(OBJS)
 	rm -rf $(TARGET)
-	# rm -rf *.pb-c.*
 
