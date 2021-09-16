@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2021-08-24 13:24:14
  * @LastEditors  : MCD
- * @LastEditTime : 2021-08-27 13:53:44
- * @FilePath     : /actroot/services/eide_light/app/eide_rs485/eide_rs485.h
+ * @LastEditTime : 2021-09-15 13:42:06
+ * @FilePath     : /My_C_Test/CRC16_MODBUS/eide_rs485.h
  * @Description  : 
  * 
  * ******************************************
@@ -74,6 +74,8 @@
 #define EIDE_RS485_VERSION         (0x00)
 #define EIDE_RS485_FLAGS           (0x00)
 #define EIDE_RS485_ENCRYPTION_TYPE (0x00) // 485 总线暂时为 0；
+#define EIDE_RS485_MAX_FUNC_SIZE   (0x08)
+#define EIDE_RS485_MAX_DN_DEVICES  (0x08)
 
 // 数据码
 typedef enum {
@@ -345,40 +347,67 @@ typedef enum {
 }eide_rs485_err_code_t;
 
 typedef struct{
-    char device_id;
+    uint8_t device_id;
     
 }eide_device_info_t;
 
 typedef struct
 {
-    char module_name[EIDE_MODULE_NAME_SIZE];
-    char module_macaddr[EIDE_MODULE_MACADDR_SIZE];
+    uint8_t module_name[EIDE_MODULE_NAME_SIZE];
+    uint8_t module_macaddr[EIDE_MODULE_MACADDR_SIZE];
     unsigned short module_type;
-    char device_type_num;
-    char device_num;
+    uint8_t device_type_num;
+    uint8_t device_num;
 }eide_module_info_t;
 
 
 typedef struct{
-    char guid[EIDE_RS485_HEARD_SIZE];
-    char data_length;
-    char version;
-    char serial_number[EIDE_RS485_HEARD_SIZE];
-    char flag_offset[EIDE_RS485_HEARD_SIZE];
-    char src_address[EIDE_MODULE_MACADDR_SIZE];
-    char dst_address[EIDE_MODULE_MACADDR_SIZE];
-    char encryption_type;
+    uint8_t guid[EIDE_RS485_HEARD_SIZE];
+    uint8_t data_length;
+    uint8_t version;
+    uint8_t serial_number[EIDE_RS485_HEARD_SIZE];
+    uint8_t flag_offset[EIDE_RS485_HEARD_SIZE];
+    uint8_t src_address[EIDE_MODULE_MACADDR_SIZE];
+    uint8_t dst_address[EIDE_MODULE_MACADDR_SIZE];
+    uint8_t encryption_type;
 }eide_rs485_head_t;
 
+
 typedef struct{
-    char data_code;
-    char data[EIDE_RS485_MAX_DATA_SIZE];
+    uint8_t ctrl_dev_count;
+    uint8_t device_id;
+    uint8_t dev_func_num;
+    uint8_t func_id;
+    uint8_t data_type;
+    uint8_t data[4];
+}eide_rs485_one_dev_ctrl_t;
+
+typedef struct{
+    uint8_t func_id;
+    uint8_t data_type;
+    uint8_t data[4];
+}eide_rs485_func_ctrl_t;
+
+typedef struct{
+    uint8_t dev_id;
+    uint8_t dev_func_num;
+    eide_rs485_func_ctrl_t funcs[EIDE_RS485_MAX_FUNC_SIZE];
+}eide_rs485_dev_ctrl_t;
+
+typedef struct{
+    uint8_t ctrl_dev_count;
+    eide_rs485_dev_ctrl_t ctrl[EIDE_RS485_MAX_DN_DEVICES];
+}eide_rs485_devs_ctrl_t;
+
+typedef struct{
+    uint8_t data_code;
+    uint8_t data[EIDE_RS485_MAX_DATA_SIZE];
 }eide_rs485_payload_t;
 
 typedef struct{
     eide_rs485_head_t header;
     eide_rs485_payload_t payload;
-    char crc16_check[2];
+    uint8_t crc16_check[2];
 }eide_rs485_msg_t;
 
 int eide_rs485_open(char *device_path);

@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-07-15 15:07:39
  * @LastEditors  : MCD
- * @LastEditTime : 2021-09-01 10:46:13
+ * @LastEditTime : 2021-09-16 08:56:20
  * @FilePath     : /My_C_Test/CRC16_MODBUS/crc16_modbus.c
  * @Description  : 
  * 
@@ -39,6 +39,8 @@
  */
 
 #include "common.h"
+#include "eide_rs485.h"
+#include "rs485_dispatch.h"
 #include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
@@ -48,9 +50,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include "eide_rs485.h"
-#include "rs485_dispatch.h"
-
 
 // 该位称为预置值，使用人工算法（长除法）时
 //需要将除数多项式先与该与职位 异或 ，才能得到最后的除数多项式
@@ -125,24 +124,22 @@ unsigned short do_crc16_XMODEM(unsigned char *ptr, int len)
 
 unsigned short do_crc(unsigned char *ptr, int len)
 {
-    
+
     unsigned int i;
     unsigned short crc = 0x0000;
-    
-    while(len--)
-    {
-    
+
+    while (len--) {
+
         crc ^= (unsigned short)(*ptr++) << 8;
-        for (i = 0; i < 8; ++i)
-        {
-    
+        for (i = 0; i < 8; ++i) {
+
             if (crc & 0x8000)
                 crc = (crc << 1) ^ 0x1021;
             else
                 crc <<= 1;
         }
     }
-    
+
     return crc;
 }
 
@@ -174,42 +171,285 @@ unsigned short do_crc16_MODBUS(unsigned char *ptr, int len)
     return (ret);
 }
 
-
 unsigned short CRC16_XMODEM(unsigned char *puchMsg, unsigned int usDataLen)
 {
-	unsigned short wCRCin = 0x0000;
-	unsigned short wCPoly = 0x1021;
-	unsigned char wChar = 0;
- 
-	while (usDataLen--) 
-	{
-		wChar = *(puchMsg++);
-		wCRCin ^= (wChar << 8);
-		for (int i = 0; i < 8; i++) 
-		{
-			if (wCRCin & 0x8000)
-				wCRCin = (wCRCin << 1) ^ wCPoly;
-			else
-				wCRCin = wCRCin << 1;
-		}
-	}
-	return (wCRCin);
-}
+    unsigned short wCRCin = 0x0000;
+    unsigned short wCPoly = 0x1021;
+    unsigned char wChar = 0;
 
+    while (usDataLen--) {
+        wChar = *(puchMsg++);
+        wCRCin ^= (wChar << 8);
+        for (int i = 0; i < 8; i++) {
+            if (wCRCin & 0x8000)
+                wCRCin = (wCRCin << 1) ^ wCPoly;
+            else
+                wCRCin = wCRCin << 1;
+        }
+    }
+    return (wCRCin);
+}
 
 int my_itoa(char *buf, int value, char size)
 {
     char *p = buf;
-    int  i  = 1;
+    int i = 1;
 
-    if(buf == NULL || size <= 0) return -1;
-    for ( i = 1; i <= size; i++)
-    {
+    if (buf == NULL || size <= 0)
+        return -1;
+    for (i = 1; i <= size; i++) {
         *p = value >> (8 * (size - i));
         p++;
     }
     return 0;
 }
+
+static size_t _test_get_data_len(uint8_t data_type)
+{
+    size_t len = 0;
+
+    switch (data_type) {
+    case EIDE_DATA_TYPE_NO:
+        break;
+    case EIDE_DATA_TYPE_BOOLEAN:
+    case EIDE_DATA_TYPE_CHAR:
+    case EIDE_DATA_TYPE_UNSIGNED_CHAR:
+        len += sizeof(char);
+        break;
+    case EIDE_DATA_TYPE_SHORE_INT:
+    case EIDE_DATA_TYPE_UNSIGNED_SHORT_INT:
+        len += sizeof(short);
+        break;
+    case EIDE_DATA_TYPE_INT:
+    case EIDE_DATA_TYPE_UNSIGNED_INT:
+    case EIDE_DATA_TYPE_FLOAT:
+        len += sizeof(int);
+        break;
+    default:
+        break;
+    }
+
+    return len;
+}
+
+static size_t _test_data_fill(eide_rs485_devs_ctrl_t *ctrl_data, eide_rs485_payload_t *payload)
+{
+    size_t len = 0;
+    size_t data_len = 0;
+    uint8_t ctrl_num = 0, func_num = 0;
+    uint8_t data_type = 0;
+    size_t i = 0, j = 0;
+    uint8_t *data = payload->data;
+
+    if (payload == NULL || ctrl_data == NULL)
+        return -1;
+    payload->data_code = EIDE_DATACODE_CONTROL;
+    len += 1;
+    ctrl_num = ctrl_data->ctrl_dev_count;
+    *data = ctrl_num;
+    data++;
+    len += 1;
+    for (i = 0; i < ctrl_num; i++) {
+        *data = ctrl_data->ctrl[i].dev_id;
+        len += 1;
+        data++;
+        func_num = ctrl_data->ctrl[i].dev_func_num;
+        *data = func_num;
+        len += 1;
+        data++;
+        for (j = 0; j < func_num; j++) {
+            *data = ctrl_data->ctrl[i].funcs[j].func_id;
+            len += 1;
+            data++;
+            data_type = ctrl_data->ctrl[i].funcs[j].data_type;
+            // print_mcd("data_type = %d", data_type);
+            *data = data_type;
+            len += 1;
+            data++;
+            data_len= _test_get_data_len(data_type);
+            // print_mcd("data len: %d", data_len);
+            memcpy(data, ctrl_data->ctrl[i].funcs[j].data, data_len);
+            len += data_len;
+            data += data_len;
+        }
+    }
+
+    return len;
+}
+
+
+static void _test_prase_msg(eide_rs485_payload_t *payload, size_t len)
+{
+    uint8_t *data = payload->data;
+    eide_rs485_devs_ctrl_t rep_dev_ctrl;
+    size_t i, j;
+    uint8_t dev_num = 0, fun_num = 0, data_type = 0;
+    size_t data_len = 0;
+    for(i = 0; i < len; i++) {
+        printf("%02x ", data[i]);
+    }
+    printf("\n");
+
+    memset(&rep_dev_ctrl, 0, sizeof(eide_rs485_devs_ctrl_t));
+    dev_num = *data;
+    data++;
+    rep_dev_ctrl.ctrl_dev_count = dev_num;
+    for (i = 0; i < dev_num; i++) {
+        rep_dev_ctrl.ctrl[i].dev_id = *data;
+        data++;
+        fun_num = *data;
+        data++;
+        rep_dev_ctrl.ctrl[i].dev_func_num = fun_num;
+        for (j = 0; j < fun_num; j++) {
+            rep_dev_ctrl.ctrl[i].funcs[j].func_id = *data;
+            print_mcd("func id = %02x", rep_dev_ctrl.ctrl[i].funcs[j].func_id);
+            data++;
+            data_type = *data;
+            rep_dev_ctrl.ctrl[i].funcs[j].data_type = data_type;
+            data++;
+            data_len = _test_get_data_len(data_type);
+            if(data_len > 4)
+                data_len = 4;
+            memcpy(&rep_dev_ctrl.ctrl[i].funcs[j].data, data, data_len);
+            data += data_len;
+        }
+    }
+    
+    print_mcd("get device num = %02x", rep_dev_ctrl.ctrl_dev_count);
+    for(i = 0; i < rep_dev_ctrl.ctrl_dev_count; i++) {
+        rep_dev_ctrl.ctrl[i].dev_id;
+        print_mcd("dev id = %02x, dev func num = %02x", rep_dev_ctrl.ctrl[i].dev_id, rep_dev_ctrl.ctrl[i].dev_func_num);
+        for(j = 0; j < rep_dev_ctrl.ctrl[i].dev_func_num; j++) {
+            print_mcd("func id = %02x, data type = %02x", rep_dev_ctrl.ctrl[i].funcs[j].func_id, rep_dev_ctrl.ctrl[i].funcs[j].data_type);
+            data_type = rep_dev_ctrl.ctrl[i].funcs[j].data_type;
+            data_len = _test_get_data_len(data_type);
+            size_t k = 0;
+            for (k = 0; k < data_len; k++) {
+                print_mcd("data = %02x", rep_dev_ctrl.ctrl[i].funcs[j].data[k]);
+            }
+        }
+        printf("\n\n");
+    }
+}
+
+static int test_ctrl_devs()
+{
+    eide_rs485_devs_ctrl_t ctrl_data;
+    eide_rs485_devs_ctrl_t tmp_data;
+    eide_rs485_payload_t payload;
+    // eide_rs485_dev_ctrl_t **dev_ctrl = &ctrl_data.ctrl;
+    int i = 0, j = 0;
+
+    memset(&payload, 0, sizeof(eide_rs485_payload_t));
+    memset(&ctrl_data, 0, sizeof(eide_rs485_devs_ctrl_t));
+
+    ctrl_data.ctrl_dev_count = 4;
+    for (i = 0; i < ctrl_data.ctrl_dev_count; i++) {
+        ctrl_data.ctrl[i].dev_id = i + 1;
+        if( i== 3)
+            ctrl_data.ctrl[i].dev_func_num = 3;
+        else
+            ctrl_data.ctrl[i].dev_func_num = 2;
+        for (j = 0; j < ctrl_data.ctrl[i].dev_func_num; j++) {
+            ctrl_data.ctrl[i].funcs[j].func_id = j + 1;
+            if (j == 0) {
+                ctrl_data.ctrl[i].funcs[j].data_type = 1;
+                ctrl_data.ctrl[i].funcs[j].data[0] = 1;
+            } else {
+                ctrl_data.ctrl[i].funcs[j].data_type = 3;
+                ctrl_data.ctrl[i].funcs[j].data[0] = 50;
+            }
+        }
+    }
+    size_t len = _test_data_fill(&ctrl_data, &payload) - 1;
+    // size_t len = 30;
+    print_mcd("data len: %d", len);
+
+    for(i = 0; i < len; i++) {
+        printf("%02x ", payload.data[i]);
+    }
+    printf("\n");
+
+    _test_prase_msg(&payload, len);
+}
+
+
+static void _test_macaddr_to_decstring(void )
+{
+    int i = 0;
+    // mac addr hex to dec string
+// func1
+    uint8_t mac_addr[8] = {0xF0, 0x0A, 0x4F, 0x04, 0x10, 0x2D, 0x01, 0x01};
+    uint8_t act_addr[25] = {0};
+    uint8_t act_addr1[25] = {0};
+    uint8_t act_addr2[25] = {0};
+    int offset = 0;
+    int offset1 = 0;
+    snprintf(act_addr, sizeof(act_addr), "%02d%02d%02d%02d%02d%02d%02d%02d", mac_addr[0],mac_addr[1],mac_addr[2],mac_addr[3],mac_addr[4],mac_addr[5],mac_addr[6],mac_addr[7]);
+    // snprintf(act_addr, sizeof(act_addr), "%02d", mac_addr);
+    print_mcd("%s", act_addr);
+//func2
+    for(i = 0; i < 8; i++){
+        offset+=snprintf(act_addr1+offset,sizeof(act_addr1), "%02d",mac_addr[i]);  // 格式化的数据写入字符串
+    }
+    // act_addr1[offset]= '\0';
+    print_mcd("%s",act_addr1);
+
+//func3
+    for(i = 0; i < 8; i++){
+        offset1+=sprintf(act_addr2+offset1, "%02d",mac_addr[i]);  // 格式化的数据写入字符串
+    }
+    act_addr2[offset]= '\0';
+    print_mcd("%s",act_addr2);
+}
+
+static int _test_macaddr_string_to_macaddr_hex()
+{
+    char *mac_addr = "11164F0E102D0100";
+    size_t i = 0;
+    uint8_t data1, data2;
+    uint8_t  val;
+    
+    // print_mcd("%d", strlen(mac_addr));
+    for(i = 0; i < strlen(mac_addr); ){
+        data1 = mac_addr[i];
+        data2 = mac_addr[i + 1];
+        switch(data1){
+        case '0'...'9': 
+            val = (data1 - '0');   
+            break;
+        case 'a'...'f':
+            val = (data1 - 'a') + 0x0A; 
+            break;
+        case 'A'...'F':
+            val = (data1 - 'A') + 0x0A; 
+            break;
+        default:
+            return -1;
+            // break;
+        }
+        switch(data2){
+        case '0'...'9': 
+            val = (val << 4) | (data2 - '0');   
+            break;
+        case 'a'...'f':
+            val = val << 4 | (data2 - 'a') + 0x0A; 
+            break;
+        case 'A'...'F':
+            val = val << 4 | (data2 - 'A') + 0x0A; 
+            break;
+        default:
+            return -1;
+            // break;
+        }
+        // data = (mac_addr[i] - '0') * 16 + (mac_addr[i+1] - '0');
+        printf("%02X", val);
+        i += 2;
+    }
+    return 0;
+
+}
+
 int main(int argc, char const *argv[])
 {
     unsigned int temp = 0xFFFF;
@@ -219,22 +459,42 @@ int main(int argc, char const *argv[])
     char flag = 0x0A;
     int len = 0;
     int i = 0;
-
+    
+    #if 0
     crc = ((crc & 0x000F) | (flag & 0x0F)) << 12;
 
-    print_mcd("crc = %x", crc);                                        
-    
+    print_mcd("crc = %x", crc);
+
     buff[len++] = 0x01;
     buff[len++] = 0x02;
     print_mcd("len  = %d", len);
-    for ( i = 0; i < len; i++)
-    {
+    for (i = 0; i < len; i++) {
         print_mcd("buff  = 0x%02x", buff[i]);
     }
-    eide_rs485_get_module_info();
     
-    char tmp_buf2[27] = {0x1D ,0x00 ,0x01 ,0x00 ,0x00 ,0x00 ,0x12 ,0x23 ,0x34 ,0x45 ,0x56 ,0x67 ,0x78 ,0x89 ,0xFF ,0xFF ,0xFF ,0xFF ,0xFF ,0xFF ,0xFF ,0xFF ,0x00 ,0x01 ,0x00 ,0x00 ,0x02};
+    eide_rs485_get_module_info();
+
+    char tmp_buf2[27] = {0x1D, 0x00, 0x01, 0x00, 0x00, 0x00, 0x12, 0x23, 0x34, 0x45, 0x56, 0x67, 0x78, 0x89, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x01, 0x00, 0x00, 0x02};
     print_mcd("0x%x", do_crc16_XMODEM(tmp_buf2, sizeof(tmp_buf2)));
+    #endif
+    _test_macaddr_string_to_macaddr_hex();
+    // _test_macaddr_to_decstring();
+    eide_rs485_payload_t payload;
+    memset(&payload, 0, sizeof(payload));
+    eide_rs485_payload_t *test = &payload;
+    // char *data = test->data;
+
+    // *data = 0x71;
+    // data++;
+    // *data = 0x11;
+
+    // print_mcd("0x%x", payload.data[0]);
+    // print_mcd("0x%x", payload.data[1]);
+    // print_mcd("0x%x", payload.data[2]);
+
+    // test_ctrl_devs();
+
+
 #if 0
     eide_rs485_ctrl_t ctrl_test;
     char data[EIDE_RS485_MAX_DATA_SIZE] = {0};
