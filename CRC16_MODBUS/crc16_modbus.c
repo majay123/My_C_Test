@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-07-15 15:07:39
  * @LastEditors  : MCD
- * @LastEditTime : 2021-09-16 08:56:20
+ * @LastEditTime : 2021-09-28 10:57:12
  * @FilePath     : /My_C_Test/CRC16_MODBUS/crc16_modbus.c
  * @Description  : 
  * 
@@ -50,6 +50,24 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+// #define MY_RELLOC(data, num, type)           \
+// do{if(data){free(data);data = calloc(num, sizeof(type));}}while(0);            
+#define MY_RELLOC(data, num, type)              \
+do{                                             \
+    if(data){                                   \
+        free(data);                             \
+        data = NULL;}                           \
+    if(num > 0) {data = calloc(num, sizeof(type));}           \
+}while(0)
+
+#define MY_RELLOC_REQUIRE(data, num, type, tag)                               \
+do{                                             \
+    MY_RELLOC(data, num, type);                 \
+    if(!data){print_mcd("%s %s malloc is null", #tag, #data); goto tag;}}while(0)
+
+#define PRINT_SIZEOF(type)      \
+do{printf("%d\n",sizeof(type));}while(0);
 
 // 该位称为预置值，使用人工算法（长除法）时
 //需要将除数多项式先与该与职位 异或 ，才能得到最后的除数多项式
@@ -403,6 +421,7 @@ static void _test_macaddr_to_decstring(void )
     print_mcd("%s",act_addr2);
 }
 
+// my func
 static int _test_macaddr_string_to_macaddr_hex()
 {
     char *mac_addr = "11164F0E102D0100";
@@ -450,6 +469,28 @@ static int _test_macaddr_string_to_macaddr_hex()
 
 }
 
+static void _test_index(int index)
+{
+    if(index < 0 )
+        index = 0;
+}
+
+typedef enum {
+    MSG_TEST = 0,
+    MSG_TEST1 = 2,
+}msg_test_e;
+
+static int _test_argv(void *arg)
+{
+    // uint8_t *num = (uint8_t *)arg;
+
+    // num = (uint8_t *)arg;
+    print_mcd("num = %d", (uint8_t *)arg);
+    int num  = 100;
+    return num;
+}
+
+
 int main(int argc, char const *argv[])
 {
     unsigned int temp = 0xFFFF;
@@ -459,6 +500,15 @@ int main(int argc, char const *argv[])
     char flag = 0x0A;
     int len = 0;
     int i = 0;
+    uint8_t num1 = MSG_TEST1;
+    int  num2;
+
+
+    num2 = _test_argv(MSG_TEST1);
+
+    print_mcd("num2 = %d", num2);
+
+    return 0;
     
     #if 0
     crc = ((crc & 0x000F) | (flag & 0x0F)) << 12;
@@ -477,11 +527,65 @@ int main(int argc, char const *argv[])
     char tmp_buf2[27] = {0x1D, 0x00, 0x01, 0x00, 0x00, 0x00, 0x12, 0x23, 0x34, 0x45, 0x56, 0x67, 0x78, 0x89, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x01, 0x00, 0x00, 0x02};
     print_mcd("0x%x", do_crc16_XMODEM(tmp_buf2, sizeof(tmp_buf2)));
     #endif
-    _test_macaddr_string_to_macaddr_hex();
+    // _test_macaddr_string_to_macaddr_hex();
     // _test_macaddr_to_decstring();
+#if 0
     eide_rs485_payload_t payload;
     memset(&payload, 0, sizeof(payload));
     eide_rs485_payload_t *test = &payload;
+    bool ret1 = false;
+    print_mcd("%d", ret = false ? false : true);
+
+    
+    eide_rs485_payload_t *test_len = (eide_rs485_payload_t *)calloc(1, sizeof(eide_rs485_payload_t));
+    print_mcd("%p, %d", test_len, malloc_usable_size(test_len));
+    // eide_rs485_payload_t *test_len = NULL;
+    int num = 0;
+    switch (num){
+        case 1: {
+            if(1) {
+                // MY_RELLOC_REQUIRE(test_len, 1, eide_rs485_payload_t, Error);
+                MY_RELLOC_REQUIRE(test_len, 10, eide_rs485_payload_t, Error);
+                print_mcd("%p, %d", test_len, malloc_usable_size(test_len));
+                print_mcd("ok");
+                // memcpy()
+            }
+            else {
+                print_mcd("0");
+            }
+        }
+        break;
+        case 2: 
+        break;
+        case 3: 
+        break;
+    }
+    if(1) {
+        MY_RELLOC_REQUIRE(test_len, 1, eide_rs485_payload_t, Error);
+        MY_RELLOC_REQUIRE(test_len, 10, eide_rs485_payload_t, Error);
+        print_mcd("%p, %d", test_len, malloc_usable_size(test_len));
+        print_mcd("ok");
+    }
+    else {
+        print_mcd("0");
+    }
+    // REQUIRE(!test_len, Error);
+    return 0;
+Error:
+    print_mcd("error");
+#endif
+    // for (i = 0; i < 10; i++){
+    //     test_len[i].data_code = i;
+    //     test_len[i].data[0] = i;
+    // }
+
+    // for (i = 0; i < 10; i++){
+    //     print_mcd("%d, %d", test_len[i].data_code, test_len[i].data[0]);
+    // }
+    
+    // print_mcd("%d", sizeof(eide_rs485_payload_t));
+    // PRINT_SIZEOF(eide_rs485_payload_t *);
+    
     // char *data = test->data;
 
     // *data = 0x71;

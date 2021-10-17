@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-09-06 13:08:36
  * @LastEditors  : MCD
- * @LastEditTime : 2021-09-13 14:06:40
+ * @LastEditTime : 2021-09-28 17:02:14
  * @FilePath     : /My_C_Test/protobuff/main.c
  * @Description  : 
  * 
@@ -274,10 +274,10 @@ static void _search_respone_proto_test(void)
 
 
 
-static void _search_respone_proto_ont_test(void)
+static void _search_respone_proto_one_test(void)
 {
     int i, j;
-    SearchResponse__Result **results;
+    // SearchResponse__Result **results;
     SearchResponse pack_sr = SEARCH_RESPONSE__INIT;
     SearchResponse *unpack_sr;
     char **snippets;
@@ -285,7 +285,7 @@ static void _search_respone_proto_ont_test(void)
 
     
     #if 1   // use Heap(堆) memory
-    pack_sr.results = calloc(sizeof(SearchResponse__Result *), sizeof(char));
+    pack_sr.results = (SearchResponse__Result **)calloc(sizeof(SearchResponse__Result *), sizeof(char));
     pack_sr.n_results = 1;
     res.page_number = 100;
     pack_sr.results[0] = &res;
@@ -320,17 +320,98 @@ static void _search_respone_proto_ont_test(void)
 }
 
 
+static void _search_respone_proto_point_test(void * arg) 
+{
+    int i;
+    SearchResponse__Result **results = (SearchResponse__Result **)arg;
+    SearchResponse__Result *result = (SearchResponse__Result *)calloc(10, sizeof(SearchResponse__Result));
+    for ( i = 0; i < 10; i++)
+    {
+        search_response__result__init(&result[i]);
+        memcpy(&result[i], results[i], sizeof(SearchResponse__Result));
+        print_mcd("test = %s", result[i].title);
+        print_mcd("test = %s", result[i].url);
+    }
+    free(result);
+}
+
+
+static void _proto_point_test(void)
+{
+    int i;
+    SearchResponse__Result **results = (SearchResponse__Result **)calloc(10, sizeof(SearchResponse__Result *));
+    SearchResponse__Result *result = (SearchResponse__Result *)calloc(10, sizeof(SearchResponse__Result));
+    for ( i = 0; i < 10; i++)
+    {
+        uint8_t tmp[64] = {0};
+        uint8_t tmp1[64] = {0};
+        snprintf(tmp, sizeof(tmp), "title test %d", i);
+        snprintf(tmp1, sizeof(tmp), "url test %d", i);
+        result[i].title = strdup(tmp);
+        result[i].url = strdup(tmp1);
+        results[i] = &result[i];
+    }
+    _search_respone_proto_point_test(results);
+    for ( i = 0; i < 10; i++) {
+        free(result[i].title);
+        free(result[i].url);
+    }
+    free(results);
+    free(result);
+}
+
+static void _search_respone_proto_point_oneitem_test(void * arg) 
+{
+    int i = 0;
+    SearchResponse__Result **results = (SearchResponse__Result **)arg;
+    print_mcd("test = %s", results[i]->title);
+    print_mcd("test = %s", results[i]->url);
+    SearchResponse__Result *result = (SearchResponse__Result *)calloc(1, sizeof(SearchResponse__Result));
+    for ( i = 0; i < 1; i++)
+    {
+        search_response__result__init(&result[i]);
+        memcpy(&result[i], results[i], sizeof(SearchResponse__Result));
+        print_mcd("test = %s", result[i].title);
+        print_mcd("test = %s", result[i].url);
+    }
+    free(result);
+}
+static void _proto_oneitem_test(void)
+{
+    SearchResponse__Result result = SEARCH_RESPONSE__RESULT__INIT;
+    SearchResponse__Result *d_res = &result;
+    SearchResponse__Result **d_res1  = NULL;
+    int i = 0;
+    uint8_t tmp[64] = {0};
+    uint8_t tmp1[64] = {0};
+    snprintf(tmp, sizeof(tmp), "title test %d", i);
+    snprintf(tmp1, sizeof(tmp), "url test %d", i);
+    result.title = strdup(tmp);
+    result.url = strdup(tmp1);
+    d_res1 = &d_res;
+    _search_respone_proto_point_oneitem_test(d_res1);
+
+    free(result.title);
+    free(result.url);
+}
+
+
 int main(int argc, char const *argv[])
 {
     int i = 0;
 
     // student_msg__init(&pack_st);
+    char tmp[64] = "testsetast";
+    char *tmp2 = tmp;
     print_mcd("argc = %d", argc);
     for (i = 1; i < argc; i++)
         print_mcd("argv[%d] = %d", i, atoi(argv[i]));
-    _student_proto_test();
+    print_mcd("%s",tmp2);
+    _proto_oneitem_test();
+    // _student_proto_test();
+    // _proto_point_test();
     // _search_respone_proto_test();
-    _search_respone_proto_ont_test();
+    // _search_respone_proto_one_test();
 
     return 0;
 }

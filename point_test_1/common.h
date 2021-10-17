@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:39:45
  * @LastEditors  : MCD
- * @LastEditTime : 2021-06-30 10:16:47
- * @FilePath     : /My_C_Test/point_test/common.h
+ * @LastEditTime : 2021-09-24 13:10:03
+ * @FilePath     : /My_C_Test/point_test_1/common.h
  * @Description  : 
  * 
  * ******************************************
@@ -159,8 +159,8 @@ typedef struct
     #define print_mcd(format, arg...)   do {} while (0)
 #endif  
 
-#define REQUIRE(in,tag)                     do{if(in){print_log("%s %s", #tag, #in); goto tag;}}while(0)
-#define REQUIRE_NOLOG(in,tag)              	do{if(in){print_log("%s %s", #tag, #in); goto tag;}}while(0)
+#define REQUIRE(in,tag)                     do{if(in){print_mcd("%s %s\n", #tag, #in); goto tag;}}while(0)
+#define REQUIRE_NOLOG(in,tag)              	do{if(in){print_mcd("%s %s", #tag, #in); goto tag;}}while(0)
 #define REQ_JSON_OBJ(des,item,tag)        	cJSON_GetObjectItem(des,#item); \
                                                            REQUIRE((item==NULL),tag)
 #define REQ_JSON_PARSE(str,item,tag)     	cJSON_Parse(str); \
