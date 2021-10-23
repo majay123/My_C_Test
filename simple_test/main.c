@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2021-10-20 13:54:31
+ * @LastEditTime : 2021-10-22 13:00:23
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -181,6 +181,15 @@ int get_addr(char *src_addr, char *dst_addr, size_t len)
     hexStr2bytes(src_addr, dst_addr, len);
 }
 
+
+
+typedef struct {
+    uint8_t addr[2];
+    uint8_t len;
+    uint8_t data;
+    uint8_t key;
+} test_def;
+
 int main(int argc, char const *argv[])
 {
     uint8_t time1[4] = {0x00, 0x01, 0xe0, 0x19};
@@ -192,19 +201,28 @@ int main(int argc, char const *argv[])
     // char *end;
     uint32_t running_time = 10 * 1000;
 
+    test_def test_def;
+    memset(&test_def, 0, sizeof(test_def));
+    printf("%d\n",sizeof(test_def));
+    printf("%p, %p %p \n",  &test_def.addr[0], &test_def.addr[1],&test_def.len);
+    // printf("%p\n",  &test_def);
+
+    printf("%p\n",  (char *)&test_def+2);
+    // printf("%d, %p\n", test_def.len, test+ 2);
+
     // del_sp(test1, ':');
     // printf("%s \n", test1);
     // hexStr2bytes(test1, buf, 8);
-    get_addr(test1, buf, 8);
-    for (size_t i = 0; i < 8; i++)
-    {
-        printf("%02X ", buf[i]);
-    }
-    printf("\n");
+    // get_addr(test1, buf, 8);
+    // for (size_t i = 0; i < 8; i++)
+    // {
+    //     printf("%02X ", buf[i]);
+    // }
+    // printf("\n");
     
-    time_t t;
-    srand((unsigned) time(&t));
-    printf("%d %d\n", rand() % 256, rand() % 256);
+    // time_t t;
+    // srand((unsigned) time(&t));
+    // printf("%d %d\n", rand() % 256, rand() % 256);
     
     // running_time = _hex_to_uint(time, sizeof(time));
     // printf("Running time: %d\n", running_time);
