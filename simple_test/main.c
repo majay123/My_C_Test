@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2021-10-22 13:00:23
+ * @LastEditTime : 2021-10-23 15:48:52
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -201,13 +201,17 @@ int main(int argc, char const *argv[])
     // char *end;
     uint32_t running_time = 10 * 1000;
 
-    test_def test_def;
-    memset(&test_def, 0, sizeof(test_def));
-    printf("%d\n",sizeof(test_def));
-    printf("%p, %p %p \n",  &test_def.addr[0], &test_def.addr[1],&test_def.len);
-    // printf("%p\n",  &test_def);
+    // test_def test_def;
+    // memset(&test_def, 0, sizeof(test_def));
+    // printf("%d\n",sizeof(test_def));
+    // printf("%p, %p %p \n",  &test_def.addr[0], &test_def.addr[1],&test_def.len);
+    // // printf("%p\n",  &test_def);
 
-    printf("%p\n",  (char *)&test_def+2);
+    // printf("%p\n",  (char *)&test_def+2);
+    size_t i = 0;
+    srand(time(0)); 
+    for(; i < 20; i++)
+	printf("%d \n", rand() % (6)) ;
     // printf("%d, %p\n", test_def.len, test+ 2);
 
     // del_sp(test1, ':');
