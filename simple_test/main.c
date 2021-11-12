@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2021-10-23 15:48:52
+ * @LastEditTime : 2021-11-10 17:26:22
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -208,10 +208,39 @@ int main(int argc, char const *argv[])
     // // printf("%p\n",  &test_def);
 
     // printf("%p\n",  (char *)&test_def+2);
+#if 0
     size_t i = 0;
     srand(time(0)); 
     for(; i < 20; i++)
 	printf("%d \n", rand() % (6)) ;
+    // char *result = (char *)calloc(100, sizeof(char));
+    char *result = NULL;
+    if(result) printf("result calloc Ok\n");
+    else printf("result calloc failed\n");
+
+    _Bool on = 0;
+
+    printf("on = %d\n", on);
+    on = !on;
+    printf("on = %d\n", on);
+    on = !on;
+    printf("on = %d\n", on);
+    on = !on;
+    printf("on = %d\n", on);
+#endif
+
+    char *temp_mem = NULL;
+    char *temp_mem1 = NULL;
+    size_t size = 1;
+
+    temp_mem = malloc(100);
+    printf("temp_mem = %p\n", temp_mem);
+    temp_mem1 = realloc(temp_mem, size);
+    printf("temp_mem = %p, temp_mem1 = %p\n", temp_mem, temp_mem1);
+    temp_mem1 = realloc(temp_mem, 0);   //already free temp_mem;
+    temp_mem = temp_mem1;
+    printf("temp_mem = %p, temp_mem1 = %p\n", temp_mem, temp_mem1);
+    // if()
     // printf("%d, %p\n", test_def.len, test+ 2);
 
     // del_sp(test1, ':');
