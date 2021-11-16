@@ -3,7 +3,7 @@
 # **********************************************
 TARGET := test_migu
 
-LOCAL_INCS := . ./include
+LOCAL_INCS := . ./../../include
 LOCAL_SRCS := .
 
 CC := arm-openwrt-linux-gcc

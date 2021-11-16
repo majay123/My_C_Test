@@ -56,7 +56,8 @@ int get_curl_timeout();
 void set_curl_timeout(long timeout);
 //停止接口curl访问
 void stop_curl_access();
-
+//设置证书路径
+void set_CAfile(char * CAfile);
 
 /*
 下面是咪咕后台相关接口。 “result” 为接收数据指针，请用户自行分配空间并置0
