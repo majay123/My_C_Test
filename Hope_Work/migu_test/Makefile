@@ -9,7 +9,7 @@ LOCAL_SRCS := .
 CC := arm-openwrt-linux-gcc
 
 LOCAL_CFLAGS :=
-LOCAL_LDFLAGS := -lmigu -lcurl -lssl -lcrypto -lnghttp2 -lz -lcares -lm -L./
+LOCAL_LDFLAGS := -lmigu -lcurl -lssl -lcrypto -lnghttp2 -lz -lcares -lm -lpthread -L./
 
 # **********************************************
 # Common CFLAGS & LDFLAGS

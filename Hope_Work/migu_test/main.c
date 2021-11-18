@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include "migu.h"
 #include "cJSON.h"
 #include "common.h"
@@ -91,7 +92,7 @@ static int _try_to_active(void)
 
 
 //对应乐库的分类
-static int _ger_and_parse_radio_info(void)
+void *_ger_and_parse_radio_info(void *arg)
 {
 	char * result = malloc(MALLOC_SIZE);
 	int ret = 0;
@@ -147,13 +148,13 @@ static int _ger_and_parse_radio_info(void)
 			print_mcd("rname = %s", radioName->valuestring);
 			int size2 = cJSON_GetArraySize(songIds);
 			print_mcd("size2 = %d", size2);
-			int k= 0;
-			size_t offset = 0;
-			char songids[1024 *10] = {0};
-			char *out = calloc(1024, sizeof(char));
-			out = cJSON_Print(songIds);
-			print_mcd("songids = %s",out);
-			free(out);
+			// int k= 0;
+			// size_t offset = 0;
+			// char songids[1024 *10] = {0};
+			// char *out = calloc(1024, sizeof(char));
+			// out = cJSON_Print(songIds);
+			// print_mcd("songids = %s",out);
+			// free(out);
 		#if 0
 			for ( k = 0; k < 1; k++) {
 				cJSON *songid = cJSON_GetArrayItem(songIds, k);
@@ -161,10 +162,15 @@ static int _ger_and_parse_radio_info(void)
 				// offset += snprintf(songids + offset, sizeof(songids), "%s,", songid->valuestring);
 				// print_mcd("songids = %s", songids);
 				char *result2 = calloc(1024*50, 1);
-				get_musicInfo(songid->valuestring, "S", result2);
+				get_musicInfo("6005750X5DM", "S", result2);
 				print_mcd("result2 = %s", result2);
 				free(result2);
 			}
+		#else
+			char *result2 = calloc(1024*50, 1);
+			get_musicInfo("6005750X5DM", "S", result2);
+			print_mcd("result2 = %s", result2);
+			free(result2);
 		#endif
 
 		}
@@ -179,8 +185,41 @@ Error:
 
 	return ret;
 }
+
+void *_get_and_parse_music_rank(void *arg)
+{
+	char * result1 = malloc(MALLOC_DEFULT_SIZE);
+	if(result1 == NULL)
+		return NULL;
+	get_music_rank(result1);	//对应乐库的榜单
+	print_mcd("%s\n",result1);
+	if(result1 != NULL)
+		free(result1);
+}
+
+void *_get_and_parse_music_newalbum(void *arg)
+{
+	char * result1 = malloc(MALLOC_DEFULT_SIZE);
+	if(result1 == NULL)
+		return NULL;
+	#if 0
+	get_music_newalbum(result1);	//对应乐库的榜单
+	get_albumInfo("1139069260", "1", "30", "S", result1);
+	print_mcd("%s\n",result1);
+	memset(result1, 0, MALLOC_DEFULT_SIZE);
+	get_albumInfo("1139069260", "2", "30", "S", result1);
+	print_mcd("%s\n",result1);
+	#endif
+	get_music_playlistId("205882236", result1);
+	print_mcd("%s\n",result1);
+	if(result1 != NULL)
+		free(result1);
+}
+
+#if 1
 int main(int argc, char const *argv[])
 {
+	int ret = -1;
 	// char device_info [] = "{\"uid\":\"9ac8ccbe-40f2-430b-bf19-2eaea389143d\",\"mac\":\"9C:41:7C:A0:1B:88\",\"smartDeviceId\":\"44401007240347\"}";	//old sn
 	char device_info [] = "{\"uid\":\"9ac8ccbe-40f2-430b-bf19-2eaea389143d\",\"mac\":\"9C:41:7C:A0:1B:88\",\"smartDeviceId\":\"44405107074789\"}";	//new sn
 	migusdk_init(device_info);
@@ -197,6 +236,7 @@ int main(int argc, char const *argv[])
 	memset(version,0,sizeof(version));
 	migusdk_init(device_info);
 	set_CAfile("/etc/ssl/certs/cacert.pem");
+#if 0
 	int a = atoi(argv[1]);
 	switch (a) {
 		case 1:
@@ -208,7 +248,8 @@ int main(int argc, char const *argv[])
 			// printf("\n");
 			break;
 		case 3:
-			// get_music_newalbum(result1);	//对应乐库的榜单
+		1139069260
+			// get_music_newalbum(result1);	//对应乐库的歌单
 			// printf("%s\n",result1);
 			// printf("\n");
 			break;
@@ -216,12 +257,59 @@ int main(int argc, char const *argv[])
 			printf("wrong num\n");
 			break;
 	};
+#endif
+	pthread_t tid;
+	pthread_t tid1;
+	pthread_t tid2;
+	// pthread_attr_t attr;
+	// pthread_attr_init(&attr);
+	// pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+	ret = pthread_create(&tid, NULL,(void*) _ger_and_parse_radio_info, NULL);
+	// pthread_attr_destroy(&attr);
+	ret = pthread_create(&tid1, NULL,(void*) _get_and_parse_music_rank, NULL);
+	ret = pthread_create(&tid2, NULL,(void*) _get_and_parse_music_newalbum, NULL);
+	// if (ret < 0) {
+	// 	print_mcd("pthread creat error: %d\n", ret);
+	// 	exit(1);
+	// }
 
-
-	free(result);
+	pthread_join(tid, NULL);
+	pthread_join(tid1, NULL);
+	pthread_join(tid2, NULL);
+	sleep(1);
+    free(result);
 	free(result1);
 
 	migusdk_cleanup();
 	return 0;
 }
+#else
+void* thread1(void *arg)
+{
+    while (1)
+    {
+        usleep(100 * 1000);
+        printf("thread1 running...!\n");
+    }
+    printf("Leave thread1!\n");
 
+    return NULL;
+}
+
+int main(int argc, char** argv)
+{
+    pthread_t tid;
+    pthread_attr_t attr;
+
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);  // 设置分离属性
+
+    pthread_create(&tid, &attr, (void*)thread1, NULL);
+    pthread_attr_destroy(&attr);
+
+    sleep(1);
+    printf("Leave main thread!\n");
+
+    return 0;
+}
+#endif
