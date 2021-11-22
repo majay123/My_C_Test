@@ -204,16 +204,17 @@ void *_get_and_parse_music_newalbum(void *arg)
 	char * result1 = malloc(MALLOC_DEFULT_SIZE);
 	if(result1 == NULL)
 		return NULL;
-	#if 0
+#if 1
 	get_music_newalbum(result1);	//对应乐库的榜单
 	get_albumInfo("1139069260", "1", "30", "S", result1);
 	print_mcd("%s\n",result1);
-	memset(result1, 0, MALLOC_DEFULT_SIZE);
-	get_albumInfo("1139069260", "2", "30", "S", result1);
-	print_mcd("%s\n",result1);
-	#endif
+	// memset(result1, 0, MALLOC_DEFULT_SIZE);
+	// get_albumInfo("1139069260", "2", "30", "S", result1);
+	// print_mcd("%s\n",result1);
+#else
 	get_music_playlistId("205882236", result1);
 	print_mcd("%s\n",result1);
+#endif
 	if(result1 != NULL)
 		free(result1);
 	return NULL;
@@ -238,7 +239,7 @@ int main(int argc, char const *argv[])
 	memset(version,0,sizeof(version));
 	migusdk_init(device_info);
 	set_CAfile("/etc/ssl/certs/cacert.pem");
-
+#if 0
 	pthread_t tid;
 	pthread_t tid1;
 	pthread_t tid2;
@@ -250,10 +251,8 @@ int main(int argc, char const *argv[])
 	ret = pthread_create(&tid1, &attr,(void*) _get_and_parse_music_rank, NULL);
 	ret = pthread_create(&tid2, &attr,(void*) _get_and_parse_music_newalbum, NULL);
 	pthread_attr_destroy(&attr);
-	// if (ret < 0) {
-	// 	print_mcd("pthread creat error: %d\n", ret);
-	// 	exit(1);
-	// }
+#endif
+	lua_call_fun_async("/tmp/lua/migu_radio.lua", "get_migu_radio", NULL, ">i", &ret);
 	while (1)
 	{
 		/* code */

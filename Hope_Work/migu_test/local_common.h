@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-11-19 10:55:40
  * @LastEditors  : MCD
- * @LastEditTime : 2021-11-22 13:59:00
+ * @LastEditTime : 2021-11-22 14:33:15
  * @FilePath     : /My_C_Test/Hope_Work/migu_test/local_common.h
  * @Description  : 
  * 
@@ -46,6 +46,8 @@
 #include <lualib.h>
 
 #define MAX_BODY_LEN    (1024)
+#define MIGU_MALLOC_SIZE			(1024 * 256)
+#define MIGU_MALLOC_DEFULT_SIZE		(1024 * 50)
 
 /** 
  * @brief  dump all the stack of L

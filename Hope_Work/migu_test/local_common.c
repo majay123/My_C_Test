@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-11-19 10:55:47
  * @LastEditors  : MCD
- * @LastEditTime : 2021-11-22 13:59:07
+ * @LastEditTime : 2021-11-22 15:36:01
  * @FilePath     : /My_C_Test/Hope_Work/migu_test/local_common.c
  * @Description  : 
  * 
@@ -394,19 +394,104 @@ Exit:
 
 
 //======================lua to c======================
+// 分类 radio
+static int _migu_get_radio_info(lua_State* L)
+{
+    char *result = (char *)calloc(MIGU_MALLOC_SIZE, sizeof(char));
+    get_radio_info(result);
+    if(result != NULL) {
+        lua_pushstring(L, result);
+        free(result);
+    }
+    return 1;
+}
 
+// 榜单 rank
+static int _migu_get_music_rank(lua_State* L)
+{
+    char *result = (char *)calloc(MIGU_MALLOC_DEFULT_SIZE, sizeof(char));
+    get_music_rank(result);
+    if(result != NULL) {
+        lua_pushstring(L, result);
+        free(result);
+    }
+    return 1;
+}
+
+// 歌单 albums
+static int _migu_get_music_newalbum(lua_State* L)
+{
+    char *result = (char *)calloc(MIGU_MALLOC_DEFULT_SIZE, sizeof(char));
+    get_music_newalbum(result);
+    if(result != NULL) {
+        lua_pushstring(L, result);
+        free(result);
+    }
+    return 1;
+}
+
+// 歌单1 playlists
+static int _migu_get_music_playlist(lua_State* L)
+{
+    char *result = (char *)calloc(MIGU_MALLOC_DEFULT_SIZE, sizeof(char));
+    get_music_playlist(result);
+    if(result != NULL) {
+        lua_pushstring(L, result);
+        free(result);
+    }
+    return 1;
+}
+
+// 获取 playlist的具体内容
+static int _migu_get_music_playlistId(lua_State* L)
+{
+    char *playlistId = (char *)luaL_checkstring(L, 1);
+    char *result = (char *)calloc(MIGU_MALLOC_DEFULT_SIZE, sizeof(char));
+    get_music_playlistId(playlistId, result);
+    if(result != NULL) {
+        lua_pushstring(L, result);
+        free(result);
+    }
+    return 1;
+}
+
+// 获取 多个歌曲ID的歌曲信息
 static int _migu_get_musicInfos(lua_State* L)
 {
     char *musicIds = (char *)luaL_checkstring(L, 1);
-    char *result = (char *)calloc(1024*50, sizeof(char));
+    char *result = (char *)calloc(MIGU_MALLOC_DEFULT_SIZE, sizeof(char));
     get_musicInfos(musicIds, "S", result);
-    if(result != NULL)
+    if(result != NULL) {
         lua_pushstring(L, result);
+        free(result);
+    }
+    return 1;
+}
+
+// 获取 专辑下歌曲
+static int _migu_get_albumInfo(lua_State* L)
+{
+    char *albumId = (char *)luaL_checkstring(L, 1);
+    char *pageNumber = (char *)luaL_checkstring(L, 2);
+    char *numberPerPage = (char *)luaL_checkstring(L, 3);
+
+    char *result = (char *)calloc(MIGU_MALLOC_DEFULT_SIZE, sizeof(char));
+    get_albumInfo(albumId, pageNumber, numberPerPage, "S", result);
+    if(result != NULL) {
+        lua_pushstring(L, result);
+        free(result);
+    }
     return 1;
 }
 
 static const luaL_reg _migu_api_M[] =  {
+    {"migu_get_radio_info",         _migu_get_radio_info},
+    {"migu_get_music_rank",         _migu_get_music_rank},
+    {"migu_get_music_newalbum",     _migu_get_music_newalbum},
+    {"migu_get_music_playlist",     _migu_get_music_playlist},
+    {"migu_get_music_playlistId",   _migu_get_music_playlistId},
     {"migu_get_musicinfos",         _migu_get_musicInfos},
+    {"migu_get_albumInfo",          _migu_get_albumInfo},
     {NULL,      NULL},
 };
 
