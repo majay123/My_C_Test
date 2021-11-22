@@ -3,13 +3,16 @@
 # **********************************************
 TARGET := test_migu
 
-LOCAL_INCS := . ./../../include
-LOCAL_SRCS := .
+LOCAL_INCS := 	../../include 	\
+				./include		
+	
+LOCAL_SRCS := 	.
+
 
 CC := arm-openwrt-linux-gcc
 
 LOCAL_CFLAGS :=
-LOCAL_LDFLAGS := -lmigu -lcurl -lssl -lcrypto -lnghttp2 -lz -lcares -lm -lpthread -L./
+LOCAL_LDFLAGS := -lmigu -lcurl -lssl -lcrypto -lnghttp2 -lz -lcares -lm -lpthread -llua -L./ -L./lib
 
 # **********************************************
 # Common CFLAGS & LDFLAGS

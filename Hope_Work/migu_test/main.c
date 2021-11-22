@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include "migu.h"
+#include "local_common.h"
 #include "cJSON.h"
 #include "common.h"
 
@@ -102,7 +103,7 @@ void *_ger_and_parse_radio_info(void *arg)
 
 	if(!result) {
 		print_mcd("error result!");
-		return -1;
+		return NULL;
 	}
 	ret = get_radio_info(result);	//对应乐库的分类
 	if(ret != 0) {
@@ -183,7 +184,7 @@ Error:
 	if(result) free(result);
 	if(root) cJSON_Delete(root);
 
-	return ret;
+	return NULL;
 }
 
 void *_get_and_parse_music_rank(void *arg)
@@ -195,6 +196,7 @@ void *_get_and_parse_music_rank(void *arg)
 	print_mcd("%s\n",result1);
 	if(result1 != NULL)
 		free(result1);
+	return NULL;
 }
 
 void *_get_and_parse_music_newalbum(void *arg)
@@ -214,9 +216,9 @@ void *_get_and_parse_music_newalbum(void *arg)
 	print_mcd("%s\n",result1);
 	if(result1 != NULL)
 		free(result1);
+	return NULL;
 }
 
-#if 1
 int main(int argc, char const *argv[])
 {
 	int ret = -1;
@@ -236,80 +238,37 @@ int main(int argc, char const *argv[])
 	memset(version,0,sizeof(version));
 	migusdk_init(device_info);
 	set_CAfile("/etc/ssl/certs/cacert.pem");
-#if 0
-	int a = atoi(argv[1]);
-	switch (a) {
-		case 1:
-			_ger_and_parse_radio_info();
-			break;
-		case 2:
-			// get_music_rank(result1);	//对应乐库的榜单
-			// printf("%s\n",result1);
-			// printf("\n");
-			break;
-		case 3:
-		1139069260
-			// get_music_newalbum(result1);	//对应乐库的歌单
-			// printf("%s\n",result1);
-			// printf("\n");
-			break;
-		default:
-			printf("wrong num\n");
-			break;
-	};
-#endif
+
 	pthread_t tid;
 	pthread_t tid1;
 	pthread_t tid2;
-	// pthread_attr_t attr;
-	// pthread_attr_init(&attr);
-	// pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-	ret = pthread_create(&tid, NULL,(void*) _ger_and_parse_radio_info, NULL);
-	// pthread_attr_destroy(&attr);
-	ret = pthread_create(&tid1, NULL,(void*) _get_and_parse_music_rank, NULL);
-	ret = pthread_create(&tid2, NULL,(void*) _get_and_parse_music_newalbum, NULL);
+	pthread_attr_t attr;
+	pthread_attr_init(&attr);
+	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+	ret = pthread_create(&tid, &attr,(void*) _ger_and_parse_radio_info, NULL);
+	
+	ret = pthread_create(&tid1, &attr,(void*) _get_and_parse_music_rank, NULL);
+	ret = pthread_create(&tid2, &attr,(void*) _get_and_parse_music_newalbum, NULL);
+	pthread_attr_destroy(&attr);
 	// if (ret < 0) {
 	// 	print_mcd("pthread creat error: %d\n", ret);
 	// 	exit(1);
 	// }
+	while (1)
+	{
+		/* code */
+	}
+	
 
-	pthread_join(tid, NULL);
-	pthread_join(tid1, NULL);
-	pthread_join(tid2, NULL);
-	sleep(1);
+	// pthread_join(tid, NULL);
+	// pthread_join(tid1, NULL);
+	// pthread_join(tid2, NULL);
+	// sleep(1);
     free(result);
 	free(result1);
 
 	migusdk_cleanup();
+
 	return 0;
 }
-#else
-void* thread1(void *arg)
-{
-    while (1)
-    {
-        usleep(100 * 1000);
-        printf("thread1 running...!\n");
-    }
-    printf("Leave thread1!\n");
 
-    return NULL;
-}
-
-int main(int argc, char** argv)
-{
-    pthread_t tid;
-    pthread_attr_t attr;
-
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);  // 设置分离属性
-
-    pthread_create(&tid, &attr, (void*)thread1, NULL);
-    pthread_attr_destroy(&attr);
-
-    sleep(1);
-    printf("Leave main thread!\n");
-
-    return 0;
-}
-#endif

@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:39:45
  * @LastEditors  : MCD
- * @LastEditTime : 2021-09-24 13:11:45
+ * @LastEditTime : 2021-11-22 10:09:19
  * @FilePath     : /My_C_Test/include/common.h
  * @Description  : 
  * 
@@ -141,6 +141,7 @@ typedef struct
 
 
 #define PRINT_MCD_ENABLE 1
+#define PRINT_ERR_ENABLE 1
 
 
 #ifndef COMMON_DEBUG
@@ -172,6 +173,18 @@ typedef struct
 #else
     #define print_mcd(format, arg...)   do {} while (0)
 #endif  
+
+
+#if PRINT_ERR_ENABLE == 1                   
+    #define print_err(format, arg...)   do { printf("\033[4;35m[ERROR]\033[0m(%d,%s)-pid:%d-%s,%d,%s, "format"\n",\
+                                                    errno,strerror(errno),getpid(),__FILE__,__LINE__,__func__, ## arg);} \
+                                        while (0)
+
+    #define print_err_simple(format, arg...)   do { printf(format, ## arg);} while (0)
+#else
+    #define print_err(format, arg...)   do {} while (0)
+    #define print_err_simple(format, arg...)   do {} while (0)
+#endif
 
 #define REQUIRE(in,tag)                     do{if(in){print_mcd("%s %s", #tag, #in); goto tag;}}while(0)
 #define REQUIRE_NOLOG(in,tag)              	do{if(in){print_mcd("%s %s", #tag, #in); goto tag;}}while(0)
