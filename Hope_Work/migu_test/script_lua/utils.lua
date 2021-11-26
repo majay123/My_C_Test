@@ -321,6 +321,12 @@ function print(...)
     f:write(ansicolors.red .. '[hope_lua] --> ' .. ansicolors.reset..str.."\n")
 end
 
+-- 替换特殊符号
+function utils.replace_symbol(input, sy, rp_sy)
+    local str = string.gsub(input, sy, rp_sy)
+    return str
+end
+
 reply_code = {
     success =  {
         code = 10000,

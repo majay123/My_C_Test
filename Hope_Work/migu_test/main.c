@@ -237,8 +237,10 @@ int main(int argc, char const *argv[])
 	}
 
 	memset(version,0,sizeof(version));
-	migusdk_init(device_info);
+	// migusdk_init(device_info);
 	set_CAfile("/etc/ssl/certs/cacert.pem");
+	// get_device_info(KEY, result);
+	// print_mcd("device info: %s\n", result);
 #if 0
 	pthread_t tid;
 	pthread_t tid1;
@@ -253,6 +255,7 @@ int main(int argc, char const *argv[])
 	pthread_attr_destroy(&attr);
 #endif
 	lua_call_fun_async("/tmp/lua/migu_radio.lua", "get_migu_radio", NULL, ">i", &ret);
+	lua_call_fun_async("/tmp/lua/migu_rank.lua", "get_migu_rank", NULL, ">i", &ret);
 	while (1)
 	{
 		/* code */

@@ -4,28 +4,35 @@ require("utils")
 local json = require("cjson.safe")
 local migu = hpio.migu
 
-local RADIO_PATH       = "/tmp/music/music_radio/"
+local RADIO_PATH       = "/tmp/music/music_radio/radio_list/"
+local RADIO_MUSIC_PATH       = "/tmp/music/music_radio/radio_music/"
 
 -- 替换特殊符号
-local function replace_symbol(input, sy, rp_sy)
-    local str = string.gsub(input, sy, rp_sy)
-    return str
-end
+
 
 local function  get_musicinfos()
 
 end
 
 local function get_radio_info(columnId, radioinfo)
-    local file_name = replace_symbol(radioinfo.radioId, '%p(.-)', '')
+    local file_name = utils.replace_symbol(radioinfo.radioId, '%p(.-)', '')
     utils.writefile(RADIO_PATH..columnId..'/'..file_name, json.encode(radioinfo))
 end
 
 
 function get_migu_radio()
-    local file,err=io.open(RADIO_PATH)
+    local file=io.open(RADIO_PATH)
     if  not file then
         os.execute('mkdir -p '..RADIO_PATH)
+    else
+        file:close()
+    end
+
+    local file1=io.open(RADIO_MUSIC_PATH)
+    if  not file1 then
+        os.execute('mkdir -p '..RADIO_MUSIC_PATH)
+    else
+        file1:close()
     end
     
     local info = {}
@@ -37,10 +44,10 @@ function get_migu_radio()
     for i=1, columnNum do
         -- print("columnInfo ", tab[i].columnName, tab[i].columnId)
         info.columnId = tab[i].columnId
-        info.columnName = tab[i].columnName;
+        info.columnName = tab[i].columnName
         local str = json.encode(info)
         os.execute('mkdir -p '..RADIO_PATH..tab[i].columnId)
-        local file_name = replace_symbol(tab[i].columnName, '%p(.-)', '')
+        local file_name = utils.replace_symbol(tab[i].columnName, '%p(.-)', '')
         utils.writefile(RADIO_PATH..file_name, str)
 
         local radioNum = #tab[i].radios

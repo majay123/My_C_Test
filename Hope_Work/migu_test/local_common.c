@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-11-19 10:55:47
  * @LastEditors  : MCD
- * @LastEditTime : 2021-11-22 15:36:01
+ * @LastEditTime : 2021-11-26 12:43:15
  * @FilePath     : /My_C_Test/Hope_Work/migu_test/local_common.c
  * @Description  : 
  * 
@@ -410,6 +410,7 @@ static int _migu_get_radio_info(lua_State* L)
 static int _migu_get_music_rank(lua_State* L)
 {
     char *result = (char *)calloc(MIGU_MALLOC_DEFULT_SIZE, sizeof(char));
+    print_mcd("do rank music");
     get_music_rank(result);
     if(result != NULL) {
         lua_pushstring(L, result);
