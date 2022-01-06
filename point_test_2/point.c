@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:38:35
  * @LastEditors  : MCD
- * @LastEditTime : 2021-07-09 15:42:48
- * @FilePath     : /My_C_Test/point_test_1/point.c
+ * @LastEditTime : 2021-12-29 10:37:50
+ * @FilePath     : /My_C_Test/point_test_2/point.c
  * @Description  : 
  * 
  * ******************************************
@@ -59,7 +59,7 @@ int main(int argc, char const *argv[])
 
     char **english_book[4];
     char **best_book[3];
-
+#if 0
     best_book[0] = &book_table[0];
     best_book[1] = &book_table[2];
     best_book[2] = &book_table[5];
@@ -71,6 +71,20 @@ int main(int argc, char const *argv[])
 
     print_mcd("%p, %p, %p", &book_table[0], &(*best_book[0]), &(*english_book[0]));
 
+    int i = 0;
+    uint8_t a = 1;
+    for (i = 0; i < 10; i++) {
+        a = ~a & 0x01;
+        printf("%d\n", a);
+    }
+#endif
+    char tmp[] = "DUI.SmartHome.Device.TurnOff";
+    char tmp2[] = "DUI.SmartHome.";
+
+    printf("%d\n", strncmp(tmp, tmp2, strlen("DUI.SmartHome.")));
+
+    int a = atoi("0");
+    print_mcd("a = %d", a);
 
     return 0;
 }

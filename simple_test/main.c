@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2021-11-10 17:26:22
+ * @LastEditTime : 2021-12-07 13:50:57
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -232,7 +232,11 @@ int main(int argc, char const *argv[])
     char *temp_mem = NULL;
     char *temp_mem1 = NULL;
     size_t size = 1;
-
+    char aa[] = "回家模式";
+    char aaa[64] = {0};
+    
+    if(aaa != NULL)
+        printf("aaa = %s\n", aaa);
     temp_mem = malloc(100);
     printf("temp_mem = %p\n", temp_mem);
     temp_mem1 = realloc(temp_mem, size);
@@ -240,6 +244,13 @@ int main(int argc, char const *argv[])
     temp_mem1 = realloc(temp_mem, 0);   //already free temp_mem;
     temp_mem = temp_mem1;
     printf("temp_mem = %p, temp_mem1 = %p\n", temp_mem, temp_mem1);
+    // printf("%s\r\n", strstr( aa, "模式"));
+    char *aa1 = strstr( aa, "模式");
+    memcpy(aaa, aa, aa1-aa);
+    printf("aaa = %s %d\r\n", aaa,aa1-aa);
+    // printf("%d\r\n", strcspn( aa, "模式"));
+    // aaaa = strtok(aa, "模式");
+    // printf("get %s\r\n", aaa);
     // if()
     // printf("%d, %p\n", test_def.len, test+ 2);
 

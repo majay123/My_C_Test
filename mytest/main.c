@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-05-20 14:28:57
  * @LastEditors  : MCD
- * @LastEditTime : 2021-06-17 14:24:15
+ * @LastEditTime : 2022-01-06 11:00:51
  * @FilePath     : /My_C_Test/mytest/main.c
  * @Description  : 
  * 
@@ -316,6 +316,7 @@ static int _my_sort(int *a, int l)
 	}
 }
 
+char aaa[] = "[{\"value1\":\"自定义话术1\"},{\"value2\":\"\"},{\"value3\":\"回家模式的自定义话术\"},{\"title\":\"回家模式\"}]";
 
 int main(int argc, const char *argv[])
 {
@@ -325,7 +326,126 @@ int main(int argc, const char *argv[])
 	all_db_info_t *temp;
 	srv_msg_t *msg;
 	db_ctrl_t db_ctrl;
+
+	int s_name_size = 0;
+
+	while(1) {
+
+		cJSON *root = cJSON_CreateObject();
+		cJSON *name = cJSON_CreateObject();
+		cJSON_AddItemToObject(root, "name", name);
+
+		// char *out = calloc(1024, sizeof(char));
+		char *out = cJSON_PrintUnformatted(root);
+		print_mcd("%p, out = %s", out, out);
+		// print_mcd("%p, out = %s", out, out);
+		// print_mcd("%p, out1 = %s", out1, out1);
+
+		cJSON_Delete(root);
+		free(out);
+		sleep(2);
+	}
+	// print_mcd("%p, out = %s", out, out);
+
 	
+#if 0
+	cJSON *root = cJSON_Parse(aaa);
+	if(root){
+		print_mcd("root is not null");
+		int size = cJSON_GetArraySize(root);
+		print_mcd("%d",size);
+		cJSON *item = NULL;
+		cJSON *iitem  = NULL;
+		char s_name[64] = {0};
+		char *s_name1 = NULL, *s_name2 = NULL, *s_name3 = NULL;
+		cJSON *s_root = cJSON_CreateArray();
+		char temp[128] = {0};
+            // 
+		for(i = 0; i < size; i++) {
+			item = cJSON_GetArrayItem(root, i);
+			iitem = cJSON_GetObjectItem(item, "title");
+			if(iitem){
+				// s_name = iitem->valuestring;
+				memcpy(s_name, iitem->valuestring, strlen(iitem->valuestring));
+				print_mcd("%s", s_name);
+				if(s_root) {
+					cJSON *name_s = cJSON_CreateString(s_name);
+					cJSON_AddItemToArray(s_root, name_s);
+				}
+
+			}
+		}
+		for(i = 0; i < size; i++) {
+			item = cJSON_GetArrayItem(root, i);
+			iitem = cJSON_GetObjectItem(item, "value1");
+			if(iitem){
+				if(strlen(iitem->valuestring) > 0) {
+					s_name_size++;
+					s_name1 = iitem->valuestring;
+					print_mcd("%s %d", s_name1, strlen(s_name1));
+					if(s_root) {
+						memset(temp, 0, sizeof(temp));
+						snprintf(temp, sizeof(temp),"%s:%s", s_name1, s_name);
+						print_mcd("%s", temp);
+						cJSON *name_s1 = cJSON_CreateString(temp);
+						cJSON_AddItemToArray(s_root, name_s1);
+					}
+					
+				}
+			}
+			iitem = cJSON_GetObjectItem(item, "value2");
+			if(iitem){
+				if(strlen(iitem->valuestring) > 0) {
+					s_name_size++;
+					s_name2 = iitem->valuestring;
+					print_mcd("%s %d", iitem->valuestring, strlen(iitem->valuestring));
+					if(s_root) {
+						memset(temp, 0, sizeof(temp));
+						snprintf(temp, sizeof(temp),"%s:%s", s_name2, s_name);
+						print_mcd("%s", temp);
+						cJSON *name_s2 = cJSON_CreateString(temp);
+						cJSON_AddItemToArray(s_root, name_s2);
+					}
+				}
+			}
+			iitem = cJSON_GetObjectItem(item, "value3");
+			if(iitem){
+				if(strlen(iitem->valuestring) > 0) {
+					s_name_size++;
+					s_name3 = iitem->valuestring;
+					print_mcd("%s %d", iitem->valuestring, strlen(iitem->valuestring));
+					if(s_root) {
+						memset(temp, 0, sizeof(temp));
+						snprintf(temp, sizeof(temp),"%s:%s", s_name3, s_name);
+						print_mcd("%s", temp);
+						cJSON *name_s3 = cJSON_CreateString(temp);
+						cJSON_AddItemToArray(s_root, name_s3);
+					}
+				}
+			}
+		}
+		print_mcd("s_name size = %d", s_name_size);
+		if(s_name_size > 0) {
+			char *out = cJSON_PrintUnformatted(s_root);
+			char *out1 = calloc(1024, sizeof(char));
+
+			print_mcd("out = %p, %s", out, out);
+			print_mcd("out1 = %p, %s", out1, out1);
+			out1 = out;
+			print_mcd("out1 = %p, %s", out1, out1);
+			// free(out);
+			free(out1);
+			out1 = NULL;
+			print_mcd("out = %p, %s", out, out);
+
+		}
+		cJSON_Delete(s_root);
+		// cJSON *a = cJSON_GetObjectItem(root, "title");
+		// print_mcd("title = %s", a->valuestring);
+	}
+#endif
+
+#if 0	
 	char buf[1024] = {0};
 	int a[10] = {2,4,1,5,5,3,7,4,1,5};//乱序的数组。
 
@@ -351,9 +471,12 @@ int main(int argc, const char *argv[])
 	}
 
 	print_mcd("out");
+#endif
+
 return 0;
 	// _get_file_size();
 
+#if 0
 	// ctrl_db_device_scene();
 	db_ctrl.action = HOPE_DB_ACTION_OPEN;
 	db_ctrl.dev_type = HOPE_DB_LIGHT_TYPE;
@@ -389,6 +512,7 @@ return 0;
 	memcpy(db_ctrl.name, "空调", NAME_MAX_LEN);
 	db_ctrl.attribute = VALUE_HIGH;
 	ctrl_db_device_scene(&db_ctrl);
+#endif
 #if 0
 	all_db_info_t *info = (all_db_info_t *)msg->content;
 
