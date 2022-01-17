@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-05-20 14:28:57
  * @LastEditors  : MCD
- * @LastEditTime : 2022-01-06 11:00:51
+ * @LastEditTime : 2022-01-06 16:34:51
  * @FilePath     : /My_C_Test/mytest/main.c
  * @Description  : 
  * 
@@ -329,7 +329,7 @@ int main(int argc, const char *argv[])
 
 	int s_name_size = 0;
 
-	while(1) {
+	 {
 
 		cJSON *root = cJSON_CreateObject();
 		cJSON *name = cJSON_CreateObject();

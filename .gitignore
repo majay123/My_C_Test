@@ -56,3 +56,6 @@ CRC16_MODBUS/crc16
 CRC16_MODBUS/crc16
 protobuff/protobuff
 simple_test/core
+mytest/.gdb_history
+mytest/peda-session-test.txt
+.gitignore
