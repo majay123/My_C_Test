@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-08-12 09:36:52
  * @LastEditors  : MCD
- * @LastEditTime : 2021-08-12 10:37:46
+ * @LastEditTime : 2022-02-24 14:37:27
  * @FilePath     : /My_C_Test/file_test/file_test.c
  * @Description  : 
  * 
@@ -46,7 +46,29 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include "common.h"
+#include <errno.h>
+#include <time.h>
+
+#define PRINT_MCD_ENABLE 1
+
+
+#if PRINT_MCD_ENABLE == 1
+    #define print_mcd(format, arg...)                                                          \
+    do                                                                                     			\
+    {                                                                                      			\
+        char ctime[30] = { 0 };																		\
+        char ctime1[30] = { 0 };																	\
+        struct tm tm1 = { 0 };																		\
+        struct timespec ts; 																		\
+        clock_gettime(CLOCK_REALTIME, &ts); 														\
+        localtime_r(&ts.tv_sec,&tm1);																\
+        strftime(ctime,sizeof(ctime),"%Y-%m-%d %H:%M:%S",&tm1); 									\
+        snprintf(ctime1,sizeof(ctime),"%s.%.3ld",ctime,ts.tv_nsec/1000/1000);	                	\
+        printf("\033[31m[--mcd--][%s]\033[0m:%s,%s,%d--- " format "\n", ctime1,__FILE__,__func__,__LINE__, ##arg); 	\
+    } while (0)
+#else
+    #define print_mcd(format, arg...)   do {} while (0)
+#endif  
 
 #define MAX_BUF_SIZE        (1024)
 

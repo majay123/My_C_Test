@@ -59,3 +59,6 @@ simple_test/core
 mytest/.gdb_history
 mytest/peda-session-test.txt
 .gitignore
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/settings.json

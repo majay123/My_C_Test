@@ -29,7 +29,8 @@
         "string_view": "c",
         "common.h": "c",
         "rtnetlink.h": "c",
-        "lua.h": "c"
+        "lua.h": "c",
+        "unistd.h": "c"
     },
     "cSpell.words": [
         "kfree",
