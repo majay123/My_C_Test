@@ -26,5 +26,12 @@ s = "Deadline is 30/05/1999, firm"
 date = "%d+/%d+/%d+"
 -- date = "%d%d/%d%d/%d%d%d%d"
 print(string.sub(s, string.find(s, date)))    --> 30/05/1999
+buf = '回家模式模式'
+print(string.sub(buf, string.find(buf, '模式')))
+if string.find(buf, '模式') then
+    print("1111")
+else
+    print("2222")
+end
 
 

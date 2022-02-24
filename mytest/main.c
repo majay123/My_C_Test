@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-05-20 14:28:57
  * @LastEditors  : MCD
- * @LastEditTime : 2022-01-06 16:34:51
+ * @LastEditTime : 2022-02-21 09:58:01
  * @FilePath     : /My_C_Test/mytest/main.c
  * @Description  : 
  * 
@@ -316,8 +316,50 @@ static int _my_sort(int *a, int l)
 	}
 }
 
-char aaa[] = "[{\"value1\":\"自定义话术1\"},{\"value2\":\"\"},{\"value3\":\"回家模式的自定义话术\"},{\"title\":\"回家模式\"}]";
 
+#define KEYWORD_PATH       ".speech_keyword" 
+static int32_t _get_tuya_keyword_to_speech(void) 
+{
+    int ret = 0;
+    // char sv_name[128] = "HOPE情景";
+
+    FILE *file = fopen(KEYWORD_PATH, "r");
+    if(file == NULL) {
+        print_mcd("open file failed: %s", KEYWORD_PATH);
+        return -1;
+    }
+    fseek(file, 0, SEEK_END);
+    long size = ftell(file);
+    char *buffer = (char *)calloc(size + 1, sizeof(char));
+    if(buffer == NULL) {
+        print_mcd("calloc memeory failed");
+        ret = -1;
+        goto error;
+    }
+	rewind(file);
+    size_t rsize = fread(buffer, 1, size, file);
+    print_mcd("get size: %ld, rsize: %ld\n", size, rsize);
+    if(rsize != (size_t)size) {
+        print_mcd("read file failed");
+        ret = -1;
+        goto error;
+    }
+    // speech set_cinfo
+    print_mcd("get speech keywords : %s", buffer);
+    // ai_engine_set_cinfo("HOPE情景", buffer, 1);
+error:
+    if(buffer != NULL) {
+        free(buffer);
+    }
+    if(file != NULL) {
+        fclose(file);
+    }
+    return ret;
+
+}
+
+char aaa[] = "[{\"value1\":\"自定义话术1\"},{\"value2\":\"\"},{\"value3\":\"回家模式的自定义话术\"},{\"title\":\"回家模式\"}]";
+#define DSP_MAX_DATA_SIZE		(32 - 1)
 int main(int argc, const char *argv[])
 {
 	char utf8_tmp_buf[128] = "}12123";
@@ -327,8 +369,62 @@ int main(int argc, const char *argv[])
 	srv_msg_t *msg;
 	db_ctrl_t db_ctrl;
 
-	int s_name_size = 0;
 
+	// int ret = strcmp("9.0.2.20211101", "9.0.2.20200101");
+	// print_mcd("ret = %d", ret);
+	int *size = 1;
+	// _get_tuya_keyword_to_speech();
+	// print_mcd("size = %d", size);
+	char test_buf[64] = "test";
+	print_mcd("test_buf = %s", test_buf);
+	if(!strcmp(test_buf, "test")) { 
+		print_mcd("good!!");
+	}
+	char data[1024] = "";
+	int a = 0;
+	int fd = open("test.txt", O_CREAT | O_RDWR, 0776);
+	memset(test_buf, 0, sizeof(test_buf));
+	if(fd > 0) {
+		// lseek(fd, 0, SEEK_END);
+		// for ( i = 0; i < 5; i++)
+		// {
+		// 	sprintf(test_buf, "%s %d\n", "test", i+10);
+		// 	write(fd, test_buf, strlen(test_buf));
+		// }
+		while(1) {
+			write(fd, data, sizeof(data));
+			a++;
+			if(a >= 1024*3049)
+				break;
+		}
+	}
+
+	close(fd);
+	print_mcd("write over");
+#if 0
+	char *auth_str = "jvkl78XHnUTHH+VZvRN2YTqeHSpuJ/BiRDoVEizGoqSg3y66y756GdGKuhxnCQeTIbbcRw4MdFU=";
+	
+	int s_name_size = 0;
+	
+	int size = strlen(auth_str);
+	char *test_mem = malloc(size);
+	char mac_empower[DSP_MAX_DATA_SIZE + 1] = {0};
+	sprintf(test_mem, "%s", auth_str);
+	char *test1 = test_mem;
+	
+	while(size > 0) {
+		memset(mac_empower, 0, sizeof(mac_empower));
+		int block = size - DSP_MAX_DATA_SIZE;
+		// print_mcd("print data = %d", block > 0 ? DSP_MAX_DATA_SIZE : size);
+		memcpy(mac_empower, test1, (block > 0 ? DSP_MAX_DATA_SIZE : size));
+		print_mcd("data = %d %s ", block > 0 ? DSP_MAX_DATA_SIZE : size, mac_empower);
+		test1 += block > 0 ? DSP_MAX_DATA_SIZE : size;
+		size -= DSP_MAX_DATA_SIZE;
+	}
+	free(test_mem);
+#endif
+
+#if 0
 	 {
 
 		cJSON *root = cJSON_CreateObject();
@@ -345,6 +441,7 @@ int main(int argc, const char *argv[])
 		free(out);
 		sleep(2);
 	}
+#endif
 	// print_mcd("%p, out = %s", out, out);
 
 	
