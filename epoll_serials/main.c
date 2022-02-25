@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:21:51
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-24 14:57:21
+ * @LastEditTime : 2022-02-25 09:03:57
  * @FilePath     : /My_C_Test/epoll_serials/main.c
  * @Description  : 
  * 
@@ -64,7 +64,7 @@ static void usage()
     fprintf(stdout, "   --help\n");
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
     /* code */
     int c;

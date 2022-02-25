@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:02
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-24 14:01:13
+ * @LastEditTime : 2022-02-25 09:01:01
  * @FilePath     : /My_C_Test/epoll_serials/epoll.c
  * @Description  : 
  * 
@@ -53,7 +53,7 @@ int es_epoll_create(int flags)
     if (epoll_fd < 0) {
         return -1;
     }
-    events = (struct epoll_events *)calloc(MAXEVENTS, sizeof(struct epoll_event));
+    events = (struct epoll_event *)calloc(MAXEVENTS, sizeof(struct epoll_event));
     if (events != NULL)
         return epoll_fd;
     else
