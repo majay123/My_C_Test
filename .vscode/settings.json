@@ -35,6 +35,14 @@
     "cSpell.words": [
         "kfree",
         "kzalloc",
-        "printk"
+        "LISH",
+        "nwritten",
+        "printk",
+        "readinitb",
+        "readlineb",
+        "readn",
+        "readnb",
+        "timerj",
+        "writen"
     ]
 }

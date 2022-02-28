@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:58
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-24 14:04:18
+ * @LastEditTime : 2022-02-28 16:03:31
  * @FilePath     : /My_C_Test/epoll_serials/threadpool.h
  * @Description  : 
  * 
@@ -41,6 +41,7 @@
 #ifndef THREADPOOL_H
 #define THREADPOOL_H
 
+#include "es_debug.h"
 #include <pthread.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -77,7 +78,7 @@ typedef enum {
 } es_threadpool_sd_t;
 
 es_threadpool_t *threadpool_init(int thread_num);
-int threadpool_add(es_threadpool_t *pool, void (*func)(void *));
+int threadpool_add(es_threadpool_t *pool, void (*func)(void *), void *arg);
 int threadpool_destroy(es_threadpool_t *pool, int graceful);
 
 #endif // !THREADPOOL_H

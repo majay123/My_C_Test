@@ -9,8 +9,8 @@ LOCAL_INCS := 	../../include 	\
 LOCAL_SRCS := 	.
 
 
-CC := arm-openwrt-linux-gcc
-# CC := gcc
+# CC := arm-openwrt-linux-gcc
+CC := gcc
 
 LOCAL_CFLAGS :=
 LOCAL_LDFLAGS :=  -lm -lpthread -L./ -L./lib

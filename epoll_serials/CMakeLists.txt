@@ -13,8 +13,19 @@ set(SOURCE_FILES
         main.c
         threadpool.c
         threadpool.h
-        es_debug.h)
+        es_debug.h
+        rio.c
+        rio.h
+        priority_queue.c
+        priority_queue.h
+        timer.c
+        timer.h
+        serials_requset.h
+        util.c
+        util.h
+        list.h)
 
 add_executable(epoll_serials ${SOURCE_FILES})
 redefine_file_macro(epoll_serials)
+target_link_libraries(epoll_serials -lm -lpthread)
 

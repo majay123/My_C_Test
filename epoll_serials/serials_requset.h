@@ -29,34 +29,32 @@
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2022-02-24 10:26:58
+ * @Date         : 2022-02-28 14:53:37
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 15:59:02
- * @FilePath     : /My_C_Test/epoll_serials/util.h
+ * @LastEditTime : 2022-02-28 16:03:01
+ * @FilePath     : /My_C_Test/epoll_serials/serials_requset.h
  * @Description  : 
  * 
  * ******************************************
  */
 
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef SERIALS_REQUEST_H
+#define SERIALS_REQUEST_H
 
-#include "es_debug.h"
+#include "list.h"
+#include <errno.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-#define PATH_LEN      (128)
-#define MAX_BUF_LEN   (1024 * 8)
-#define DELIM         "="
-#define ES_CONF_OK    (0)
-#define ES_CONF_ERROR (-1)
-#define MIN(a, b)     ((a) < (b) ? (a) : (b))
+#define MAX_BUF (1024 * 8)
 
-typedef struct es_conf {
-    char root[PATH_LEN];
-    int baud_rate;
-    int thread_num;
-} es_conf_t;
+typedef struct es_serial_request {
+    char *root;
+    void *timer;
+    int fd;
+} es_serial_request_t;
 
-int read_conf(char *filename, es_conf_t *conf);
-void handle_for_sigpipe();
-
-#endif // !UTIL_H
+#endif // !_SERIALS_REQUEST_H

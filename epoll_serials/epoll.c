@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:02
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-25 09:01:01
+ * @LastEditTime : 2022-02-28 16:02:18
  * @FilePath     : /My_C_Test/epoll_serials/epoll.c
  * @Description  : 
  * 
@@ -67,7 +67,15 @@ int es_epoll_create(int flags)
 */
 int es_epoll_add(int epoll_fd, int fd, void *arg, int events)
 {
-    return 0;
+    struct epoll_event event;
+    memset(&event, 0, sizeof(struct epoll_event));
+
+    event.data.ptr = arg;
+    event.events = events;
+
+    int ret = epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &event);
+
+    return ret;
 }
 
 /**
@@ -77,7 +85,15 @@ int es_epoll_add(int epoll_fd, int fd, void *arg, int events)
 */
 int es_epoll_mod(int epoll_fd, int fd, void *arg, int events)
 {
-    return 0;
+    struct epoll_event event;
+    memset(&event, 0, sizeof(struct epoll_event));
+
+    event.data.ptr = arg;
+    event.events = events;
+
+    int ret = epoll_ctl(epoll_fd, EPOLL_CTL_MOD, fd, &event);
+
+    return ret;
 }
 
 /**
@@ -87,7 +103,15 @@ int es_epoll_mod(int epoll_fd, int fd, void *arg, int events)
 */
 int es_epoll_del(int epoll_fd, int fd, void *arg, int events)
 {
-    return 0;
+    struct epoll_event event;
+    memset(&event, 0, sizeof(struct epoll_event));
+
+    event.data.ptr = arg;
+    event.events = events;
+
+    int ret = epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, &event);
+
+    return ret;
 }
 
 /**
@@ -97,7 +121,8 @@ int es_epoll_del(int epoll_fd, int fd, void *arg, int events)
 */
 int es_epoll_wait(int epoll_fd, struct epoll_event *events, int max_events, int timeout)
 {
-    return 0;
+    int ret_count = epoll_wait(epoll_fd, events, max_events, timeout);
+    return ret_count;
 }
 
 /**
@@ -105,7 +130,25 @@ int es_epoll_wait(int epoll_fd, struct epoll_event *events, int max_events, int 
 * @date  		2022-02-24-14:01
 * @details		handle event
 */
+// for test
+static void dispatch_rs485(void *arg)
+{
+    // todo dispatch rs485 data
+    ES_DEBUG_INFO("do dispatch rs485 data");
+}
+
 void es_handle_event(int epoll_fd, int fd, struct epoll_event *events, int events_num, char *path, es_threadpool_t *tp)
 {
-    return;
+    int i = 0;
+    for (i = 0; i < events_num; i++) {
+        /* code */
+        // 发生错误或者文件挂断
+        if ((events[i].events & EPOLLERR) || (events[i].events & EPOLLHUP) || (!events[i].events & EPOLLIN)) {
+            close(fd);
+            continue;
+        }
+
+        // 将请求任务加入到线程池
+        int rc = threadpool_add(tp, dispatch_rs485, events[i].data.ptr);
+    }
 }
