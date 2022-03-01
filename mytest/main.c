@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-05-20 14:28:57
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-21 09:58:01
+ * @LastEditTime : 2022-03-01 10:48:40
  * @FilePath     : /My_C_Test/mytest/main.c
  * @Description  : 
  * 
@@ -369,9 +369,22 @@ int main(int argc, const char *argv[])
 	srv_msg_t *msg;
 	db_ctrl_t db_ctrl;
 
+	srv_msg_t *mtest = (srv_msg_t *)calloc(10, sizeof(srv_msg_t));
+	for ( i = 0; i < 10; i++)
+	{
+		mtest[i].type = i;
+		// printf("%p\n", mtest[i]);
+	}
+	for ( i = 0; i < 10; i++)
+	{
+		// mtest[i].type = i;
+		printf("%d\n", mtest[i].type);
+	}
+	
 
 	// int ret = strcmp("9.0.2.20211101", "9.0.2.20200101");
 	// print_mcd("ret = %d", ret);
+#if 0
 	int *size = 1;
 	// _get_tuya_keyword_to_speech();
 	// print_mcd("size = %d", size);
@@ -401,6 +414,7 @@ int main(int argc, const char *argv[])
 
 	close(fd);
 	print_mcd("write over");
+#endif
 #if 0
 	char *auth_str = "jvkl78XHnUTHH+VZvRN2YTqeHSpuJ/BiRDoVEizGoqSg3y66y756GdGKuhxnCQeTIbbcRw4MdFU=";
 	

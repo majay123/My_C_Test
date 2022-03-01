@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:58
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 16:29:08
+ * @LastEditTime : 2022-03-01 09:50:33
  * @FilePath     : /My_C_Test/epoll_serials/list.h
  * @Description  : 
  * 
@@ -51,10 +51,10 @@ typedef struct list_head {
 
 // 初始化
 #define INIT_LIST_HEAD(ptr)                               \
-    d0                                                    \
+    do                                                    \
     {                                                     \
         struct list_head *_ptr = (struct list_head *)ptr; \
-        (_ptr)->next = *(_ptr);                           \
+        (_ptr)->next = (_ptr);                           \
         (_ptr->prev) = (_ptr);                            \
     }                                                     \
     while (0)

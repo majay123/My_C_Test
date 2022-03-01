@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:58
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 15:59:02
+ * @LastEditTime : 2022-03-01 10:01:59
  * @FilePath     : /My_C_Test/epoll_serials/util.h
  * @Description  : 
  * 
@@ -54,6 +54,7 @@ typedef struct es_conf {
     char root[PATH_LEN];
     int baud_rate;
     int thread_num;
+    int test_num;
 } es_conf_t;
 
 int read_conf(char *filename, es_conf_t *conf);

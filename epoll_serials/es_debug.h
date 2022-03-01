@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 12:50:39
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 16:02:34
+ * @LastEditTime : 2022-03-01 12:46:05
  * @FilePath     : /My_C_Test/epoll_serials/es_debug.h
  * @Description  : 
  * 
@@ -133,7 +133,7 @@ extern appContext_t esContext;
             clock_gettime(CLOCK_REALTIME, &ts);                                                                                            \
             localtime_r(&ts.tv_sec, &tm1);                                                                                                 \
             strftime(ctime, sizeof(ctime), "%Y-%m-%d %H:%M:%S", &tm1);                                                                     \
-            snprintf(ctime1, sizeof(ctime1), "%s.%.3ld", ctime, ts.tv_nsec / 1000 / 1000);                                                 \
+            snprintf(ctime1, sizeof(ctime), "%s.%.3ld", ctime, ts.tv_nsec / 1000 / 1000);                                                  \
             printf("\033[1;31m[ES_DEBUG_INFO][%s]\033[0m:(%s),%s,%d--- " param "\n", ctime1, __FILE__, __func__, __LINE__, ##__VA_ARGS__); \
         }                                                                                                                                  \
     } while (0)

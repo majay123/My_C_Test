@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:58
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 16:03:06
+ * @LastEditTime : 2022-03-01 12:37:59
  * @FilePath     : /My_C_Test/epoll_serials/threadpool.c
  * @Description  : 
  * 
@@ -204,7 +204,7 @@ int threadpool_add(es_threadpool_t *pool, void (*func)(void *), void *arg)
     // 新建task并注册消息
     es_task_t *task = (es_task_t *)calloc(1, sizeof(es_task_t));
     if (task == NULL) {
-        ES_DEBUG_ERROR("callo task failed");
+        ES_DEBUG_ERROR("calloc task failed");
         goto out;
     }
     task->func = func;

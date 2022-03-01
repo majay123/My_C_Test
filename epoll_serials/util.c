@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:58
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 16:03:40
+ * @LastEditTime : 2022-03-01 11:23:01
  * @FilePath     : /My_C_Test/epoll_serials/util.c
  * @Description  : 
  * 
@@ -66,7 +66,7 @@ int read_conf(char *filename, es_conf_t *conf)
     int pos = 0;
     int line_len = 0;
 
-    while (fgets(curr_pos, MAX_BUF_LEN, fp)) {
+    while (fgets(curr_pos, buff_len - pos, fp)) {
         // 定位每一行第一个界定符位置
         delim_pos = strstr(curr_pos, DELIM);
         if (!delim_pos) {
@@ -92,8 +92,12 @@ int read_conf(char *filename, es_conf_t *conf)
         }
 
         // 得到thread数量
-        if (strncmp("thread_num", curr_pos, 9) == 0)
+        if (strncmp("thread_num", curr_pos, 10) == 0)
             conf->thread_num = atoi(delim_pos + 1);
+
+        // 得到test_num数量
+        if (strncmp("test_num", curr_pos, 8) == 0)
+            conf->test_num = atoi(delim_pos + 1);
 
         // line_len得到当前行行长
         line_len = strlen(curr_pos);

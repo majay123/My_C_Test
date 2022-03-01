@@ -33,6 +33,8 @@
         "unistd.h": "c"
     },
     "cSpell.words": [
+        "EPOLLET",
+        "EPOLLIN",
         "kfree",
         "kzalloc",
         "LISH",

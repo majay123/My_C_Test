@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:02
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 16:02:18
+ * @LastEditTime : 2022-03-01 14:06:25
  * @FilePath     : /My_C_Test/epoll_serials/epoll.c
  * @Description  : 
  * 
@@ -49,15 +49,18 @@ struct epoll_event *events;
 */
 int es_epoll_create(int flags)
 {
-    int epoll_fd = epoll_create(flags);
+    int epoll_fd = epoll_create1(flags);
     if (epoll_fd < 0) {
+        ES_DEBUG_ERROR("epoll create failed: %d", epoll_fd);
         return -1;
     }
     events = (struct epoll_event *)calloc(MAXEVENTS, sizeof(struct epoll_event));
-    if (events != NULL)
+    if (events != NULL) 
         return epoll_fd;
-    else
+    else {
+        ES_DEBUG_ERROR("calloc events failed!");
         return -1;
+    }
 }
 
 /**
@@ -134,17 +137,25 @@ int es_epoll_wait(int epoll_fd, struct epoll_event *events, int max_events, int 
 static void dispatch_rs485(void *arg)
 {
     // todo dispatch rs485 data
-    ES_DEBUG_INFO("do dispatch rs485 data");
+    ES_DEBUG_INFO("do dispatch rs485 data" );
+    es_serial_request_t *req = (es_serial_request_t *)arg;
+    char buf[1024] = {0};
+    size_t len = read(req->fd, buf, sizeof(buf));
+    printf("%ld, %s", len, buf);
 }
 
-void es_handle_event(int epoll_fd, int fd, struct epoll_event *events, int events_num, char *path, es_threadpool_t *tp)
+void es_handle_events(int epoll_fd, struct epoll_event *events, int events_num, char *path, es_threadpool_t *tp)
 {
     int i = 0;
+
     for (i = 0; i < events_num; i++) {
-        /* code */
+        // 获取有事件产生的描述符
+        es_serial_request_t *request = (es_serial_request_t *)(events[i].data.ptr);
+        int fd = request->fd;
         // 发生错误或者文件挂断
         if ((events[i].events & EPOLLERR) || (events[i].events & EPOLLHUP) || (!events[i].events & EPOLLIN)) {
-            close(fd);
+            // close(fd);
+            ES_DEBUG_ERROR("epoll error: %d", events[i].events);
             continue;
         }
 

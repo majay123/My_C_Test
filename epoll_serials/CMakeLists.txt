@@ -20,6 +20,7 @@ set(SOURCE_FILES
         priority_queue.h
         timer.c
         timer.h
+        serials_requset.c
         serials_requset.h
         util.c
         util.h
