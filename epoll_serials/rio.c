@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:58
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 16:02:55
- * @FilePath     : /My_C_Test/epoll_serials/rio.c
+ * @LastEditTime : 2022-03-03 16:49:12
+ * @FilePath     : /epoll_serials/rio.c
  * @Description  : 
  * 
  * ******************************************
@@ -56,6 +56,7 @@ ssize_t rio_readn(int fd, void *usebuf, size_t n)
 
     char *bufp = (char *)usebuf;
     while (nleft > 0) {
+        // printf("nleft = %d\n", nleft);
         if ((nread = read(fd, bufp, nleft)) < 0) {
             if (errno == EINTR)
                 nread = 0;
@@ -63,6 +64,7 @@ ssize_t rio_readn(int fd, void *usebuf, size_t n)
                 return -1;
         } else if (nread == 0)
             break;
+        // printf("nread = %d\n");
         nleft -= nread;
         bufp += nread;
     }
@@ -117,7 +119,7 @@ static ssize_t _rio_read(rio_t *rp, char *usebuf, size_t n)
     cnt = n;
     if (rp->rio_cnt < (ssize_t)n)
         cnt = rp->rio_cnt;
-    memcmp(usebuf, rp->rio_bufptr, cnt);
+    memcpy(usebuf, rp->rio_bufptr, cnt);
     rp->rio_bufptr += cnt;
     rp->rio_cnt -= cnt;
 

@@ -1,7 +1,7 @@
 # **********************************************
 # Application Makefile Config
 # **********************************************
-TARGET := epoll_test
+TARGET := serial_test
 
 LOCAL_INCS := . ./include \
 				../include

@@ -22,7 +22,7 @@ endif()
 # for cross compiling toolchain
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
-set(tools /home/ubuntu/Develop/toolchain/arm-openwrt-linux-uclibcgnueabi/toolchain-arm_cortex-a5+neon_gcc-4.8-linaro_uClibc-0.9.33.2_eabi)
+set(tools /usr/local/toolchain/arm-openwrt-linux-uclibcgnueabi/toolchain-arm_cortex-a5+neon_gcc-4.8-linaro_uClibc-0.9.33.2_eabi)
 
 set(CMAKE_C_COMPILER ${tools}/bin/arm-openwrt-linux-gcc)
 set(CMAKE_CXX_COMPILER ${tools}/bin/arm-openwrt-linux-g++)
@@ -31,8 +31,8 @@ set(CMAKE_CXX_COMPILER ${tools}/bin/arm-openwrt-linux-g++)
 add_definitions(-Os -Wall -I.. -DSTAGING_DIR)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
-# add_library(test_so SHARED library.c)
-add_executable(test_so SHARED library.c)
+add_library(test_so SHARED library.c)
+# add_executable(test_so SHARED library.c)
 
 
 target_include_directories(test_so PRIVATE 

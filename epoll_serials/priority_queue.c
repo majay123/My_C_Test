@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:30:00
  * @LastEditors  : MCD
- * @LastEditTime : 2022-02-28 16:02:48
- * @FilePath     : /My_C_Test/epoll_serials/priority_queue.c
+ * @LastEditTime : 2022-03-03 16:05:16
+ * @FilePath     : /epoll_serials/priority_queue.c
  * @Description  : 
  * 
  * ******************************************
@@ -103,6 +103,8 @@ int es_pq_init(es_pq_t *es_pq, es_pq_comparator_pt comp, size_t size)
     es_pq->pq = (void **)calloc(size + 1, sizeof(void *));
     if (!es_pq->pq)
         return -1;
+
+    es_pq->nalloc = 0;
     es_pq->size = size;
     es_pq->comp = comp;
 
@@ -166,7 +168,7 @@ static int _resize(es_pq_t *es_pq, size_t new_size)
     }
 
     // 将原来的nalloc + 1个元素拷贝到new_ptr指向的位置
-    memcmp(new_ptr, es_pq->pq, es_pq->nalloc);
+    memcpy(new_ptr, es_pq->pq, es_pq->nalloc);
     // 释放原来的
     free(es_pq->pq);
 

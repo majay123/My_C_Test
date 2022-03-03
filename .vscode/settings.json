@@ -39,6 +39,7 @@
         "kzalloc",
         "LISH",
         "nwritten",
+        "oldtio",
         "printk",
         "readinitb",
         "readlineb",

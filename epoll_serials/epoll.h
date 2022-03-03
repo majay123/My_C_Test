@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:25:31
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-01 11:09:52
+ * @LastEditTime : 2022-03-03 15:35:55
  * @FilePath     : /My_C_Test/epoll_serials/epoll.h
  * @Description  : 
  * 
@@ -44,6 +44,7 @@
 #include "es_debug.h"
 #include "serials_requset.h"
 #include "threadpool.h"
+#include "serial_common.h"
 #include <sys/epoll.h>
 
 #define MAXEVENTS (100)
@@ -53,6 +54,7 @@ int es_epoll_add(int epoll_fd, int fd, void *arg, int events);
 int es_epoll_mod(int epoll_fd, int fd, void *arg, int events);
 int es_epoll_del(int epoll_fd, int fd, void *arg, int events);
 int es_epoll_wait(int epoll_fd, struct epoll_event *events, int max_events, int timeout);
-void es_handle_events(int epoll_fd, struct epoll_event *events, int events_num, char *path, es_threadpool_t *tp);
+// void es_handle_events(int epoll_fd, struct epoll_event *events, int events_num, char *path, es_threadpool_t *tp);
+void es_handle_events(int epoll_fd, struct epoll_event *events, int events_num, void (*func)(void *), es_threadpool_t *tp);
 
 #endif // !EPOLL_H

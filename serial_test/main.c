@@ -29,41 +29,67 @@
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2022-02-28 14:53:37
+ * @Date         : 2022-02-24 10:21:51
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-03 16:12:11
- * @FilePath     : /epoll_serials/serials_requset.h
+ * @LastEditTime : 2022-03-03 15:18:48
+ * @FilePath     : /My_C_Test/serial_test/main.c
  * @Description  : 
  * 
  * ******************************************
  */
 
-#ifndef SERIALS_REQUEST_H
-#define SERIALS_REQUEST_H
-
-#include "list.h"
-#include "util.h"
 #include "serial_common.h"
-#include "rio.h"
 #include <errno.h>
-#include <math.h>
+#include <fcntl.h>
+#include <getopt.h>
+#include <pthread.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
-#define MAX_BUF (1024 * 8)
+#define CONF_FILE "../serial.conf"
 
-typedef struct es_serial_request {
-    char *root;
-    void *timer;
-    int epoll_fd;
-    int fd;
-    struct list_head list;  // 存储请求头，list.h中有
-} es_serial_request_t;
+static void usage()
+{
+    fprintf(stdout, "\n");
+    fprintf(stdout, "serial rs485 service\n");
+    fprintf(stdout, "usage:\n");
+    fprintf(stdout, "   -v verbose debug info\n");
+    fprintf(stdout, "   --help\n");
+}
 
-int es_init_serial_request_t(es_serial_request_t *request, int fd, int epoll_fd, char *path);
-int es_serial_close_conn(es_serial_request_t *request);
-void es_serial_dispatch_rs485(void *arg);
-
-#endif // !_SERIALS_REQUEST_H
+int main(int argc, char *argv[])
+{
+#if 0
+        int fd = STDIN_FILENO;
+#else
+        int fd = serial_init_open(DEV_PATH, 9600, 8, 1, 'N');
+        if(fd < 0) {
+            printf("open failed!!\n");
+            return -1;
+        }
+        printf("fd = %d\n", fd);
+#endif
+    int len = 0;
+    char buf[1024] = { 0 };
+    int i;
+    while(1) {
+        // len = read(fd, buf, sizeof(buf));
+        len = serial_read_data(fd, buf, 6);
+        if(len > 0) {
+            printf("read data: %d \n", len);
+            for ( i = 0; i < 6; i++)
+            {
+                printf("%02x ", buf[i]);
+            }
+            printf("\n");
+            printf("%s\n", buf);
+        }
+    }
+    return 0;
+}

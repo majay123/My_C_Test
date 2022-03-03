@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-05-20 14:28:57
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-01 10:48:40
+ * @LastEditTime : 2022-03-01 17:06:16
  * @FilePath     : /My_C_Test/mytest/main.c
  * @Description  : 
  * 
@@ -369,17 +369,24 @@ int main(int argc, const char *argv[])
 	srv_msg_t *msg;
 	db_ctrl_t db_ctrl;
 
-	srv_msg_t *mtest = (srv_msg_t *)calloc(10, sizeof(srv_msg_t));
-	for ( i = 0; i < 10; i++)
+	// srv_msg_t *mtest = (srv_msg_t *)calloc(10, sizeof(srv_msg_t));
+	// for ( i = 0; i < 10; i++)
+	// {
+	// 	mtest[i].type = i;
+	// 	// printf("%p\n", mtest[i]);
+	// }
+	// for ( i = 0; i < 10; i++)
+	// {
+	// 	// mtest[i].type = i;
+	// 	printf("%d\n", mtest[i].type);
+	// }
+	char buf[1024] = "播放周杰伦的歌";
+	printf("size = %d\n", strlen(buf));
+	for ( i = 0; i < strlen(buf); i++ )
 	{
-		mtest[i].type = i;
-		// printf("%p\n", mtest[i]);
+		printf("0x%02x\n", buf[i]);
 	}
-	for ( i = 0; i < 10; i++)
-	{
-		// mtest[i].type = i;
-		printf("%d\n", mtest[i].type);
-	}
+	printf("%s\n", buf);
 	
 
 	// int ret = strcmp("9.0.2.20211101", "9.0.2.20200101");

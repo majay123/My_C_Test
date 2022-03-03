@@ -24,9 +24,21 @@ set(SOURCE_FILES
         serials_requset.h
         util.c
         util.h
-        list.h)
+        list.h
+        serial_common.c
+        serial_common.h)
+
+# for cross compiling toolchain
+# set(CMAKE_SYSTEM_NAME Linux)
+# set(CMAKE_SYSTEM_PROCESSOR arm)
+# set(tools /usr/local/toolchain/arm-openwrt-linux-uclibcgnueabi/toolchain-arm_cortex-a5+neon_gcc-4.8-linaro_uClibc-0.9.33.2_eabi)
+
+# set(CMAKE_C_COMPILER ${tools}/bin/arm-openwrt-linux-gcc)
+# set(CMAKE_CXX_COMPILER ${tools}/bin/arm-openwrt-linux-g++)
 
 add_executable(epoll_serials ${SOURCE_FILES})
 redefine_file_macro(epoll_serials)
+# add_definitions(-Os -Wall -I.. -DSTAGING_DIR)
+link_directories(${CMAKE_SOURCE_DIR}/lib)
 target_link_libraries(epoll_serials -lm -lpthread)
 

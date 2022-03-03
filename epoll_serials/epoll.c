@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:02
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-01 14:06:25
- * @FilePath     : /My_C_Test/epoll_serials/epoll.c
+ * @LastEditTime : 2022-03-03 16:33:29
+ * @FilePath     : /epoll_serials/home/mcd/MyWorkSpace/MyGithub_Project/My_C_Test/epoll_serials/epoll.c
  * @Description  : 
  * 
  * ******************************************
@@ -128,30 +128,16 @@ int es_epoll_wait(int epoll_fd, struct epoll_event *events, int max_events, int 
     return ret_count;
 }
 
-/**
-* @author  		MCD
-* @date  		2022-02-24-14:01
-* @details		handle event
-*/
-// for test
-static void dispatch_rs485(void *arg)
-{
-    // todo dispatch rs485 data
-    ES_DEBUG_INFO("do dispatch rs485 data" );
-    es_serial_request_t *req = (es_serial_request_t *)arg;
-    char buf[1024] = {0};
-    size_t len = read(req->fd, buf, sizeof(buf));
-    printf("%ld, %s", len, buf);
-}
 
-void es_handle_events(int epoll_fd, struct epoll_event *events, int events_num, char *path, es_threadpool_t *tp)
+void es_handle_events(int epoll_fd, struct epoll_event *events, int events_num, void (*func)(void *), es_threadpool_t *tp)
 {
     int i = 0;
 
     for (i = 0; i < events_num; i++) {
+        // printf("events_num = %d\n", events_num);
         // 获取有事件产生的描述符
         es_serial_request_t *request = (es_serial_request_t *)(events[i].data.ptr);
-        int fd = request->fd;
+        // int fd = request->fd;
         // 发生错误或者文件挂断
         if ((events[i].events & EPOLLERR) || (events[i].events & EPOLLHUP) || (!events[i].events & EPOLLIN)) {
             // close(fd);
@@ -160,6 +146,7 @@ void es_handle_events(int epoll_fd, struct epoll_event *events, int events_num, 
         }
 
         // 将请求任务加入到线程池
-        int rc = threadpool_add(tp, dispatch_rs485, events[i].data.ptr);
+        // printf("add thread pool\n");
+        threadpool_add(tp, func, events[i].data.ptr);
     }
 }

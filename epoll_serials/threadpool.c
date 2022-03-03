@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:58
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-01 12:37:59
- * @FilePath     : /My_C_Test/epoll_serials/threadpool.c
+ * @LastEditTime : 2022-03-03 16:54:21
+ * @FilePath     : /epoll_serials/threadpool.c
  * @Description  : 
  * 
  * ******************************************
@@ -90,6 +90,8 @@ static void *_threadpool_worker(void *arg)
         // 没有task且未停机阻塞
         while ((pool->queue_size == 0) && !(pool->shutdown))
             pthread_cond_wait(&(pool->cond), &(pool->lock));
+        if(pool->queue_size > 0)
+            // printf("Queue size: %d\n", pool->queue_size);
 
         // 立即停机模式，平滑停机且没有未完成任务则退出
         if (pool->shutdown == immediate_shutdown)
@@ -107,14 +109,15 @@ static void *_threadpool_worker(void *arg)
 
         // 存放task则取走并开锁
         pool->head->next = task->next;
-        pool->queue_size++;
+        pool->queue_size--;
         pthread_mutex_unlock(&(pool->lock));
 
         // 设置task中func参数
         (*(task->func))(task->arg);
+        ES_DEBUG_INFO("free tark");
         free(task);
     }
-    pool->started++;
+    pool->started--;
     pthread_mutex_unlock(&(pool->lock));
     pthread_exit(NULL);
     return NULL;
@@ -136,6 +139,10 @@ es_threadpool_t *threadpool_init(int thread_num)
     }
 
     // threads指针指向线程数组（存放tid），数组大小即为线程数量
+    pool->thread_count = 0;
+    pool->queue_size = 0;
+    pool->shutdown = 0;
+    pool->started = 0;
     pool->threads = (pthread_t *)calloc(thread_num, sizeof(pthread_t));
 
     // 分配并初始化task头节点
@@ -144,6 +151,9 @@ es_threadpool_t *threadpool_init(int thread_num)
         ES_DEBUG_ERROR("calloc threads or head failed");
         goto err;
     }
+    pool->head->func = NULL;
+    pool->head->arg = NULL;
+    pool->head->next = NULL;
 
     // 初始化互斥锁
     if (pthread_mutex_init(&(pool->lock), NULL) != 0) {
@@ -183,7 +193,7 @@ err:
 */
 int threadpool_add(es_threadpool_t *pool, void (*func)(void *), void *arg)
 {
-    int rc, err = 0;
+    int err = 0;
 
     if ((pool == NULL) || (func == NULL)) {
         ES_DEBUG_ERROR("pool or func is NULL");
@@ -214,8 +224,8 @@ int threadpool_add(es_threadpool_t *pool, void (*func)(void *), void *arg)
     task->next = pool->head->next;
     pool->head->next = task;
     pool->queue_size++;
-
-    rc = pthread_cond_signal(&(pool->cond));
+    // printf("queue size: %d\n", pool->queue_size);
+    pthread_cond_signal(&(pool->cond));
 
 out:
     if (pthread_mutex_unlock(&(pool->lock)) != 0) {
@@ -234,11 +244,11 @@ int threadpool_destroy(es_threadpool_t *pool, int graceful)
 {
     if (pool == NULL) {
         ES_DEBUG_ERROR("pool NULL");
-        return -1;
+        return es_tp_invalid;
     }
     if (pthread_mutex_lock(&(pool->lock)) != 0) {
         ES_DEBUG_ERROR("pthrad mutex lock failed");
-        return -1;
+        return es_tp_lock_fail;
     }
 
     int i, err = 0;

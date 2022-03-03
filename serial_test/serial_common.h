@@ -29,41 +29,43 @@
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2022-02-28 14:53:37
+ * @Date         : 2022-03-03 09:38:17
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-03 16:12:11
- * @FilePath     : /epoll_serials/serials_requset.h
+ * @LastEditTime : 2022-03-03 14:22:50
+ * @FilePath     : /My_C_Test/serial_test/serial_common.h
  * @Description  : 
  * 
  * ******************************************
  */
 
-#ifndef SERIALS_REQUEST_H
-#define SERIALS_REQUEST_H
+#ifndef SERIAL_COMMON_H
+#define SERIAL_COMMON_H
 
-#include "list.h"
-#include "util.h"
-#include "serial_common.h"
-#include "rio.h"
+// #include "es_debug.h"
 #include <errno.h>
-#include <math.h>
+#include <fcntl.h>
+#include <getopt.h> //for getopt_long
+#include <limits.h>
+#include <pthread.h>
+#include <signal.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <sys/termios.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
 #include <unistd.h>
 
-#define MAX_BUF (1024 * 8)
+#define DEV_PATH ("/dev/ttyS0")
 
-typedef struct es_serial_request {
-    char *root;
-    void *timer;
-    int epoll_fd;
-    int fd;
-    struct list_head list;  // 存储请求头，list.h中有
-} es_serial_request_t;
+int serial_init_open(char *dev_path, int speed, int databits, int stopbits, int parity);
+int serial_read_data(int fd, char *rcv_buf, int data_len);
+int serial_write_data(int fd, char *send_buf, int data_len);
 
-int es_init_serial_request_t(es_serial_request_t *request, int fd, int epoll_fd, char *path);
-int es_serial_close_conn(es_serial_request_t *request);
-void es_serial_dispatch_rs485(void *arg);
-
-#endif // !_SERIALS_REQUEST_H
+#endif // !
