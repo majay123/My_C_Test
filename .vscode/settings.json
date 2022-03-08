@@ -35,9 +35,11 @@
     "cSpell.words": [
         "EPOLLET",
         "EPOLLIN",
+        "isnonblocking",
         "kfree",
         "kzalloc",
         "LISH",
+        "NBLOCK",
         "nwritten",
         "oldtio",
         "printk",

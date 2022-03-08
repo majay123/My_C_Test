@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-03-03 09:38:03
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-03 15:18:42
+ * @LastEditTime : 2022-03-04 15:00:34
  * @FilePath     : /My_C_Test/serial_test/serial_common.c
  * @Description  : 
  * 
@@ -136,7 +136,7 @@ static int _serial_set_parity(int fd, int speed, int databits, int stopbits, int
 
 int serial_init_open(char *dev_path, int speed, int databits, int stopbits, int parity)
 {
-#if 1
+#if 0
     int fd = 0;
 
     fd = open(dev_path, O_RDWR | O_NOCTTY); // block read/write

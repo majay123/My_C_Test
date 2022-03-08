@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2022-02-28 16:29:57
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-03 16:49:21
- * @FilePath     : /epoll_serials/serials_requset.c
+ * @LastEditTime : 2022-03-08 11:14:02
+ * @FilePath     : /My_C_Test/epoll_serials/serials_requset.c
  * @Description  : 
  * 
  * ******************************************
@@ -94,7 +94,7 @@ void es_serial_dispatch_rs485(void *arg)
     int i;
     // int len = serial_read_data(req->fd, buf, 6);
     int len = rio_readn(req->fd, buf, 6);
-    printf("read data: %d \n", len);
+    printf("read data: %d %d \n", sizeof(buf), len);
     if(len > 0) {
         for ( i = 0; i < 6; i++)
         {

@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:26:58
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-03 16:54:21
- * @FilePath     : /epoll_serials/threadpool.c
+ * @LastEditTime : 2022-03-08 11:01:30
+ * @FilePath     : /My_C_Test/epoll_serials/threadpool.c
  * @Description  : 
  * 
  * ******************************************
@@ -96,7 +96,7 @@ static void *_threadpool_worker(void *arg)
         // 立即停机模式，平滑停机且没有未完成任务则退出
         if (pool->shutdown == immediate_shutdown)
             break;
-        else if ((pool->shutdown == immediate_shutdown) && (pool->queue_size == 0))
+        else if ((pool->shutdown == graceful_shutdown) && (pool->queue_size == 0))
             break;
 
         // 得到第一个task
@@ -114,7 +114,8 @@ static void *_threadpool_worker(void *arg)
 
         // 设置task中func参数
         (*(task->func))(task->arg);
-        ES_DEBUG_INFO("free tark");
+        ES_DEBUG_INFO("free task");
+        printf("free task\n");
         free(task);
     }
     pool->started--;

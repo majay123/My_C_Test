@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-24 10:21:51
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-03 15:18:48
+ * @LastEditTime : 2022-03-08 10:54:06
  * @FilePath     : /My_C_Test/serial_test/main.c
  * @Description  : 
  * 
@@ -80,7 +80,9 @@ int main(int argc, char *argv[])
     int i;
     while(1) {
         // len = read(fd, buf, sizeof(buf));
-        len = serial_read_data(fd, buf, 6);
+        len = read(fd, buf, 6);
+        // len = serial_read_data(fd, buf, 6);
+        // len = serial_read_data(fd, buf, sizeof(buf));
         if(len > 0) {
             printf("read data: %d \n", len);
             for ( i = 0; i < 6; i++)

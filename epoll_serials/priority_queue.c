@@ -52,7 +52,7 @@ static void _exch(es_pq_t *es_pq, size_t i, size_t j)
     void *tmp = es_pq->pq[i];
 
     es_pq->pq[i] = es_pq->pq[j];
-    es_pq->pq[i] = tmp;
+    es_pq->pq[j] = tmp;
 }
 
 /**
