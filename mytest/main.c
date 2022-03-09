@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-05-20 14:28:57
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-01 17:06:16
+ * @LastEditTime : 2022-03-08 15:46:50
  * @FilePath     : /My_C_Test/mytest/main.c
  * @Description  : 
  * 
@@ -382,11 +382,21 @@ int main(int argc, const char *argv[])
 	// }
 	char buf[1024] = "播放周杰伦的歌";
 	printf("size = %d\n", strlen(buf));
-	for ( i = 0; i < strlen(buf); i++ )
-	{
-		printf("0x%02x\n", buf[i]);
-	}
+	// for ( i = 0; i < strlen(buf); i++ )
+	// {
+	// 	printf("0x%02x\n", buf[i]);
+	// }
 	printf("%s\n", buf);
+	i = 1;
+	switch (i)
+	{
+	case 1:
+		printf("%d\n", i);
+	case 2:
+		printf("%d\n", i);
+	default:
+		break;
+	}
 	
 
 	// int ret = strcmp("9.0.2.20211101", "9.0.2.20200101");

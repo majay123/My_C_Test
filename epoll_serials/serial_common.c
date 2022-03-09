@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2022-03-03 09:38:03
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-03 16:36:05
- * @FilePath     : /epoll_serials/serial_common.c
+ * @LastEditTime : 2022-03-08 16:18:39
+ * @FilePath     : /My_C_Test/epoll_serials/serial_common.c
  * @Description  : 
  * 
  * ******************************************
@@ -41,6 +41,7 @@
 
 static int _serial_set_parity(int fd, int speed, int databits, int stopbits, int parity)
 {
+#if 1
     struct termios tio, oldtio;
     int i;
     int status;
@@ -55,9 +56,10 @@ static int _serial_set_parity(int fd, int speed, int databits, int stopbits, int
     }
 
     bzero(&tio, sizeof(tio));
-    cfmakeraw(&tio); /*see man page */
+    // cfmakeraw(&tio); /*see man page */
                      /* 设置字符大小 */
     tio.c_cflag |= CLOCAL | CREAD;
+    tio.c_cflag &= ~(CRTSCTS | CSIZE);
 
     tio.c_iflag |= IGNPAR; /*ignore parity on input */
     tio.c_oflag &= ~(OPOST | ONLCR | OLCUC | OCRNL | ONOCR | ONLRET | OFILL);
@@ -72,11 +74,13 @@ static int _serial_set_parity(int fd, int speed, int databits, int stopbits, int
 
     switch (databits) {
     case 7:
+        tio.c_cflag |= CS7;
         break;
     case 8:
+        tio.c_cflag |= CS8;
         break;
     default:
-        ES_DEBUG_ERROR("unsupported databits: %d", databits);
+        printf("unsupported databits: %d\n", databits);
         return -1;
     }
 
@@ -120,25 +124,85 @@ static int _serial_set_parity(int fd, int speed, int databits, int stopbits, int
         return -1;
     }
 
-    tio.c_cc[VMIN] = 1;  /* block until 1 char received */
+    // tio.c_cc[VTIME] = X; 　　//设置从获取到1个字节后开始计时的超时时间
+    // tio.c_cc[VMIN] = Y;　　   //设置要求等待的最小字节数
+    // 1、X=0，Y!=0。函数read()只有在读取了Y个字节的数据或者收到一个信号的时候才返回；
+    // 2、X!=0，Y=0。即使没有数据可以读取，read()函数等待X时间量后返回；
+    // 3、X!=0,Y!=0。第一个字节数据到时开始，最先满足收到Y个字节或达超时时间X任意一个条件，read()返回；
+    // 4、X=0,Y=0。即使读取不到任何数据，函数read也会立即返回。
     tio.c_cc[VTIME] = 0; /*no inter-character timer */
+    tio.c_cc[VMIN] = 1;  /* block until 1 char received */
 
     tcflush(fd, TCIFLUSH);
     if (tcsetattr(fd, TCSANOW, &tio) != 0) {
         ES_DEBUG_ERROR("SetupSerial 3");
         return -1;
     }
+#else
+    struct termios opt, oldtio;
+    int i;
+    int status;
+
+    int speed_arr[] = {B115200, B19200, B9600, B4800, B2400, B1200, B300};
+    int name_arr[] = {115200, 19200, 9600, 4800, 2400, 1200, 300};
+
+    /*保存测试现有串口参数设置，在这里如果串口号等出错，会有相关的出错信息*/
+    if (tcgetattr(fd, &oldtio) != 0) {
+        printf("SetupSerial 1\n");
+        return -1;
+    }
+    bzero(&opt, sizeof(opt));
+
+    cfsetispeed(&opt, B9600);
+    cfsetospeed(&opt, B9600);
+    opt.c_cflag |= CLOCAL | CREAD;
+    opt.c_cflag &= ~(CRTSCTS | CSIZE);
+
+    opt.c_cflag |= CS8;
+    opt.c_cflag &= ~PARENB;
+    opt.c_iflag &= ~INPCK;
+
+    opt.c_cflag &= ~CSTOPB;
+
+    opt.c_oflag &= ~OPOST;
+    opt.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+    opt.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
+
+    opt.c_cc[VTIME] = 0;
+    opt.c_cc[VMIN] = 0;
+
+    tcflush(fd, TCIFLUSH);
+    
+    if (tcsetattr(fd, TCSANOW, &opt) != 0) {
+        printf("SetupSerial 3\n");
+        return -1;
+    }
+#endif
 
     return 0;
+}
+
+static int _serial_open(char *dev_path)
+{
+    int fd = 0;
+
+    fd = open(dev_path, O_RDWR | O_NOCTTY | O_NDELAY/*| O_NONBLOCK*/); // block read/write
+    if (fd < 0) {
+        ES_DEBUG_ERROR("%s device open failed", dev_path);
+        return -1;
+    }
+    if (fcntl(fd, F_SETFL, 0) < 0) {
+        ES_DEBUG_ERROR("fcntl failed!\n");
+    }
+
+    return fd;
 }
 
 int serial_init_open(char *dev_path, int speed, int databits, int stopbits, int parity)
 {
 #if 1
-    int fd = 0;
-
-    fd = open(dev_path, O_RDWR | O_NOCTTY); // block read/write
-    if (fd < 0) {
+    int fd = -1;
+    if((fd = _serial_open(dev_path)) < 0) {
         ES_DEBUG_ERROR("%s device open failed", dev_path);
         return -1;
     }
