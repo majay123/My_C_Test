@@ -7,8 +7,8 @@ LOCAL_INCS := . ./include \
 				../include
 LOCAL_SRCS := .
 
-CC = arm-openwrt-linux-gcc
-# CC = gcc
+# CC = arm-openwrt-linux-gcc
+CC = gcc
 
 LOCAL_CFLAGS :=
 LOCAL_LDFLAGS := -lpthread  -lm -L./
@@ -43,9 +43,16 @@ SRCS  := $(foreach file, $(foreach dir, $(LOCAL_SRCS), $(wildcard $(dir)/*.S)), 
 
 OBJS := $(patsubst %.S,%.o, $(patsubst %.c,%.o, $(patsubst %.cpp, %.o, $(SRCS))))
 
+TAR_PATH := $(shell pwd)
+TMP_PATH := __tmp__/
+
 .PHONY : all clean
 
+
 all : $(TARGET)
+	-mkdir $(TMP_PATH)
+	-mv $(OBJS) $(TMP_PATH)
+	@echo "make successfully"
 
 $(TARGET) : $(OBJS)
 ifeq ($(suffix $(TARGET)),.a)
@@ -56,6 +63,7 @@ else
 endif
 
 clean :
+	-rm $(TMP_PATH) -rf
 	rm -rf $(OBJS)
 	rm -rf $(TARGET)
 
