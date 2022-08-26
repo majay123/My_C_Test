@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-08-24 15:42:17
  * @LastEditors  : MCD
- * @LastEditTime : 2022-08-26 16:30:05
+ * @LastEditTime : 2022-08-26 16:33:12
  * @FilePath     : /My_C_Test/DAJING_Modbus/adaptor_reg.h
  * @Description  :
  *
@@ -67,7 +67,7 @@
 #define INDOOR_MACH_COMM02_REG      (INDOOR_MACH_COMM00_REG + 2)
 #define INDOOR_MACH_COMM03_REG      (INDOOR_MACH_COMM00_REG + 3)
 
-#define INDOOR_MACH_ONE_ROW_SIZE                                    (16)
+#define INDOOR_MACH_ONE_ROW_SIZE                                        (16)
 
 /* -----------------------室内机的性能信息寄存器----------------------- */
 /* 1-00 ~ 1-15 */
