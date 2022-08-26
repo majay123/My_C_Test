@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-07-15 15:07:39
  * @LastEditors  : MCD
- * @LastEditTime : 2021-09-28 10:57:12
+ * @LastEditTime : 2022-08-22 15:13:27
  * @FilePath     : /My_C_Test/CRC16_MODBUS/crc16_modbus.c
  * @Description  : 
  * 
@@ -206,6 +206,31 @@ unsigned short CRC16_XMODEM(unsigned char *puchMsg, unsigned int usDataLen)
         }
     }
     return (wCRCin);
+}
+
+const uint16_t polynom = 0xA001;
+
+uint16_t crc16bitbybit(uint8_t *ptr, uint16_t len)
+{
+    uint8_t i;
+    uint16_t crc = 0xffff;
+
+    if (len == 0) {
+        len = 1;
+    }
+    while (len--) {
+        crc ^= *ptr;
+        for (i = 0; i < 8; i++) {
+            if (crc & 1) {
+                crc >>= 1;
+                crc ^= polynom;
+            } else {
+                crc >>= 1;
+            }
+        }
+        ptr++;
+    }
+    return (crc);
 }
 
 int my_itoa(char *buf, int value, char size)
@@ -502,15 +527,21 @@ int main(int argc, char const *argv[])
     int i = 0;
     uint8_t num1 = MSG_TEST1;
     int  num2;
+    unsigned char buf[] = {0x05, 0x04, 0x00, 0x1d, 0x00, 0x04};
+    unsigned char buf1[] = {0x03, 0x06, 0x00, 0x95, 0x03, 0xe8};
 
+    crc = do_crc16_MODBUS(buf, sizeof(buf));
+    printf("get crc 0x%04X\n", crc);
+    crc = do_crc16_MODBUS(buf1, sizeof(buf1));
+    printf("get crc 0x%04X\n", crc);
 
+    #if 0
     num2 = _test_argv(MSG_TEST1);
 
     print_mcd("num2 = %d", num2);
 
     return 0;
     
-    #if 0
     crc = ((crc & 0x000F) | (flag & 0x0F)) << 12;
 
     print_mcd("crc = %x", crc);

@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-05-20 14:28:57
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-08 15:46:50
+ * @LastEditTime : 2022-08-26 16:30:20
  * @FilePath     : /My_C_Test/mytest/main.c
  * @Description  : 
  * 
@@ -358,6 +358,60 @@ error:
 
 }
 
+static _json_test(void)
+{
+	char buffer[1024] = "{\"comName\":\"顺舟科技\",\"deviceCata\":\"Host3\",\"deviceName\":\"Host3\",\"parentId\":\"820930244371648512\",\"deviceSN\":\"44415106030037\",\"deviceVO\":true}\"}";
+	char buffer1[1024] = "{\"comName\":\"顺舟科技\",\"deviceCata\":\"Host3\",\"deviceName\":\"Host3\",\"parentId\":\"820930244371648512\",\"deviceSN\":\"44415106030037\",\"deviceVO\":1}\"}";
+
+	cJSON *root = cJSON_Parse(buffer);
+	if(root != NULL) {
+		cJSON *comName = cJSON_GetObjectItem(root, "comName");
+		print_mcd("comName: %s\n", comName->valuestring);
+		cJSON *deviceVO = cJSON_GetObjectItem(root, "deviceVO");
+		print_mcd("deviceVO: %d\n", deviceVO->valueint);
+	}
+}
+
+char* itoa(int num, char* str, int radix)
+{
+    char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//索引表
+    unsigned unum;//存放要转换的整数的绝对值,转换的整数可能是负数
+    int i=0,j,k;//i用来指示设置字符串相应位，转换之后i其实就是字符串的长度；转换后顺序是逆序的，有正负的情况，k用来指示调整顺序的开始位置;j用来指示调整顺序时的交换。
+ 
+    //获取要转换的整数的绝对值
+    if(radix==10&&num<0)//要转换成十进制数并且是负数
+    {
+        unum=(unsigned)-num;//将num的绝对值赋给unum
+        str[i++]='-';//在字符串最前面设置为'-'号，并且索引加1
+    }
+    else unum=(unsigned)num;//若是num为正，直接赋值给unum
+ 
+    //转换部分，注意转换后是逆序的
+    do
+    {
+        str[i++]=index[unum%(unsigned)radix];//取unum的最后一位，并设置为str对应位，指示索引加1
+        unum/=radix;//unum去掉最后一位
+ 
+    }while(unum);//直至unum为0退出循环
+ 
+    str[i]='\0';//在字符串最后添加'\0'字符，c语言字符串以'\0'结束。
+ 
+    //将顺序调整过来
+    if(str[0]=='-') k=1;//如果是负数，符号不用调整，从符号后面开始调整
+    else k=0;//不是负数，全部都要调整
+ 
+    char temp;//临时变量，交换两个值时用到
+    for(j=k;j<=(i-1)/2;j++)//头尾一一对称交换，i其实就是字符串的长度，索引最大值比长度少1
+    {
+        temp=str[j];//头部赋值给临时变量
+        str[j]=str[i-1+k-j];//尾部赋值给头部
+        str[i-1+k-j]=temp;//将临时变量的值(其实就是之前的头部值)赋给尾部
+    }
+ 
+    return str;//返回转换后的字符串
+ 
+}
+
 char aaa[] = "[{\"value1\":\"自定义话术1\"},{\"value2\":\"\"},{\"value3\":\"回家模式的自定义话术\"},{\"title\":\"回家模式\"}]";
 #define DSP_MAX_DATA_SIZE		(32 - 1)
 int main(int argc, const char *argv[])
@@ -368,6 +422,24 @@ int main(int argc, const char *argv[])
 	all_db_info_t *temp;
 	srv_msg_t *msg;
 	db_ctrl_t db_ctrl;
+	int64_t userid = 1005039295;
+	char *user = NULL;
+
+	char str[32] = {0};
+	char str1[32] = {0};
+
+	// itoa(userid, str, 10);
+	// printf("userid = %d, %s\n", userid, str);
+	// snprintf(str1, sizeof(str1), "%d", userid);
+	// printf("userid = %d, %s\n", userid, str1);
+	// printf("user = %d\n", strlen(user));
+
+	// printf("get addr %d\n", INDOOR_MACH_WORK_MODE_INP_REG(1, 14));
+	// printf("get addr %d\n", INDOOR_MACH_REF_TMP_UPPER_AND_LOWER_LIMIT_INP_REG(1, 14));
+	// printf("get addr %d\n", INDOOR_MACH_HEAT_TMP_UPPER_AND_LOWER_LIMIT_INP_REG(1, 14));
+	// printf("get addr %d\n", INDOOR_MACH_OPERATION_DETAILS_HOLD_REG(1, 14));
+
+	// _json_test(	);
 
 	// srv_msg_t *mtest = (srv_msg_t *)calloc(10, sizeof(srv_msg_t));
 	// for ( i = 0; i < 10; i++)
@@ -380,6 +452,7 @@ int main(int argc, const char *argv[])
 	// 	// mtest[i].type = i;
 	// 	printf("%d\n", mtest[i].type);
 	// }
+#if 0
 	char buf[1024] = "播放周杰伦的歌";
 	printf("size = %d\n", strlen(buf));
 	// for ( i = 0; i < strlen(buf); i++ )
@@ -398,7 +471,7 @@ int main(int argc, const char *argv[])
 		break;
 	}
 	
-
+#endif
 	// int ret = strcmp("9.0.2.20211101", "9.0.2.20200101");
 	// print_mcd("ret = %d", ret);
 #if 0
