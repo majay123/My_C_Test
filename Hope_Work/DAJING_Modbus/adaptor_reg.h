@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2022-08-24 15:42:17
  * @LastEditors  : MCD
- * @LastEditTime : 2022-08-26 16:33:12
- * @FilePath     : /My_C_Test/DAJING_Modbus/adaptor_reg.h
+ * @LastEditTime : 2022-09-01 15:15:22
+ * @FilePath     : /My_C_Test/Hope_Work/DAJING_Modbus/adaptor_reg.h
  * @Description  :
  *
  * ******************************************
@@ -53,16 +53,17 @@
 /* -----------------------------------------------------输入寄存器(input register)----------------------------------------------------- */
 /* ********************************************************************************************************************************** */
 /* 适配器状态寄存器 */
-#define ADAPTRO_STATUS_REG          (30001)
+#define INPUT_BASE_REGISTER         (30001)
+#define ADAPTRO_STATUS_REG          (30001 - INPUT_BASE_REGISTER)
 
 /* 室内机的连接状态寄存器 */
-#define INDOOR_MACH_CONN00_REG      (30002)
+#define INDOOR_MACH_CONN00_REG      (30002 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_CONN01_REG      (INDOOR_MACH_CONN00_REG + 1)
 #define INDOOR_MACH_CONN02_REG      (INDOOR_MACH_CONN00_REG + 2)
 #define INDOOR_MACH_CONN03_REG      (INDOOR_MACH_CONN00_REG + 3)
 
 /* 室内机的通信状态寄存器 */
-#define INDOOR_MACH_COMM00_REG      (30006)
+#define INDOOR_MACH_COMM00_REG      (30006 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_COMM01_REG      (INDOOR_MACH_COMM00_REG + 1)
 #define INDOOR_MACH_COMM02_REG      (INDOOR_MACH_COMM00_REG + 2)
 #define INDOOR_MACH_COMM03_REG      (INDOOR_MACH_COMM00_REG + 3)
@@ -79,19 +80,19 @@
 #define INDOOR_PERFORMANCE1_INFO_OFFSET(row, addr)                      (((row - 1) * INDOOR_MACH_ONE_ROW_SIZE + addr) * (INDOOR_MACH_P_OFFSET +  1))
 
 /* 室内机工作模式和风量风向 */
-#define INDOOR_MACH_WORK_MODE_100_INP_REG                               (31001)
+#define INDOOR_MACH_WORK_MODE_100_INP_REG                               (31001 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_WORK_MODE_INP_REG(row, addr)                        (INDOOR_MACH_WORK_MODE_100_INP_REG + INDOOR_PERFORMANCE_INFO_OFFSET(row, addr))
 
 /* 室内机制冷设定温度上下限 */
-#define INDOOR_MACH_REF_TMP_UPPER_AND_LOWER_LIMIT_100_INP_REG           (31002)
+#define INDOOR_MACH_REF_TMP_UPPER_AND_LOWER_LIMIT_100_INP_REG           (31002 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_REF_TMP_UPPER_AND_LOWER_LIMIT_INP_REG(row, addr)    (INDOOR_MACH_REF_TMP_UPPER_AND_LOWER_LIMIT_100_INP_REG + INDOOR_PERFORMANCE_INFO_OFFSET(row, addr))
 
 /* 室内机制热设定温度上下限 */
-#define INDOOR_MACH_HEAT_TMP_UPPER_AND_LOWER_LIMIT_100_INP_REG          (31003)
+#define INDOOR_MACH_HEAT_TMP_UPPER_AND_LOWER_LIMIT_100_INP_REG          (31003 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_HEAT_TMP_UPPER_AND_LOWER_LIMIT_INP_REG(row, addr)   (INDOOR_MACH_HEAT_TMP_UPPER_AND_LOWER_LIMIT_100_INP_REG + INDOOR_PERFORMANCE_INFO_OFFSET(row, addr))
 
 /* 室内机通气模式 */
-#define INDOOR_MACH_AIR_CTRL_100_INP_REG                                (31404)
+#define INDOOR_MACH_AIR_CTRL_100_INP_REG                                (31404 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_AIR_CTRL_INP_REG(row, addr)                         (INDOOR_MACH_AIR_CTRL_100_INP_REG + INDOOR_PERFORMANCE1_INFO_OFFSET(row, addr))
 /* ------------------------------end------------------------------ */
 
@@ -106,39 +107,39 @@
 #define INDOOR_STATUS2_INFO_OFFSET(row, addr)                           (((row - 1) * INDOOR_MACH_ONE_ROW_SIZE + addr) * (INDOOR_MACH_S_OFFSET - 4))
 
 /* 室内机运行状态和风向风量信息 */
-#define INDOOR_MACH_RUNING_STA_AND_AIR_STA_100_INP_REG                  (32001)
+#define INDOOR_MACH_RUNING_STA_AND_AIR_STA_100_INP_REG                  (32001 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_RUNING_STA_AND_AIR_STA_INP_REG(row, addr)           (INDOOR_MACH_RUNING_STA_AND_AIR_STA_100_INP_REG + INDOOR_STATUS_INFO_OFFSET(row, addr))
 
 /* 室内机工作模式信息 */
-#define INDOOR_MACH_WORKING_STA_INFO_100_INP_REG                        (32002)
+#define INDOOR_MACH_WORKING_STA_INFO_100_INP_REG                        (32002 -  INPUT_BASE_REGISTER)
 #define INDOOR_MACH_WORKING_STA_INFO_INP_REG(row, addr)                 (INDOOR_MACH_WORKING_STA_INFO_100_INP_REG + INDOOR_STATUS_INFO_OFFSET(row, addr))
 
 /* 室内机温度设定信息 */
-#define INDOOR_MACH_CUR_TEMPERATURE_100_INP_REG                         (32003)
+#define INDOOR_MACH_CUR_TEMPERATURE_100_INP_REG                         (32003 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_CUR_TEMPERATURE_INP_REG(row, addr)                  (INDOOR_MACH_CUR_TEMPERATURE_100_INP_REG + INDOOR_STATUS_INFO_OFFSET(row, addr))
 
 /* 室内机异常代码信息 */
-#define INDOOR_MACH_EXCEPTION_CODE_100_INP_REG                          (32004)
+#define INDOOR_MACH_EXCEPTION_CODE_100_INP_REG                          (32004 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_EXCEPTION_CODE_INP_REG(row, addr)                   (INDOOR_MACH_EXCEPTION_CODE_100_INP_REG + INDOOR_STATUS_INFO_OFFSET(row, addr))
 
 /* 室内机室内温度信息 */
-#define INDOOR_MACH_INDOOR_TEMPER_100_INP_REG                           (32005)
-#define INDOOR_MACH_INDOOR_TEMPER_INP_REG(row, addr)                    (INDOOR_MACH_INDOOR_TEMPER_INP_REG + INDOOR_STATUS_INFO_OFFSET(row, addr))
+#define INDOOR_MACH_INDOOR_TEMPER_100_INP_REG                           (32005 - INPUT_BASE_REGISTER)
+#define INDOOR_MACH_INDOOR_TEMPER_INP_REG(row, addr)                    (INDOOR_MACH_INDOOR_TEMPER_100_INP_REG + INDOOR_STATUS_INFO_OFFSET(row, addr))
 
 /* 室内机温度传感器状态信息 */
-#define INDOOR_MACH_TEMPER_SENSOR_100_INP_REG                           (32006)
-#define INDOOR_MACH_TEMPER_SENSOR_INP_REG(row, addr)                    (INDOOR_MACH_TEMPER_SENSOR_INP_REG + INDOOR_STATUS_INFO_OFFSET(row, addr))
+#define INDOOR_MACH_TEMPER_SENSOR_100_INP_REG                           (32006 - INPUT_BASE_REGISTER)
+#define INDOOR_MACH_TEMPER_SENSOR_INP_REG(row, addr)                    (INDOOR_MACH_TEMPER_SENSOR_100_INP_REG + INDOOR_STATUS_INFO_OFFSET(row, addr))
 
 /* 室内机换气模式信息 */
-#define INDOOR_MACH_VENTILATION_MODE_100_INP_REG                        (32804)
+#define INDOOR_MACH_VENTILATION_MODE_100_INP_REG                        (32804 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_VENTILATION_MODE_INP_REG(row, addr)                 (INDOOR_MACH_VENTILATION_MODE_100_INP_REG + INDOOR_STATUS1_INFO_OFFSET(row, addr))
 
 /* 室内机风向2信息 */
-#define INDOOR_MACH_WIND_DIRECTION2_100_INP_REG                         (34001)
+#define INDOOR_MACH_WIND_DIRECTION2_100_INP_REG                         (34001 -  INPUT_BASE_REGISTER)
 #define INDOOR_MACH_WIND_DIRECTION2_INP_REG(row, addr)                  (INDOOR_MACH_WIND_DIRECTION2_100_INP_REG + INDOOR_STATUS2_INFO_OFFSET(row, addr))
 
 /* 室内机设定运转模式详细信息 */
-#define INDOOR_MACH_OPERATION_DETAILS_100_INP_REG                       (34002)
+#define INDOOR_MACH_OPERATION_DETAILS_100_INP_REG                       (34002 - INPUT_BASE_REGISTER)
 #define INDOOR_MACH_OPERATION_DETAILS_INP_REG(row, addr)                (INDOOR_MACH_OPERATION_DETAILS_100_INP_REG + INDOOR_STATUS2_INFO_OFFSET(row, addr))
 /* ------------------------------end------------------------------ */
 /* ********************************************************************************************************************************** */
@@ -151,7 +152,8 @@
 /* ********************************************************************************************************************************** */
 /* ----------------------------------------------------保持寄存器(holding register)---------------------------------------------------- */
 /* ********************************************************************************************************************************** */
-#define ADAPTOR_INIT_STATUS_REG                                         (40001)
+#define HOLDING_BASE_REGISTER                                           (40001)
+#define ADAPTOR_INIT_STATUS_REG                                         (40001 - HOLDING_BASE_REGISTER)
 
 /* -------------------------室内机控制寄存器------------------------- */
 /* 1-00 ~ 1-15 */
@@ -164,27 +166,27 @@
 #define INDOOR_MACH_CTRL2_OFFSET(row, addr)                             (((row - 1) * INDOOR_MACH_ONE_ROW_SIZE + addr) * (INDOOR_MACH_C_OFFSET - 1))
 
 /* 室内机风量风向控制寄存器 */
-#define INDOOR_MACH_CTRL_WIND_100_HOLD_REG                              (42001)
+#define INDOOR_MACH_CTRL_WIND_100_HOLD_REG                              (42001 - HOLDING_BASE_REGISTER)
 #define INDOOR_MACH_CTRL_WIND_HOLD_REG(row, addr)                       (INDOOR_MACH_CTRL_WIND_100_HOLD_REG + INDOOR_MACH_CTRL_OFFSET(row, addr))
 
 /* 室内机运转模式控制寄存器 */
-#define INDOOR_MACH_OPERATION_MODE_CTRL_100_HOLD_REG                    (42002)
+#define INDOOR_MACH_OPERATION_MODE_CTRL_100_HOLD_REG                    (42002 - HOLDING_BASE_REGISTER)
 #define INDOOR_MACH_OPERATION_MODE_CTRL_HOLD_REG(row, addr)             (INDOOR_MACH_OPERATION_MODE_CTRL_100_HOLD_REG + INDOOR_MACH_CTRL_OFFSET(row, addr))
 
 /* 室内机温度设定寄存器 */
-#define INDOOR_MACH_TEMPER_SET_100_HOLD_REG                             (42003)
+#define INDOOR_MACH_TEMPER_SET_100_HOLD_REG                             (42003 - HOLDING_BASE_REGISTER)
 #define INDOOR_MACH_TEMPER_SET_HOLD_REG(row, addr)                      (INDOOR_MACH_TEMPER_SET_100_HOLD_REG + INDOOR_MACH_CTRL_OFFSET(row, addr))
 
 /* 室内机换气模式切换寄存器 */
-#define INDOOR_MACH_VENTILATION_MODE_100_HOLD_REG                       (42404)
+#define INDOOR_MACH_VENTILATION_MODE_100_HOLD_REG                       (42404 - HOLDING_BASE_REGISTER)
 #define INDOOR_MACH_ENTILATION_MODE_HOLD_REG(row, addr)                 (INDOOR_MACH_VENTILATION_MODE_100_HOLD_REG + INDOOR_MACH_CTRL1_OFFSET(row, addr))
 
 /* 室内机风向2设定寄存器 */
-#define INDOOR_MACH_WIND_DIRECTION2_100_HOLD_REG                       (44001)
-#define INDOOR_MACH_WIND_DIRECTION2_HOLD_REG(row, addr)                (INDOOR_MACH_WIND_DIRECTION2_100_HOLD_REG + INDOOR_MACH_CTRL2_OFFSET(row, addr))
+#define INDOOR_MACH_WIND_DIRECTION2_100_HOLD_REG                        (44001 - HOLDING_BASE_REGISTER)
+#define INDOOR_MACH_WIND_DIRECTION2_HOLD_REG(row, addr)                 (INDOOR_MACH_WIND_DIRECTION2_100_HOLD_REG + INDOOR_MACH_CTRL2_OFFSET(row, addr))
 
 /* 室内机风向2设定寄存器 */
-#define INDOOR_MACH_OPERATION_DETAILS_100_HOLD_REG                      (44002)
+#define INDOOR_MACH_OPERATION_DETAILS_100_HOLD_REG                      (44002 - HOLDING_BASE_REGISTER)
 #define INDOOR_MACH_OPERATION_DETAILS_HOLD_REG(row, addr)               (INDOOR_MACH_OPERATION_DETAILS_100_HOLD_REG + INDOOR_MACH_CTRL2_OFFSET(row, addr))
 /* ------------------------------end------------------------------ */
 /* ********************************************************************************************************************************** */
@@ -275,30 +277,37 @@
 /* 送风模式 */
 #define INDOOR_MACH_AIR_SUPPLY_MODE_Pos                 (0)                                                     /* !< indoor machine set air supply mode*/
 #define INDOOR_MACH_AIR_SUPPLY_MODE_Msk                 (0x1ul << INDOOR_MACH_AIR_SUPPLY_MODE_Pos)              /* !< indoor machine set air supply mode*/
+#define INDOOR_MACH_AIR_SUPPLY(dregister)               ((dregister & INDOOR_MACH_AIR_SUPPLY_MODE_Msk) >> INDOOR_MACH_AIR_SUPPLY_MODE_Pos)
 
 /* 制冷模式 */
 #define INDOOR_MACH_REFRIGERATION_MODE_Pos              (1)                                                     /* !< indoor machine Refrigeration mode */
 #define INDOOR_MACH_REFRIGERATION_MODE_Msk              (0x1ul << INDOOR_MACH_REFRIGERATION_MODE_Pos)           /* !< indoor machine Refrigeration mode */
+#define INDOOR_MACH_REFRIGERATION_MODE(dregister)       ((dregister & INDOOR_MACH_REFRIGERATION_MODE_Msk) >> INDOOR_MACH_REFRIGERATION_MODE_Pos)
 
 /* 制热模式 */
 #define INDDOR_MACH_HEAT_MODE_Pos                       (2)                                                     /* !< indoor machine heating mode */
 #define INDDOR_MACH_HEAT_MODE_Msk                       (0x1ul << INDDOR_MACH_HEAT_MODE_Pos)                    /* !< indoor machine heating mode */
+#define INDDOR_MACH_HEAT_MODE(dregister)                ((dregister & INDDOR_MACH_HEAT_MODE_Msk) >> INDDOR_MACH_HEAT_MODE_Pos)
 
 /* 自动模式 */
 #define INDOOR_MACH_AUTO_MODE_Pos                       (3)                                                     /* !< indoor machine automatic mode */
 #define INDOOR_MACH_AUTO_MODE_Msk                       (0x1ul << INDOOR_MACH_AUTO_MODE_Pos)                    /* !< indoor machine automatic mode */
+#define INDOOR_MACH_AUTO_MODE(dregister)                ((dregister & INDOOR_MACH_AUTO_MODE_Msk) >> INDOOR_MACH_AUTO_MODE_Pos)
 
 /* 除湿模式 */
 #define INDOOR_MACH_DEHUMIDIFICATION_MODE_Pos           (4)                                                     /* !< indoor machine Dehumidification mode */
 #define INDOOR_MACH_DEHUMIDIFICATION_MODE_Msk           (0x1ul << INDOOR_MACH_DEHUMIDIFICATION_MODE_Pos)        /* !< indoor machine Dehumidification mode */
+#define INDOOR_MACH_DEHUMIDIFICATION_MODE(dregister)    ((dregister & INDOOR_MACH_DEHUMIDIFICATION_MODE_Msk) >> INDOOR_MACH_DEHUMIDIFICATION_MODE_Pos)
 
 /* 风量自动 */
 #define INDOOR_MACH_AUTO_AIR_VOL_Pos                    (6)                                                     /* !< indoor machine auto air vol */
 #define INDOOR_MACH_AUTO_AIR_VOL_Msk                    (0x1ul << INDOOR_MACH_AUTO_AIR_VOL_Pos)                 /* !< indoor machine auto air vol */
+#define INDOOR_MACH_AUTO_AIR_VOL(dregister)             ((dregister & INDOOR_MACH_AUTO_AIR_VOL_Msk) >> INDOOR_MACH_AUTO_AIR_VOL_Pos)
 
 /* 风向自动 */
 #define INDOOR_MACH_AUTO_WIND_DIR_Pos                   (7)                                                     /* !< indoor machine auto wind direction */
 #define INDOOR_MACH_AUTO_WIND_DIR_Msk                   (0x1ul << INDOOR_MACH_AUTO_WIND_DIR_Pos)                /* !< indoor machine auto wind direction */
+#define INDOOR_MACH_AUTO_WIND_DIR(dregister)            ((dregister & INDOOR_MACH_AUTO_WIND_DIR_Msk) >> INDOOR_MACH_AUTO_WIND_DIR_Pos)
 
 /* 风向叶片位置数设定 */
 /* [10:8] */
@@ -309,10 +318,12 @@
 /* ------------------------------------------------ */
 #define INDOOR_MACH_POSITION_NUMBER_OF_WIND_BLADE_Pos   (8)                                                         /* !< indoor machine position number of wind blade */
 #define INDOOR_MACH_POSITION_NUMBER_OF_WIND_BLADE_Msk   (0x7ul << INDOOR_MACH_POSITION_NUMBER_OF_WIND_BLADE_Pos)    /* !< indoor machine position number of wind blade */
+#define INDOOR_MACH_POSITION_NUMBER_OF_WIND_BLADE(dregister)    ((dregister & INDOOR_MACH_POSITION_NUMBER_OF_WIND_BLADE_Msk) >> INDOOR_MACH_POSITION_NUMBER_OF_WIND_BLADE_Pos)
 
 /* 风向设定 */
 #define INDOOR_MACH_WIND_DIRECTION_SET_Pos              (11)                                                    /* !< indoor machine wind direction set */
 #define INDOOR_MACH_WIND_DIRECTION_SET_Msk              (0x1ul << INDOOR_MACH_WIND_DIRECTION_SET_Pos)           /* !< indoor machine wind direction set */
+#define INDOOR_MACH_WIND_DIRECTION_SET(dregister)       ((dregister & INDOOR_MACH_WIND_DIRECTION_SET_Msk) >> INDOOR_MACH_WIND_DIRECTION_SET_Pos)
 
 /* 风量/换气风量的风速设定 */
 /* [14:12] */
@@ -323,10 +334,12 @@
 /* ---------------------------------------- */
 #define INDOOR_MACH_WIND_SEPPD_SET_Pos                  (12)                                                    /* !< indoor machine wind speed set */
 #define INDOOR_MACH_WIND_SEPPD_SET_Msk                  (0x7ul << INDOOR_MACH_WIND_SEPPD_SET_Pos)               /* !< indoor machine wind speed set */
+#define INDOOR_MACH_WIND_SEPPD_SET(dregister)           ((dregister & INDOOR_MACH_WIND_SEPPD_SET_Msk) >> INDOOR_MACH_WIND_SEPPD_SET_Pos)
 
 /* 风量调节 */
 #define INDOOR_MACH_AIR_VOLUME_REGULATION_Pos           (15)                                                    /* !< indoor machine air volume regulation */  
 #define INDOOR_MACH_AIR_VOLUME_REGULATION_Msk           (0x1ul << INDOOR_MACH_AIR_VOLUME_REGULATION_Pos)        /* !< indoor machine air volume regulation */
+#define INDOOR_MACH_AIR_VOLUME_REGULATION(dregister)    ((dregister & INDOOR_MACH_AIR_VOLUME_REGULATION_Msk) >> INDOOR_MACH_AIR_VOLUME_REGULATION_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -336,12 +349,14 @@
 /* 制冷设定温度上限 (-128-127摄氏度)*/
 /* [7:0] */
 #define INDOOR_MACH_REF_SET_TEMPER_UPPER_LIMIT_Pos      (0)                                                     /* !< indoor machine Upper limit of temperature for refrigeration */
-#define INDOOR_MACH_REF_SET_TEMPER_UPPER_LIMIT_Mak      (0xfful << INDOOR_MACH_REF_SET_TEMPER_UPPER_LIMIT_Pos)  /* !< indoor machine Upper limit of temperature for refrigeration */
+#define INDOOR_MACH_REF_SET_TEMPER_UPPER_LIMIT_Msk      (0xfful << INDOOR_MACH_REF_SET_TEMPER_UPPER_LIMIT_Pos)  /* !< indoor machine Upper limit of temperature for refrigeration */
+#define INDOOR_MACH_REF_SET_TEMPER_UPPER_LIMIT(dregister)   ((dregister & INDOOR_MACH_REF_SET_TEMPER_UPPER_LIMIT_Msk) >> INDOOR_MACH_REF_SET_TEMPER_UPPER_LIMIT_Pos)
 
 /* 制冷设定温度下限 (-128-127摄氏度) */
 /* [15:8] */
 #define INDOOR_MACH_REF_SET_TEMPER_LOWER_LIMIT_Pos      (8)                                                     /* !< indoor machine Lower limit of temperature for refrigeration */
-#define INDOOR_MACH_REF_SET_TEMPER_LOWER_LIMIT_Mak      (0xfful << INDOOR_MACH_REF_SET_TEMPER_LOWER_LIMIT_Pos)  /* !< indoor machine Lower limit of temperature for refrigeration */
+#define INDOOR_MACH_REF_SET_TEMPER_LOWER_LIMIT_Msk      (0xfful << INDOOR_MACH_REF_SET_TEMPER_LOWER_LIMIT_Pos)  /* !< indoor machine Lower limit of temperature for refrigeration */
+#define INDOOR_MACH_REF_SET_TEMPER_LOWER_LIMIT(dregister)   ((dregister & INDOOR_MACH_REF_SET_TEMPER_LOWER_LIMIT_Msk) >> INDOOR_MACH_REF_SET_TEMPER_LOWER_LIMIT_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -351,12 +366,14 @@
 /* 制热设定温度上限 (-128-127摄氏度) */
 /* [7:0] */
 #define INDOOR_MACH_HEAT_SET_TEMPER_UPPER_LIMIT_Pos     (0)                                                     /* !< indoor machine Upper limit of heating set temperature */
-#define INDOOR_MACH_HEAT_SET_TEMPER_UPPER_LIMIT_Mak     (0xfful << INDOOR_MACH_HEAT_SET_TEMPER_UPPER_LIMIT_Pos) /* !< indoor machine Upper limit of heating set temperature */
+#define INDOOR_MACH_HEAT_SET_TEMPER_UPPER_LIMIT_Msk     (0xfful << INDOOR_MACH_HEAT_SET_TEMPER_UPPER_LIMIT_Pos) /* !< indoor machine Upper limit of heating set temperature */
+#define INDOOR_MACH_HEAT_SET_TEMPER_UPPER_LIMIT(dregister)  ((dregister & INDOOR_MACH_HEAT_SET_TEMPER_UPPER_LIMIT_Msk) >> INDOOR_MACH_HEAT_SET_TEMPER_UPPER_LIMIT_Pos)
 
 /* 制热设定温度下限 (-128-127摄氏度) */
 /* [15:8] */
 #define INDOOR_MACH_HEAT_SET_TEMPER_LOWER_LIMIT_Pos     (8)                                                     /* !< indoor machine Lower limit of heating set temperature */
-#define INDOOR_MACH_HEAT_SET_TEMPER_LOWER_LIMIT_Mak     (0xfful << INDOOR_MACH_HEAT_SET_TEMPER_LOWER_LIMIT_Pos) /* !< indoor machine Lower limit of heating set temperature */
+#define INDOOR_MACH_HEAT_SET_TEMPER_LOWER_LIMIT_Msk     (0xfful << INDOOR_MACH_HEAT_SET_TEMPER_LOWER_LIMIT_Pos) /* !< indoor machine Lower limit of heating set temperature */
+#define INDOOR_MACH_HEAT_SET_TEMPER_LOWER_LIMIT(dregister)  ((dregister & INDOOR_MACH_HEAT_SET_TEMPER_LOWER_LIMIT_Msk) >> INDOOR_MACH_HEAT_SET_TEMPER_LOWER_LIMIT_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -366,42 +383,52 @@
 /* 通常模式 */
 #define INDOOR_MACH_NORMAL_MODE_Pos                     (0)                                                     /* !< indoor machine normal mode */
 #define INDOOR_MACH_NORMAL_MODE_Msk                     (0x1ul << INDOOR_MACH_NORMAL_MODE_Pos)                  /* !< indoor machine normal mode */
+#define INDOOR_MACH_NORMAL_MODE(dregister)              ((dregister & INDOOR_MACH_NORMAL_MODE_Msk) >> INDOOR_MACH_NORMAL_MODE_Pos)
 
 /* 自动换气 */
 #define INDOOR_MACH_AUTO_VENTILATION_Pos                (1)                                                     /* !< indoor machine auto Ventilation */
-#define INDOOR_MACH_AUTO_VENTILATION_Msk                (0x1ul << INDOOR_MACH_VENTILATION_Pos)                  /* !< indoor machine auto Ventilation */
+#define INDOOR_MACH_AUTO_VENTILATION_Msk                (0x1ul << INDOOR_MACH_AUTO_VENTILATION_Pos)             /* !< indoor machine auto Ventilation */
+#define INDOOR_MACH_AUTO_VENTILATION(dregister)         ((dregister & INDOOR_MACH_AUTO_VENTILATION_Msk) >> INDOOR_MACH_AUTO_VENTILATION_Pos)
 
 /* 再热除湿 */
 #define INDOOR_MACH_REHEAT_DEHUMIDIFICATION_Pos         (8)                                                     /* !< indoor machine reheat dehumidification mode */
 #define INDOOR_MACH_REHEAT_DEHUMIDIFICATION_Msk         (0x1ul << INDOOR_MACH_REHEAT_DEHUMIDIFICATION_Pos)      /* !< indoor machine reheat dehumidification mode */
+#define INDOOR_MACH_REHEAT_DEHUMIDIFICATION(dregister)    ((dregister & INDOOR_MACH_REHEAT_DEHUMIDIFICATION_Msk) >> INDOOR_MACH_REHEAT_DEHUMIDIFICATION_Pos)
 
 /* 自动除湿 */
 #define INDOOR_MACH_AUTO_DEHUMIDIFICATION_Pos           (9)                                                     /* !< indoor machine Automatic dehumidification mode */
 #define INDOOR_MACH_AUTO_DEHUMIDIFICATION_Msk           (0x1ul << INDOOR_MACH_AUTO_DEHUMIDIFICATION_Pos)        /* !< indoor machine Automatic dehumidification mode */
+#define INDOOR_MACH_AUTO_DEHUMIDIFICATION(dregister)    ((dregister & INDOOR_MACH_AUTO_DEHUMIDIFICATION_Msk) >> INDOOR_MACH_AUTO_DEHUMIDIFICATION_Pos)
 
 /* 舒适睡眠 */
 #define INDOOR_MACH_COMFORTABLE_SLEEP_Pos               (10)                                                    /* !< indoor machine confortable sleep mode */
 #define INDOOR_MACH_COMFORTABLE_SLEEP_Msk               (0xful << INDOOR_MACH_COMFORTABLE_SLEEP_Pos)            /* !< indoor machine confortable sleep mode */
+#define INDOOR_MACH_COMFORTABLE_SLEEP(dregister)        ((dregister & INDOOR_MACH_COMFORTABLE_SLEEP_Msk) >> INDOOR_MACH_COMFORTABLE_SLEEP_Pos)
 
 /* 干燥模式 */
 #define INDOOR_MACH_DRING_MODE_Pos                      (11)                                                    /* !< indoor machine dring mode */
 #define INDOOR_MACH_DRING_MODE_Msk                      (0x1ul << INDOOR_MACH_DRING_MODE_Pos)                   /* !< indoor machine dring mode */
+#define INDOOR_MACH_DRING_MODE(dregister)               ((dregister & INDOOR_MACH_DRING_MODE_Msk) >> INDOOR_MACH_DRING_MODE_Pos)
 
 /* 预备暖房 */
 #define INDOOR_MACH_PREPARE_GREENHOUSE_Pos              (12)                                                    /* !< indoor machine prepare greenhouse mode */
 #define INDOOR_MACH_PREPARE_GREENHOUSE_Msk              (0x1ul << INDOOR_MACH_PREPARE_GREENHOUSE_Pos)           /* !< indoor machine prepare greenhouse mode */
+#define INDOOR_MACH_PREPARE_GREENHOUSE(dregister)       ((dregister & INDOOR_MACH_PREPARE_GREENHOUSE_Msk) >> INDOOR_MACH_PREPARE_GREENHOUSE_Pos)
 
 /* 浴室换气 */
 #define INDOOR_MACH_BATHROOM_VENTILATION_Pos            (13)                                                    /* !< indoor machine Bathroom ventilation mode */
 #define INDOOR_MACH_BATHROOM_VENTILATION_Msk            (0x1ul << INDOOR_MACH_BATHROOM_VENTILATION_Pos)         /* !< indoor machine Bathroom ventilation mode */
+#define INDOOR_MACH_BATHROOM_VENTILATION(dregister)     ((dregister & INDOOR_MACH_BATHROOM_VENTILATION_Msk) >> INDOOR_MACH_BATHROOM_VENTILATION_Pos)
 
 /* 湿度设定 */
 #define INDOOR_MACH_HUMIDITY_SETTING_Pos                (14)                                                    /* !< indoor machine Humidity setting mode */
 #define INDOOR_MACH_HUMIDITY_SETTING_Msk                (0x1ul << INDOOR_MACH_HUMIDITY_SETTING_Pos)             /* !< indoor machine Humidity setting mode */
+#define INDOOR_MACH_HUMIDITY_SETTING(dregister)         ((dregister & INDOOR_MACH_HUMIDITY_SETTING_Msk) >> INDOOR_MACH_HUMIDITY_SETTING_Pos)
 
 /* 风向2 */
 #define INDOOR_MACH_WIND_DIRECTION2_Pos                 (15)                                                    /* !< indoor machine Wind direction mode */
 #define INDOOR_MACH_WIND_DIRECTION2_Msk                 (0x1ul << INDOOR_MACH_WIND_DIRECTION2_Pos)              /* !< indoor machine Wind direction mode */
+#define INDOOR_MACH_WIND_DIRECTION2(dregister)          ((dregister & INDOOR_MACH_WIND_DIRECTION2_Msk) >> INDOOR_MACH_WIND_DIRECTION2_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -411,10 +438,12 @@
 /* 运转/暂停状态 */
 #define INDOOR_MACH_FAN_WORK_STATUS_Pos                 (0)                                                     /* !< indoor machine fan work status */
 #define INDOOR_MACH_FAN_WORK_STATUS_Msk                 (0x1ul << INDOOR_MACH_FAN_WORK_STATUS_Pos)              /* !< indoor machine fan work status */
+#define INDOOR_MACH_FAN_WORK_STATUS(dregister)          ((dregister & INDOOR_MACH_FAN_WORK_STATUS_Msk) >> INDOOR_MACH_FAN_WORK_STATUS_Pos)
 
 /* 强制停止状态 */
 #define INDOOR_MACH_FORCED_STOP_STATE_Pos               (2)                                                     /* !< indoor machine forced stop state */
 #define INDOOR_MACH_FORCED_STOP_STATE_Msk               (0x1ul << INDOOR_MACH_FORCED_STOP_STATE_Pos)            /* !< indoor machine forced stop state */
+#define INDOOR_MACH_FORCED_STOP_STATE(dregister)        ((dregister & INDOOR_MACH_FORCED_STOP_STATE_Msk) >> INDOOR_MACH_FORCED_STOP_STATE_Pos)
 
 /* 方向(0-7) */
 /* [10:8] */
@@ -426,10 +455,12 @@
 /* P0:水平防线， P4:垂直方向 */
 #define INDOOR_MACH_WIND_DIRECTION_Pos                  (8)                                                     /* !< indoor machine wind direction */
 #define INDOOR_MACH_WIND_DIRECTION_Msk                  (0x7ul << INDOOR_MACH_WIND_DIRECTION_Pos)               /* !< indoor machine wind direction */
+#define INDOOR_MACH_WIND_DIRECTION(dregister)           ((dregister & INDOOR_MACH_WIND_DIRECTION_Msk) >> INDOOR_MACH_WIND_DIRECTION_Pos)
 
 /* 风向自动 */
 #define INDOOR_MACH_AUTO_WIND_DIRECTION_Pos             (11)                                                    /* !< indoor machine auto wind direction */
 #define INDOOR_MACH_AUTO_WIND_DIRECTION_Msk             (0x1ul << INDOOR_MACH_AUTO_WIND_DIRECTION_Pos)          /* !< indoor machine auto wind direction */
+#define INDOOR_MACH_AUTO_WIND_DIRECTION(dregister)      ((dregister & INDOOR_MACH_AUTO_WIND_DIRECTION_Msk) >> INDOOR_MACH_AUTO_WIND_DIRECTION_Pos)
 
 /* 风量/换气量(1-7) 根据室内机性能不同，风量的风速设定叶也不一样 */
 /* [14:12] */
@@ -465,6 +496,7 @@
 /* ------------------------------------------- */
 #define INDOOR_MACH_AIR_VOLUME_Pos                      (12)                                                    /* !< indoor machine air volume*/
 #define INDOOR_MACH_AIR_VOLUME_Msk                      (0x7ul << INDOOR_MACH_AIR_VOLUME_Pos)                   /* !< indoor machine air volume*/
+#define INDOOR_MACH_AIR_VOLUME(dregister)               ((dregister & INDOOR_MACH_AIR_VOLUME_Msk) >> INDOOR_MACH_AIR_VOLUME_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -480,12 +512,14 @@
 /* -------------------------------------------------------------- */
 #define INDOOR_MACH_RUNNING_MODE_Pos                    (0)                                                     /* !< indoor machine Running mode */
 #define INDOOR_MACH_RUNNING_MODE_Msk                    (0xful << INDOOR_MACH_RUNNING_MODE_Pos)                 /* !< indoor machine Running mode */
+#define INDOOR_MACH_RUNNING_MODE(dregister)             ((dregister & INDOOR_MACH_RUNNING_MODE_Msk) >> INDOOR_MACH_RUNNING_MODE_Pos)
 
 /* 过滤信号状态(0或者1-15) */
 /* 0:OFF，1-15:ON */
 /* [7:4] */
 #define INDOOR_MACH_FILTERED_SIGNAL_STATUS_Pos          (4)                                                     /* !< indoor machine Filtered signal status */
 #define INDOOR_MACH_FILTERED_SIGNAL_STATUS_Msk          (0xful << INDOOR_MACH_FILTERED_SIGNAL_STATUS_Pos)       /* !< indoor machine Filtered signal status */
+#define INDOOR_MACH_FILTERED_SIGNAL_STATUS(dregister)   ((dregister & INDOOR_MACH_FILTERED_SIGNAL_STATUS_Msk) >> INDOOR_MACH_FILTERED_SIGNAL_STATUS_Pos)
 
 /* 运转模式(0-15) */
 /* [11:8] */
@@ -496,6 +530,7 @@
 /* --------------------------------- */
 #define INDOOR_MACH_OPERATION_MODE_Pos                  (8)                                                     /* !< indoor machine Operation mode */
 #define INDOOR_MACH_OPERATION_MODE_Msk                  (0xful << INDOOR_MACH_OPERATION_MODE_Pos)               /* !< indoor machine Operation mode */
+#define INDOOR_MACH_OPERATION_MODE(dregister)           ((dregister & INDOOR_MACH_OPERATION_MODE_Msk) >> INDOOR_MACH_OPERATION_MODE_Pos)
 
 /* 冷/热选择权(0-2) */
 /* 0:VRV空调系统的冷/暖选择权还没有决定，2:它可以改变VRV空调系统室内机的制冷/制热模式。 */
@@ -507,6 +542,7 @@
 /* ------------------------------ */
 #define INDOOR_MACH_COLD_OR_HOT_OPTION_Pos              (14)                                                    /* !< indoor machine Cold / hot option */
 #define INDOOR_MACH_COLD_OR_HOT_OPTION_Msk              (0x3ul << INDOOR_MACH_COLD_OR_HOT_OPTION_Pos)           /* !< indoor machine Cold / hot option */
+#define INDOOR_MACH_COLD_OR_HOT_OPTION(dregister)       ((dregister & INDOOR_MACH_COLD_OR_HOT_OPTION_Msk) >> INDOOR_MACH_COLD_OR_HOT_OPTION_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -517,6 +553,7 @@
 /* 以0.1摄氏度为单位。此值乘以10以一个整数数值存储 */
 #define INDOOR_MACH_SET_TEMPERATURE_Pos                 (0)                                                     /* !< indoor machine set temperature */
 #define INDOOR_MACH_SET_TEMPERATURE_Msk                 (0xfffful << INDOOR_MACH_SET_TEMPERATURE_Pos)           /* !< indoor machine set temperature */
+#define INDOOR_MACH_SET_TEMPERATURE(dregister)          ((dregister & INDOOR_MACH_SET_TEMPERATURE_Msk) >> INDOOR_MACH_SET_TEMPERATURE_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -537,6 +574,7 @@
 /* -------------------------------------------- */
 #define INDOOR_MACH_EXCEPTION_CODE_MAPPING1_Pos         (0)                                                     /* !< indoor machine exception code mapping1 */
 #define INDOOR_MACH_EXCEPTION_CODE_MAPPING1_Msk         (0xful << INDOOR_MACH_EXCEPTION_CODE_MAPPING1_Pos)      /* !< indoor machine exception code mapping1 */
+#define INDOOR_MACH_EXCEPTION_CODE_MAPPING1(dregister)  ((dregister & INDOOR_MACH_EXCEPTION_CODE_MAPPING1_Msk) >> INDOOR_MACH_EXCEPTION_CODE_MAPPING1_Pos)
 
 /* 异常代码映射值2 (0-31) */
 /* [8:4] */
@@ -552,14 +590,17 @@
 /* -------------------------------------------------------------------------------------- */
 #define INDOOR_MACH_EXCEPTION_CODE_MAPPING2_Pos         (4)                                                     /* indoor machine exception code mapping2 */
 #define INDOOR_MACH_EXCEPTION_CODE_MAPPING2_Msk         (0x1ful << INDOOR_MACH_EXCEPTION_CODE_MAPPING2_Pos)     /* indoor machine exception code mapping2 */
+#define INDOOR_MACH_EXCEPTION_CODE_MAPPING2(dregister)  ((dregister & INDOOR_MACH_EXCEPTION_CODE_MAPPING2_Msk) >> INDOOR_MACH_EXCEPTION_CODE_MAPPING2_Pos)
 
 /* 故障 */
 #define INDOOR_MACH_MALFUNCTION_Pos                     (9)                                                     /* !< indoor machine malfunction */
 #define INDOOR_MACH_MALFUNCTION_Msk                     (0x1ul << INDOOR_MACH_MALFUNCTION_Pos)                  /* !< indoor machine malfunction */
+#define INDOOR_MACH_MALFUNCTION(dregister)              ((dregister & INDOOR_MACH_MALFUNCTION_Msk) >> INDOOR_MACH_MALFUNCTION_Pos)
 
 /* 警告 */  
 #define INDOOR_MACH_WARNING_Pos                         (10)                                                    /* !< indoor machine warning */
 #define INDOOR_MACH_WARNING_Msk                         (0x1ul << INDOOR_MACH_WARNING_Pos)                      /* !< indoor machine warning */
+#define INDOOR_MACH_WARNING(dregister)                  ((dregister & INDOOR_MACH_WARNING_Msk) >> INDOOR_MACH_WARNING_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -571,6 +612,7 @@
 /* 以0.1摄氏度为单位。此值乘以10以一个整数数值存储 */
 #define INDOOR_MACH_INDOOR_TEMPERATURE_Pos              (0)                                                     /* !< indoor machine Indoor temperature */
 #define INDOOR_MACH_INDOOR_TEMPERATURE_Msk              (0xffff  << INDOOR_MACH_INDOOR_TEMPERATURE_Pos)         /* !< indoor machine Indoor temperature */
+#define INDOOR_MACH_INDOOR_TEMPERATURE(dregister)       ((dregister & INDOOR_MACH_INDOOR_TEMPERATURE_Msk) >> INDOOR_MACH_INDOOR_TEMPERATURE_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -579,11 +621,13 @@
 
 /* 室内机温度传感器异常 */
 #define INDOOR_MACH_TEMPERATURE_SENSOR_ABNORMAL_Pos     (8)                                                     /* !< indoor machine temperature sensot Abnormal */
-#define INDOOR_MACH_TEMPERATURE_SENSOR_ABNORMAL_Msk     (0x1ul << INDOOR_MACH_TEMPERATURE_SENSOR_ABNORMAL_Pos)  /* !< indoor machine temperature sensot Abnormal */\
+#define INDOOR_MACH_TEMPERATURE_SENSOR_ABNORMAL_Msk     (0x1ul << INDOOR_MACH_TEMPERATURE_SENSOR_ABNORMAL_Pos)  /* !< indoor machine temperature sensot Abnormal */
+#define INDOOR_MACH_TEMPERATURE_SENSOR_ABNORMAL(dregister)    ((dregister & INDOOR_MACH_TEMPERATURE_SENSOR_ABNORMAL_Msk) >> INDOOR_MACH_TEMPERATURE_SENSOR_ABNORMAL_Pos)
 
 /* 室内机温度传感器数据接收 */
 #define INDOOR_MACH_TEMPERATURE_SENSOR_RECEIVE_DATA_Pos (15)                                                        /* !< indoor machine temperature sensot Receive data */
 #define INDOOR_MACH_TEMPERATURE_SENSOR_RECEIVE_DATA_Msk (0x1ul << INDOOR_MACH_TEMPERATURE_SENSOR_RECEIVE_DATA_Pos)  /* !< indoor machine temperature sensot Receive data */
+#define INDOOR_MACH_TEMPERATURE_SENSOR_RECEIVE_DATA(dregister)  ((dregister & INDOOR_MACH_TEMPERATURE_SENSOR_RECEIVE_DATA_Msk) >> INDOOR_MACH_TEMPERATURE_SENSOR_RECEIVE_DATA_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -599,6 +643,7 @@
 /* -------------------------------------------- */
 #define INDOOR_MACH_VENTILATION_MODE_Pos                (6)                                                         /* !< indoor machine Ventilation mode */
 #define INDOOR_MACH_VENTILATION_MODE_Msk                (0x3ul << INDOOR_MACH_VENTILATION_MODE_Pos)                 /* !< indoor machine Ventilation mode */
+#define INDOOR_MACH_VENTILATION_MODE(dregister)         ((dregister & INDOOR_MACH_VENTILATION_MODE_Msk) >> INDOOR_MACH_VENTILATION_MODE_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -615,6 +660,7 @@
 /* P0:水平防线， P4:垂直方向 */
 #define INDOOR_MACH_WIND_DIRECTION2_SET_Pos             (8)                                                     /* !< indoor machine wind direction2 */
 #define INDOOR_MACH_WIND_DIRECTION2_SET_Msk             (0x7ul << INDOOR_MACH_WIND_DIRECTION2_SET_Pos)          /* !< indoor machine wind direction2 */
+#define INDOOR_MACH_WIND_DIRECTION2_SET(dregister)      ((dregister & INDOOR_MACH_WIND_DIRECTION2_SET_Msk) >> INDOOR_MACH_WIND_DIRECTION2_SET_Pos)
 
 
 /* -------------------------------------------------------------- */
@@ -630,6 +676,7 @@
 /* -------------------------------------------------------------- */
 #define INDOOR_MACH_SET_RUNNING_MODE_INFO_Pos           (0)                                                     /* !< indoor machine set running mode */
 #define INDOOR_MACH_SET_RUNNING_MODE_INFO_Msk           (0xful << INDOOR_MACH_SET_RUNNING_MODE_INFO_Pos)        /* !< indoor machine set running mode */
+#define INDOOR_MACH_SET_RUNNING_MODE_INFO(dregister)    ((dregister & INDOOR_MACH_SET_RUNNING_MODE_INFO_Msk) >> INDOOR_MACH_SET_RUNNING_MODE_INFO_Pos)
 
 /* 设定运转模式详细信息 (0-7) */
 /* [6:4] */
@@ -640,6 +687,7 @@
 /* ------------------------------------------------------------------ */
 #define INDOOR_MACH_SET_RUNNING_MODE_DETAILS_Pos        (4)                                                     /* !< indoor machine set running mode Details */
 #define INDOOR_MACH_SET_RUNNING_MODE_DETAILS_Msk        (0x7ul << INDOOR_MACH_SET_RUNNING_MODE_DETAILS_Pos)     /* !< indoor machine set running mode Details */
+#define INDOOR_MACH_SET_RUNNING_MODE_DETAILS(dregister) ((dregister & INDOOR_MACH_SET_RUNNING_MODE_DETAILS_Msk) >> INDOOR_MACH_SET_RUNNING_MODE_DETAILS_Pos)
 
 /* 外机运转模式状态信息 (0-15) */
 /* [11:8] */
@@ -650,6 +698,7 @@
 /* --------------------------------- */
 #define OUTDOOR_MACH_OPERATION_MODE_INFO_Pos            (8)                                                     /* !< outdoor machine operation mode */
 #define OUTDOOR_MACH_OPERATION_MODE_INFO_Msk            (0xful << OUTDOOR_MACH_OPERATION_MODE_INFO_Pos)         /* !< outdoor machine operation mode */
+#define OUTDOOR_MACH_OPERATION_MODE_INFO(dregister)     ((dregister & OUTDOOR_MACH_OPERATION_MODE_INFO_Msk) >> OUTDOOR_MACH_OPERATION_MODE_INFO_Pos)
 
 /* 设定湿度状态信息 (0-3) */
 /* [13:12] */
@@ -660,6 +709,7 @@
 /* ------------------------ */    
 #define INDOOR_MACH_SET_HUMIDITY_INFO_Pos               (12)                                                    /* !< indoor machine set humidity */
 #define INDOOR_MACH_SET_HUMIDITY_INFO_Msk               (0x7ul << INDOOR_MACH_SET_HUMIDITY_INFO_Pos)            /* !< indoor machine set humidity */
+#define INDOOR_MACH_SET_HUMIDITY_INFO(dregister)        ((dregister & INDOOR_MACH_SET_HUMIDITY_INFO_Msk) >> INDOOR_MACH_SET_HUMIDITY_INFO_Pos)
 
 /* 浴室换气状态信息 (0-3) */
 /* [15:14] */
@@ -670,6 +720,7 @@
 /* ---------------------------- */ 
 #define INDOOR_MACH_BATHROOM_VENTILATION_INFO_Pos       (14)                                                    /* !< indoor machine Bathroom ventilation */
 #define INDOOR_MACH_BATHROOM_VENTILATION_INFO_Msk       (0x7ul << INDOOR_MACH_BATHROOM_VENTILATION_INFO_Pos)    /* !< indoor machine Bathroom ventilation */
+#define INDOOR_MACH_BATHROOM_VENTILATION_INFO(dregister)    ((dregister & INDOOR_MACH_BATHROOM_VENTILATION_INFO_Msk) >> INDOOR_MACH_BATHROOM_VENTILATION_INFO_Pos)
 
 /* ********************************************************************************************************************************** */
 /* ----------------------------------------------------------------end--------------------------------------------------------------- */
@@ -693,20 +744,24 @@
 /* [3:0] */
 #define ADAPTOR_INIT_STATUS_DIII_ADDRESS_RANGE_Pos      (0)                                                     /* !< adaptor init status DIII machine Address range */
 #define ADAPTOR_INIT_STATUS_DIII_ADDRESS_RANGE_Msk      (0xful << ADAPTOR_INIT_STATUS_DIII_ADDRESS_RANGE_Pos)   /* !< adaptor init status DIII machine Address range */
+#define ADAPTOR_INIT_STATUS_DIII_ADDRESS_RANGE(dregister, data)   ((dregister & (~ADAPTOR_INIT_STATUS_DIII_ADDRESS_RANGE_Msk)) | (data << ADAPTOR_INIT_STATUS_DIII_ADDRESS_RANGE_Pos))
 
 /* DIII电源供给有无 */
 #define ADAPTOR_INIT_STATUS_DIII_POWER_Pos              (8)                                                     /* !< adaptor init status DIII whether Power on */
 #define ADAPTOR_INIT_STATUS_DIII_POWER_Msk              (0x1ul << ADAPTOR_INIT_STATUS_DIII_POWER_Pos)           /* !< adaptor init status DIII whether Power on */
+#define ADAPTOR_INIT_STATUS_DIII_POWER(dregister, data)       ((dregister & (~ADAPTOR_INIT_STATUS_DIII_POWER_Msk)) | (data << ADAPTOR_INIT_STATUS_DIII_POWER_Pos))
 
 /* Auto 地址开始禁止 */
 /* 向许可要求发送禁止信息 */
 #define ADAPTOR_INIT_STATUS_AUTO_ADDR_START_BAN_Pos     (9)                                                     /* !< adaptor init status auto Address Start Ban*/
 #define ADAPTOR_INIT_STATUS_AUTO_ADDR_START_BAN_Msk     (0x1ul << ADAPTOR_INIT_STATUS_AUTO_ADDR_START_BAN_Pos)  /* !< adaptor init status auto Address Start Ban*/
+#define ADAPTOR_INIT_STATUS_AUTO_ADDR_START_BAN(dregister, data)  ((dregister & (~ADAPTOR_INIT_STATUS_AUTO_ADDR_START_BAN_Msk)) | (data << ADAPTOR_INIT_STATUS_AUTO_ADDR_START_BAN_Pos))
 
 /* DIII网络通信开始/停止标志 */
 /* 初始化值为1 */
 #define ADAPTOR_INIT_STATUS_DIII_MACH_NETWORK_FLAG_Pos  (15)                                                        /* !< adaptor init status network communication start or stop flag*/
 #define ADAPTOR_INIT_STATUS_DIII_MACH_NETWORK_FLAG_Msk  (0x1ul << ADAPTOR_INIT_STATUS_DIII_MACH_NETWORK_FLAG_Pos)   /* !< adaptor init status network communication start or stop flag*/
+#define ADAPTOR_INIT_STATUS_DIII_MACH_NETWORK_FLAG(dregister, data)   ((dregister & (~ADAPTOR_INIT_STATUS_DIII_MACH_NETWORK_FLAG_Msk)) | (data << ADAPTOR_INIT_STATUS_DIII_MACH_NETWORK_FLAG_Pos))
 
 /* --------------------------------------------------室内机控制------------------------------------------ */
 
@@ -717,6 +772,7 @@
 /* 运转或者停止 */
 #define INDOOR_MACH_CTRL_START_OR_STOP_Pos              (0)                                                     /* !< indoor machine control start or stop */
 #define INDOOR_MACH_CTRL_START_OR_STOP_Msk              (0x1ul << INDOOR_MACH_CTRL_START_OR_STOP_Pos)           /* !< indoor machine control start or stop */
+#define INDOOR_MACH_CTRL_START_OR_STOP(dregister, data)       ((dregister & (~INDOOR_MACH_CTRL_START_OR_STOP_Msk)) | (data << INDOOR_MACH_CTRL_START_OR_STOP_Pos))
 
 /* 风向风量设定运转模式 (0-15) */
 /* [7:4] */
@@ -727,6 +783,7 @@
 /* -------------------------------------------------------------------- */
 #define INDOOR_MACH_CTRL_WIND_DIR_OR_VOL_SET_MODE_Pos   (4)                                                         /* !< indoor machine control wind direction or air volume set mode */
 #define INDOOR_MACH_CTRL_WIND_DIR_OR_VOL_SET_MODE_Msk   (0xful << INDOOR_MACH_CTRL_WIND_DIR_OR_VOL_SET_MODE_Pos)    /* !< indoor machine control wind direction or air volume set mode */
+#define INDOOR_MACH_CTRL_WIND_DIR_OR_VOL_SET_MODE(dregister, data)    ((dregister & (~INDOOR_MACH_CTRL_WIND_DIR_OR_VOL_SET_MODE_Msk)) | (data << INDOOR_MACH_CTRL_WIND_DIR_OR_VOL_SET_MODE_Pos))
 
 /* 风向 (0-7) */
 /* 控制室内机的风向位置 */
@@ -739,10 +796,12 @@
 /* P0:水平防线， P4:垂直方向 */
 #define INDOOR_MACH_CTRL_WIND_DIR_SET_Pos               (8)                                                     /* !< indoor machine control wind direction */
 #define INDOOR_MACH_CTRL_WIND_DIR_SET_Msk               (0x7ul << INDOOR_MACH_CTRL_WIND_DIR_SET_Pos)            /* !< indoor machine control wind direction */
+#define INDOOR_MACH_CTRL_WIND_DIR_SET(dregister, data)        ((dregister & (~INDOOR_MACH_CTRL_WIND_DIR_SET_Msk)) | (data << INDOOR_MACH_CTRL_WIND_DIR_SET_Pos))
 
 /* 风向自动 */
 #define INDOOR_MACH_CTRL_AUTO_WIND_Pos                  (11)                                                    /* !< indoor machine control auto wind */
 #define INDOOR_MACH_CTRL_AUTO_WIND_Msk                  (0x1ul << INDOOR_MACH_CTRL_AUTO_WIND_Pos)               /* !< indoor machine control auto wind */
+#define INDOOR_MACH_CTRL_AUTO_WIND(dregister, data)           ((dregister & (~INDOOR_MACH_CTRL_AUTO_WIND_Msk)) |  (data << INDOOR_MACH_CTRL_AUTO_WIND_Pos))
 
 /* 风量设定/换气量设定 */
 /* [14:12] */
@@ -780,6 +839,7 @@
 /* *注：风量设定段数为0时，表明无设定风量、则值设定为0 */
 #define INDOOR_MACH_CTRL_AIR_OR_VENTILATION_VOL_Pos     (12)                                                    /* !< indoor machine control air or ventilation volume */
 #define INDOOR_MACH_CTRL_AIR_OR_VENTILATION_VOL_Msk     (0x7ul << INDOOR_MACH_CTRL_AIR_OR_VENTILATION_VOL_Pos)  /* !< indoor machine control air or ventilation volume */
+#define INDOOR_MACH_CTRL_AIR_OR_VENTILATION_VOL(dregister, data)  ((dregister & (~INDOOR_MACH_CTRL_AIR_OR_VENTILATION_VOL_Msk)) | (data << INDOOR_MACH_CTRL_AIR_OR_VENTILATION_VOL_Pos))
 
 
 /* -------------------------------------------------------------- */
@@ -795,6 +855,7 @@
 /* -------------------------------------------------------------------- */
 #define INDOOR_MACH_CTRL_SET_OPERATION_MODE_Pos         (0)                                                     /* indoor machine control set operation mode */
 #define INDOOR_MACH_CTRL_SET_OPERATION_MODE_Msk         (0xful << INDOOR_MACH_CTRL_SET_OPERATION_MODE_Pos)      /* indoor machine control set operation mode */
+#define INDOOR_MACH_CTRL_SET_OPERATION_MODE(dregister, data)  ((dregister & (~INDOOR_MACH_CTRL_SET_OPERATION_MODE_Msk)) | (data << INDOOR_MACH_CTRL_SET_OPERATION_MODE_Pos))
 
 /* 过滤信号复位 (0或者15) */
 /* [7:4] */
@@ -804,6 +865,7 @@
 /* 另外，当过滤信号为0时，为了下次发送重置而要写入0。 */
 #define INDOOR_MACH_CTRL_FILTER_SIGNAL_RESET_Pos        (4)                                                     /* !< indoor machine control Filter signal reset */
 #define INDOOR_MACH_CTRL_FILTER_SIGNAL_RESET_Msk        (0xful << INDOOR_MACH_CTRL_FILTER_SIGNAL_RESET_Pos)     /* !< indoor machine control Filter signal reset */
+#define INDOOR_MACH_CTRL_FILTER_SIGNAL_RESET(dregister,data)               ((dregister & (~INDOOR_MACH_CTRL_FILTER_SIGNAL_RESET_Msk)) | (data << INDOOR_MACH_CTRL_FILTER_SIGNAL_RESET_Pos))
 
 /* 运行模式 (0-15) */
 /* [8:11] */
@@ -817,6 +879,7 @@
 /* --------------------------------- */
 #define INDOOR_MACH_CTRL_RUNNING_MODE_SET_Pos           (8)                                                     /* !< indoor machine control running mode set */
 #define INDOOR_MACH_CTRL_RUNNING_MODE_SET_Msk           (0xful << INDOOR_MACH_CTRL_RUNNING_MODE_SET_Msk)        /* !< indoor machine control running mode set */
+#define INDOOR_MACH_CTRL_RUNNING_MODE_SET(dregister, data)    ((dregister & (~INDOOR_MACH_CTRL_RUNNING_MODE_SET_Msk)) | (data << INDOOR_MACH_CTRL_RUNNING_MODE_SET_Pos))
 
 
 /* -------------------------------------------------------------- */
@@ -827,6 +890,7 @@
 /* [15:0] */
 #define INDOOR_MACH_CTRL_TEMPERATURE_SET_Pos            (0)                                                     /* !< indoor machine control temperature */
 #define INDOOR_MACH_CTRL_TEMPERATURE_SET_Msk            (0xfffful << (INDOOR_MACH_CTRL_TEMPERATURE_SET_Pos))    /* !< indoor machine control temperature */
+#define INDOOR_MACH_CTRL_TEMPERATURE_SET(dregister, data)     ((dregister & (~INDOOR_MACH_CTRL_TEMPERATURE_SET_Msk)) | (data << INDOOR_MACH_CTRL_TEMPERATURE_SET_Pos))
 
 
 /* -------------------------------------------------------------- */
@@ -841,6 +905,7 @@
 /* -------------------------------------------- */
 #define INDOOR_MACH_CTRL_VENTILATION_MODE_Pos           (6)                                                 /* !< indoor machine control ventilation mode*/
 #define INDOOR_MACH_CTRL_VENTILATION_MODE_Msk           (0x3ul << INDOOR_MACH_CTRL_VENTILATION_MODE_Pos)    /* !< indoor machine control ventilation mode*/
+#define INDOOR_MACH_CTRL_VENTILATION_MODE(dregister, data)    ((dregister & (~INDOOR_MACH_CTRL_VENTILATION_MODE_Msk)) | (data << INDOOR_MACH_CTRL_VENTILATION_MODE_Pos))
 
 
 /* -------------------------------------------------------------- */
@@ -856,6 +921,7 @@
 /* --------------------------------------------------- */
 #define INDOOR_MACH_CTRL_WIND_DIRECTION2_SET_Pos        (8)                                                 /* !< indoor machine control wind direction2 set*/
 #define INDOOR_MACH_CTRL_WIND_DIRECTION2_SET_Msk        (0x7ul << INDOOR_MACH_CTRL_WIND_DIRECTION2_SET_Pos) /* !< indoor machine control wind direction2 set*/
+#define INDOOR_MACH_CTRL_WIND_DIRECTION2_SET(dregister, data)               ((dregister & (~INDOOR_MACH_CTRL_WIND_DIRECTION2_SET_Msk)) | (data << INDOOR_MACH_CTRL_WIND_DIRECTION2_SET_Pos))
 
 
 /* -------------------------------------------------------------- */
@@ -871,6 +937,7 @@
 /* -------------------------------------------------------------- */
 #define INDOOR_MACH_CTRL_SET_RUNNING_MODE_Pos               (0)                                                     /* !< indoor machine control set running mode */
 #define INDOOR_MACH_CTRL_SET_RUNNING_MODE_Msk               (0xful << INDOOR_MACH_CTRL_SET_RUNNING_MODE_Pos)        /* !< indoor machine control set running mode */
+#define INDOOR_MACH_CTRL_SET_RUNNING_MODE(dregister, data)  ((dregister & (~INDOOR_MACH_CTRL_SET_RUNNING_MODE_Msk)) | (data << INDOOR_MACH_CTRL_SET_RUNNING_MODE_Pos))
 
 /* 设定运转模式详细信息 (0-7) */
 /* [6:4] */
@@ -881,6 +948,7 @@
 /* ------------------------------------------------------------------ */
 #define INDOOR_MACH_CTRL_SET_RUNNING_MODE_DETAILS_Pos       (4)                                                        /* !< indoor machine control set running mode Details */
 #define INDOOR_MACH_CTRL_SET_RUNNING_MODE_DETAILS_Msk       (0x7ul << INDOOR_MACH_CTRL_SET_RUNNING_MODE_DETAILS_Pos)   /* !< indoor machine control set running mode Details */
+#define INDOOR_MACH_CTRL_SET_RUNNING_MODE_DETAILS(dregister, data)       ((dregister & (~INDOOR_MACH_CTRL_SET_RUNNING_MODE_DETAILS_Msk)) | (data << INDOOR_MACH_CTRL_SET_RUNNING_MODE_DETAILS_Pos))
 
 /* 外机运转模式状态信息 (0-15) */
 /* [11:8] */
@@ -891,6 +959,7 @@
 /* --------------------------------- */
 #define OUTDOOR_MACH_CTRL_OPERATION_MODE_Pos                 (8)                                                        /* !< outdoor machine control operation mode */
 #define OUTDOOR_MACH_CTRL_OPERATION_MODE_Msk                 (0xful << OUTDOOR_MACH_CTRL_OPERATION_MODE_Pos)            /* !< outdoor machine control operation mode */
+#define OUTDOOR_MACH_CTRL_OPERATION_MODE(dregister, data)          ((dregister & (~OUTDOOR_MACH_CTRL_OPERATION_MODE_Msk)) | (data << OUTDOOR_MACH_CTRL_OPERATION_MODE_Pos))
 
 /* 设定湿度状态信息 (0-3) */
 /* [13:12] */
@@ -901,6 +970,7 @@
 /* ------------------------ */    
 #define INDOOR_MACH_CTRL_SET_HUMIDITY_Pos                    (12)                                                       /* !< indoor machine control set humidity */
 #define INDOOR_MACH_CTRL_SET_HUMIDITY_Msk                    (0x7ul << INDOOR_MACH_CTRL_SET_HUMIDITY_Pos)               /* !< indoor machine control set humidity */
+#define INDOOR_MACH_CTRL_SET_HUMIDITY(dregister, data)             ((dregister & (~INDOOR_MACH_CTRL_SET_HUMIDITY_Msk)) | (data << INDOOR_MACH_CTRL_SET_HUMIDITY_Pos))
 
 /* 浴室换气状态信息 (0-3) */
 /* [15:14] */
@@ -911,6 +981,7 @@
 /* ---------------------------- */ 
 #define INDOOR_MACH_CTRL_BATHROOM_VENTILATION_Pos            (14)                                                       /* !< indoor machine control Bathroom ventilation */
 #define INDOOR_MACH_CTRL_BATHROOM_VENTILATION_Msk            (0x7ul << INDOOR_MACH_CTRL_BATHROOM_VENTILATION_Pos)       /* !< indoor machine control Bathroom ventilation */
+#define INDOOR_MACH_CTRL_BATHROOM_VENTILATION(dregister, data)     ((dregister & (~INDOOR_MACH_CTRL_BATHROOM_VENTILATION_Msk)) | (data << INDOOR_MACH_CTRL_BATHROOM_VENTILATION_Pos))
 
 /* ********************************************************************************************************************************** */
 /* ----------------------------------------------------------------end--------------------------------------------------------------- */

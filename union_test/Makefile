@@ -1,7 +1,7 @@
 # **********************************************
 # Application Makefile Config
 # **********************************************
-TARGET := dj_modbus
+TARGET := unionTest
 
 LOCAL_INCS := . ./include \
 				../include
