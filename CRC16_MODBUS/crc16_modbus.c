@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-07-15 15:07:39
  * @LastEditors  : MCD
- * @LastEditTime : 2022-09-16 16:44:06
+ * @LastEditTime : 2022-09-19 14:38:07
  * @FilePath     : /My_C_Test/CRC16_MODBUS/crc16_modbus.c
  * @Description  :
  *
@@ -209,6 +209,32 @@ unsigned short CRC16_XMODEM(unsigned char *puchMsg, unsigned int usDataLen)
         }
     }
     return (wCRCin);
+}
+
+const uint16_t polynom = 0xA001;
+
+uint16_t crc16bitbybit(uint8_t *ptr, uint16_t len)
+{
+    uint8_t i;
+    uint16_t crc = 0xffff;
+
+    if (len == 0) {
+        len = 1;
+    }
+    while (len--) {
+        crc ^= *ptr;
+        for (i = 0; i < 8; i++) {
+            if (crc & 1) {
+                crc >>= 1;
+                crc ^= polynom;
+            }
+            else {
+                crc >>= 1;
+            }
+        }
+        ptr++;
+    }
+    return (crc);
 }
 
 int my_itoa(char *buf, int value, char size)
@@ -513,13 +539,14 @@ int main(int argc, char const *argv[])
     uint8_t num1 = MSG_TEST1;
     int num2;
 
+#if 0
     num2 = _test_argv(MSG_TEST1);
 
     print_mcd("num2 = %d", num2);
 
     return 0;
 
-#if 0
+#    if 0
     crc = ((crc & 0x000F) | (flag & 0x0F)) << 12;
 
     print_mcd("crc = %x", crc);
@@ -535,10 +562,10 @@ int main(int argc, char const *argv[])
 
     char tmp_buf2[27] = {0x1D, 0x00, 0x01, 0x00, 0x00, 0x00, 0x12, 0x23, 0x34, 0x45, 0x56, 0x67, 0x78, 0x89, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x01, 0x00, 0x00, 0x02};
     print_mcd("0x%x", do_crc16_XMODEM(tmp_buf2, sizeof(tmp_buf2)));
-#endif
+#    endif
     // _test_macaddr_string_to_macaddr_hex();
     // _test_macaddr_to_decstring();
-#if 0
+#    if 0
     eide_rs485_payload_t payload;
     memset(&payload, 0, sizeof(payload));
     eide_rs485_payload_t *test = &payload;
@@ -582,7 +609,7 @@ int main(int argc, char const *argv[])
     return 0;
 Error:
     print_mcd("error");
-#endif
+#    endif
     // for (i = 0; i < 10; i++){
     //     test_len[i].data_code = i;
     //     test_len[i].data[0] = i;
@@ -607,7 +634,7 @@ Error:
 
     // test_ctrl_devs();
 
-#if 0
+#    if 0
     eide_rs485_ctrl_t ctrl_test;
     char data[EIDE_RS485_MAX_DATA_SIZE] = {0};
     char data1[EIDE_RS485_MAX_DATA_SIZE] = {0};
@@ -677,9 +704,9 @@ Error:
     // memcpy(name, data2 + 1, len1);
     
     // name[len1] =0;
-#endif
+#    endif
 
-#if 0
+#    if 0
     buff[0] = 0x56;
     buff[1] = 0x04;
     buff[2] = 0x02;
@@ -733,6 +760,6 @@ Error:
     }
 
     print_mcd("%s", buf1);
-#endif
+#    endif
     return 0;
 }
