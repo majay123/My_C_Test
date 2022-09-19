@@ -1,5 +1,5 @@
 /*
- * 
+ *
  * 　　┏┓　　　┏┓+ +
  * 　┏┛┻━━━┛┻┓ + +
  * 　┃　　　　　　　┃ 　
@@ -21,20 +21,20 @@
  * 　　　┗┓┓┏━┳┓┏┛ + + + +
  * 　　　　┃┫┫　┃┫┫
  * 　　　　┗┻┛　┗┻┛+ + + +
- * 
- * 
- * 
+ *
+ *
+ *
  * ************Copyright 2021 MCD************
- * 
- * @version      : 
+ *
+ * @version      :
  * @Company      : HOPE
  * @Author       : MCD
  * @Date         : 2021-07-15 15:07:39
  * @LastEditors  : MCD
- * @LastEditTime : 2021-09-28 10:57:12
+ * @LastEditTime : 2022-09-16 16:44:06
  * @FilePath     : /My_C_Test/CRC16_MODBUS/crc16_modbus.c
- * @Description  : 
- * 
+ * @Description  :
+ *
  * ******************************************
  */
 
@@ -52,22 +52,31 @@
 #include <unistd.h>
 
 // #define MY_RELLOC(data, num, type)           \
-// do{if(data){free(data);data = calloc(num, sizeof(type));}}while(0);            
-#define MY_RELLOC(data, num, type)              \
-do{                                             \
-    if(data){                                   \
-        free(data);                             \
-        data = NULL;}                           \
-    if(num > 0) {data = calloc(num, sizeof(type));}           \
-}while(0)
+// do{if(data){free(data);data = calloc(num, sizeof(type));}}while(0);
+#define MY_RELLOC(data, num, type)            \
+    do {                                      \
+        if (data) {                           \
+            free(data);                       \
+            data = NULL;                      \
+        }                                     \
+        if (num > 0) {                        \
+            data = calloc(num, sizeof(type)); \
+        }                                     \
+    } while (0)
 
-#define MY_RELLOC_REQUIRE(data, num, type, tag)                               \
-do{                                             \
-    MY_RELLOC(data, num, type);                 \
-    if(!data){print_mcd("%s %s malloc is null", #tag, #data); goto tag;}}while(0)
+#define MY_RELLOC_REQUIRE(data, num, type, tag)             \
+    do {                                                    \
+        MY_RELLOC(data, num, type);                         \
+        if (!data) {                                        \
+            print_mcd("%s %s malloc is null", #tag, #data); \
+            goto tag;                                       \
+        }                                                   \
+    } while (0)
 
-#define PRINT_SIZEOF(type)      \
-do{printf("%d\n",sizeof(type));}while(0);
+#define PRINT_SIZEOF(type)            \
+    do {                              \
+        printf("%d\n", sizeof(type)); \
+    } while (0);
 
 // 该位称为预置值，使用人工算法（长除法）时
 //需要将除数多项式先与该与职位 异或 ，才能得到最后的除数多项式
@@ -75,41 +84,37 @@ do{printf("%d\n",sizeof(type));}while(0);
 // 该位为简式书写 实际为0x11021
 #define CRC16_CCITT_POLY16 (0x1021)
 
-static unsigned short crc16_ccitt_table[256] =
-    {
-        0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7,
-        0x8108, 0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF,
-        0x1231, 0x0210, 0x3273, 0x2252, 0x52B5, 0x4294, 0x72F7, 0x62D6,
-        0x9339, 0x8318, 0xB37B, 0xA35A, 0xD3BD, 0xC39C, 0xF3FF, 0xE3DE,
-        0x2462, 0x3443, 0x0420, 0x1401, 0x64E6, 0x74C7, 0x44A4, 0x5485,
-        0xA56A, 0xB54B, 0x8528, 0x9509, 0xE5EE, 0xF5CF, 0xC5AC, 0xD58D,
-        0x3653, 0x2672, 0x1611, 0x0630, 0x76D7, 0x66F6, 0x5695, 0x46B4,
-        0xB75B, 0xA77A, 0x9719, 0x8738, 0xF7DF, 0xE7FE, 0xD79D, 0xC7BC,
-        0x48C4, 0x58E5, 0x6886, 0x78A7, 0x0840, 0x1861, 0x2802, 0x3823,
-        0xC9CC, 0xD9ED, 0xE98E, 0xF9AF, 0x8948, 0x9969, 0xA90A, 0xB92B,
-        0x5AF5, 0x4AD4, 0x7AB7, 0x6A96, 0x1A71, 0x0A50, 0x3A33, 0x2A12,
-        0xDBFD, 0xCBDC, 0xFBBF, 0xEB9E, 0x9B79, 0x8B58, 0xBB3B, 0xAB1A,
-        0x6CA6, 0x7C87, 0x4CE4, 0x5CC5, 0x2C22, 0x3C03, 0x0C60, 0x1C41,
-        0xEDAE, 0xFD8F, 0xCDEC, 0xDDCD, 0xAD2A, 0xBD0B, 0x8D68, 0x9D49,
-        0x7E97, 0x6EB6, 0x5ED5, 0x4EF4, 0x3E13, 0x2E32, 0x1E51, 0x0E70,
-        0xFF9F, 0xEFBE, 0xDFDD, 0xCFFC, 0xBF1B, 0xAF3A, 0x9F59, 0x8F78,
-        0x9188, 0x81A9, 0xB1CA, 0xA1EB, 0xD10C, 0xC12D, 0xF14E, 0xE16F,
-        0x1080, 0x00A1, 0x30C2, 0x20E3, 0x5004, 0x4025, 0x7046, 0x6067,
-        0x83B9, 0x9398, 0xA3FB, 0xB3DA, 0xC33D, 0xD31C, 0xE37F, 0xF35E,
-        0x02B1, 0x1290, 0x22F3, 0x32D2, 0x4235, 0x5214, 0x6277, 0x7256,
-        0xB5EA, 0xA5CB, 0x95A8, 0x8589, 0xF56E, 0xE54F, 0xD52C, 0xC50D,
-        0x34E2, 0x24C3, 0x14A0, 0x0481, 0x7466, 0x6447, 0x5424, 0x4405,
-        0xA7DB, 0xB7FA, 0x8799, 0x97B8, 0xE75F, 0xF77E, 0xC71D, 0xD73C,
-        0x26D3, 0x36F2, 0x0691, 0x16B0, 0x6657, 0x7676, 0x4615, 0x5634,
-        0xD94C, 0xC96D, 0xF90E, 0xE92F, 0x99C8, 0x89E9, 0xB98A, 0xA9AB,
-        0x5844, 0x4865, 0x7806, 0x6827, 0x18C0, 0x08E1, 0x3882, 0x28A3,
-        0xCB7D, 0xDB5C, 0xEB3F, 0xFB1E, 0x8BF9, 0x9BD8, 0xABBB, 0xBB9A,
-        0x4A75, 0x5A54, 0x6A37, 0x7A16, 0x0AF1, 0x1AD0, 0x2AB3, 0x3A92,
-        0xFD2E, 0xED0F, 0xDD6C, 0xCD4D, 0xBDAA, 0xAD8B, 0x9DE8, 0x8DC9,
-        0x7C26, 0x6C07, 0x5C64, 0x4C45, 0x3CA2, 0x2C83, 0x1CE0, 0x0CC1,
-        0xEF1F, 0xFF3E, 0xCF5D, 0xDF7C, 0xAF9B, 0xBFBA, 0x8FD9, 0x9FF8,
-        0x6E17, 0x7E36, 0x4E55, 0x5E74, 0x2E93, 0x3EB2, 0x0ED1, 0x1EF0};
-//CRC-16/CCITT
+static unsigned short crc16_ccitt_table[256] = {
+    0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7, 0x8108,
+    0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF, 0x1231, 0x0210,
+    0x3273, 0x2252, 0x52B5, 0x4294, 0x72F7, 0x62D6, 0x9339, 0x8318, 0xB37B,
+    0xA35A, 0xD3BD, 0xC39C, 0xF3FF, 0xE3DE, 0x2462, 0x3443, 0x0420, 0x1401,
+    0x64E6, 0x74C7, 0x44A4, 0x5485, 0xA56A, 0xB54B, 0x8528, 0x9509, 0xE5EE,
+    0xF5CF, 0xC5AC, 0xD58D, 0x3653, 0x2672, 0x1611, 0x0630, 0x76D7, 0x66F6,
+    0x5695, 0x46B4, 0xB75B, 0xA77A, 0x9719, 0x8738, 0xF7DF, 0xE7FE, 0xD79D,
+    0xC7BC, 0x48C4, 0x58E5, 0x6886, 0x78A7, 0x0840, 0x1861, 0x2802, 0x3823,
+    0xC9CC, 0xD9ED, 0xE98E, 0xF9AF, 0x8948, 0x9969, 0xA90A, 0xB92B, 0x5AF5,
+    0x4AD4, 0x7AB7, 0x6A96, 0x1A71, 0x0A50, 0x3A33, 0x2A12, 0xDBFD, 0xCBDC,
+    0xFBBF, 0xEB9E, 0x9B79, 0x8B58, 0xBB3B, 0xAB1A, 0x6CA6, 0x7C87, 0x4CE4,
+    0x5CC5, 0x2C22, 0x3C03, 0x0C60, 0x1C41, 0xEDAE, 0xFD8F, 0xCDEC, 0xDDCD,
+    0xAD2A, 0xBD0B, 0x8D68, 0x9D49, 0x7E97, 0x6EB6, 0x5ED5, 0x4EF4, 0x3E13,
+    0x2E32, 0x1E51, 0x0E70, 0xFF9F, 0xEFBE, 0xDFDD, 0xCFFC, 0xBF1B, 0xAF3A,
+    0x9F59, 0x8F78, 0x9188, 0x81A9, 0xB1CA, 0xA1EB, 0xD10C, 0xC12D, 0xF14E,
+    0xE16F, 0x1080, 0x00A1, 0x30C2, 0x20E3, 0x5004, 0x4025, 0x7046, 0x6067,
+    0x83B9, 0x9398, 0xA3FB, 0xB3DA, 0xC33D, 0xD31C, 0xE37F, 0xF35E, 0x02B1,
+    0x1290, 0x22F3, 0x32D2, 0x4235, 0x5214, 0x6277, 0x7256, 0xB5EA, 0xA5CB,
+    0x95A8, 0x8589, 0xF56E, 0xE54F, 0xD52C, 0xC50D, 0x34E2, 0x24C3, 0x14A0,
+    0x0481, 0x7466, 0x6447, 0x5424, 0x4405, 0xA7DB, 0xB7FA, 0x8799, 0x97B8,
+    0xE75F, 0xF77E, 0xC71D, 0xD73C, 0x26D3, 0x36F2, 0x0691, 0x16B0, 0x6657,
+    0x7676, 0x4615, 0x5634, 0xD94C, 0xC96D, 0xF90E, 0xE92F, 0x99C8, 0x89E9,
+    0xB98A, 0xA9AB, 0x5844, 0x4865, 0x7806, 0x6827, 0x18C0, 0x08E1, 0x3882,
+    0x28A3, 0xCB7D, 0xDB5C, 0xEB3F, 0xFB1E, 0x8BF9, 0x9BD8, 0xABBB, 0xBB9A,
+    0x4A75, 0x5A54, 0x6A37, 0x7A16, 0x0AF1, 0x1AD0, 0x2AB3, 0x3A92, 0xFD2E,
+    0xED0F, 0xDD6C, 0xCD4D, 0xBDAA, 0xAD8B, 0x9DE8, 0x8DC9, 0x7C26, 0x6C07,
+    0x5C64, 0x4C45, 0x3CA2, 0x2C83, 0x1CE0, 0x0CC1, 0xEF1F, 0xFF3E, 0xCF5D,
+    0xDF7C, 0xAF9B, 0xBFBA, 0x8FD9, 0x9FF8, 0x6E17, 0x7E36, 0x4E55, 0x5E74,
+    0x2E93, 0x3EB2, 0x0ED1, 0x1EF0};
+// CRC-16/CCITT
 unsigned short do_crc16_CCITT(unsigned char *pbuf, size_t len)
 {
     unsigned short crc = CRC16_CCITT_SEED;
@@ -121,7 +126,7 @@ unsigned short do_crc16_CCITT(unsigned char *pbuf, size_t len)
     return crc;
 }
 
-//CRC-16/XMODEM
+// CRC-16/XMODEM
 unsigned short do_crc16_XMODEM(unsigned char *ptr, int len)
 {
     unsigned int i;
@@ -142,15 +147,12 @@ unsigned short do_crc16_XMODEM(unsigned char *ptr, int len)
 
 unsigned short do_crc(unsigned char *ptr, int len)
 {
-
     unsigned int i;
     unsigned short crc = 0x0000;
 
     while (len--) {
-
         crc ^= (unsigned short)(*ptr++) << 8;
         for (i = 0; i < 8; ++i) {
-
             if (crc & 0x8000)
                 crc = (crc << 1) ^ 0x1021;
             else
@@ -161,7 +163,7 @@ unsigned short do_crc(unsigned char *ptr, int len)
     return crc;
 }
 
-//CRC-16/MODBUS
+// CRC-16/MODBUS
 unsigned short do_crc16_MODBUS(unsigned char *ptr, int len)
 {
     unsigned char i;
@@ -176,7 +178,8 @@ unsigned short do_crc16_MODBUS(unsigned char *ptr, int len)
             if (crc & 1) {
                 crc >>= 1;
                 crc ^= 0xA001;
-            } else {
+            }
+            else {
                 crc >>= 1;
             }
         }
@@ -227,30 +230,31 @@ static size_t _test_get_data_len(uint8_t data_type)
     size_t len = 0;
 
     switch (data_type) {
-    case EIDE_DATA_TYPE_NO:
-        break;
-    case EIDE_DATA_TYPE_BOOLEAN:
-    case EIDE_DATA_TYPE_CHAR:
-    case EIDE_DATA_TYPE_UNSIGNED_CHAR:
-        len += sizeof(char);
-        break;
-    case EIDE_DATA_TYPE_SHORE_INT:
-    case EIDE_DATA_TYPE_UNSIGNED_SHORT_INT:
-        len += sizeof(short);
-        break;
-    case EIDE_DATA_TYPE_INT:
-    case EIDE_DATA_TYPE_UNSIGNED_INT:
-    case EIDE_DATA_TYPE_FLOAT:
-        len += sizeof(int);
-        break;
-    default:
-        break;
+        case EIDE_DATA_TYPE_NO:
+            break;
+        case EIDE_DATA_TYPE_BOOLEAN:
+        case EIDE_DATA_TYPE_CHAR:
+        case EIDE_DATA_TYPE_UNSIGNED_CHAR:
+            len += sizeof(char);
+            break;
+        case EIDE_DATA_TYPE_SHORE_INT:
+        case EIDE_DATA_TYPE_UNSIGNED_SHORT_INT:
+            len += sizeof(short);
+            break;
+        case EIDE_DATA_TYPE_INT:
+        case EIDE_DATA_TYPE_UNSIGNED_INT:
+        case EIDE_DATA_TYPE_FLOAT:
+            len += sizeof(int);
+            break;
+        default:
+            break;
     }
 
     return len;
 }
 
-static size_t _test_data_fill(eide_rs485_devs_ctrl_t *ctrl_data, eide_rs485_payload_t *payload)
+static size_t _test_data_fill(eide_rs485_devs_ctrl_t *ctrl_data,
+                              eide_rs485_payload_t *payload)
 {
     size_t len = 0;
     size_t data_len = 0;
@@ -284,7 +288,7 @@ static size_t _test_data_fill(eide_rs485_devs_ctrl_t *ctrl_data, eide_rs485_payl
             *data = data_type;
             len += 1;
             data++;
-            data_len= _test_get_data_len(data_type);
+            data_len = _test_get_data_len(data_type);
             // print_mcd("data len: %d", data_len);
             memcpy(data, ctrl_data->ctrl[i].funcs[j].data, data_len);
             len += data_len;
@@ -295,7 +299,6 @@ static size_t _test_data_fill(eide_rs485_devs_ctrl_t *ctrl_data, eide_rs485_payl
     return len;
 }
 
-
 static void _test_prase_msg(eide_rs485_payload_t *payload, size_t len)
 {
     uint8_t *data = payload->data;
@@ -303,7 +306,7 @@ static void _test_prase_msg(eide_rs485_payload_t *payload, size_t len)
     size_t i, j;
     uint8_t dev_num = 0, fun_num = 0, data_type = 0;
     size_t data_len = 0;
-    for(i = 0; i < len; i++) {
+    for (i = 0; i < len; i++) {
         printf("%02x ", data[i]);
     }
     printf("\n");
@@ -326,19 +329,23 @@ static void _test_prase_msg(eide_rs485_payload_t *payload, size_t len)
             rep_dev_ctrl.ctrl[i].funcs[j].data_type = data_type;
             data++;
             data_len = _test_get_data_len(data_type);
-            if(data_len > 4)
+            if (data_len > 4)
                 data_len = 4;
             memcpy(&rep_dev_ctrl.ctrl[i].funcs[j].data, data, data_len);
             data += data_len;
         }
     }
-    
+
     print_mcd("get device num = %02x", rep_dev_ctrl.ctrl_dev_count);
-    for(i = 0; i < rep_dev_ctrl.ctrl_dev_count; i++) {
+    for (i = 0; i < rep_dev_ctrl.ctrl_dev_count; i++) {
         rep_dev_ctrl.ctrl[i].dev_id;
-        print_mcd("dev id = %02x, dev func num = %02x", rep_dev_ctrl.ctrl[i].dev_id, rep_dev_ctrl.ctrl[i].dev_func_num);
-        for(j = 0; j < rep_dev_ctrl.ctrl[i].dev_func_num; j++) {
-            print_mcd("func id = %02x, data type = %02x", rep_dev_ctrl.ctrl[i].funcs[j].func_id, rep_dev_ctrl.ctrl[i].funcs[j].data_type);
+        print_mcd("dev id = %02x, dev func num = %02x",
+                  rep_dev_ctrl.ctrl[i].dev_id,
+                  rep_dev_ctrl.ctrl[i].dev_func_num);
+        for (j = 0; j < rep_dev_ctrl.ctrl[i].dev_func_num; j++) {
+            print_mcd("func id = %02x, data type = %02x",
+                      rep_dev_ctrl.ctrl[i].funcs[j].func_id,
+                      rep_dev_ctrl.ctrl[i].funcs[j].data_type);
             data_type = rep_dev_ctrl.ctrl[i].funcs[j].data_type;
             data_len = _test_get_data_len(data_type);
             size_t k = 0;
@@ -364,7 +371,7 @@ static int test_ctrl_devs()
     ctrl_data.ctrl_dev_count = 4;
     for (i = 0; i < ctrl_data.ctrl_dev_count; i++) {
         ctrl_data.ctrl[i].dev_id = i + 1;
-        if( i== 3)
+        if (i == 3)
             ctrl_data.ctrl[i].dev_func_num = 3;
         else
             ctrl_data.ctrl[i].dev_func_num = 2;
@@ -373,7 +380,8 @@ static int test_ctrl_devs()
             if (j == 0) {
                 ctrl_data.ctrl[i].funcs[j].data_type = 1;
                 ctrl_data.ctrl[i].funcs[j].data[0] = 1;
-            } else {
+            }
+            else {
                 ctrl_data.ctrl[i].funcs[j].data_type = 3;
                 ctrl_data.ctrl[i].funcs[j].data[0] = 50;
             }
@@ -383,7 +391,7 @@ static int test_ctrl_devs()
     // size_t len = 30;
     print_mcd("data len: %d", len);
 
-    for(i = 0; i < len; i++) {
+    for (i = 0; i < len; i++) {
         printf("%02x ", payload.data[i]);
     }
     printf("\n");
@@ -391,34 +399,38 @@ static int test_ctrl_devs()
     _test_prase_msg(&payload, len);
 }
 
-
-static void _test_macaddr_to_decstring(void )
+static void _test_macaddr_to_decstring(void)
 {
     int i = 0;
     // mac addr hex to dec string
-// func1
+    // func1
     uint8_t mac_addr[8] = {0xF0, 0x0A, 0x4F, 0x04, 0x10, 0x2D, 0x01, 0x01};
     uint8_t act_addr[25] = {0};
     uint8_t act_addr1[25] = {0};
     uint8_t act_addr2[25] = {0};
     int offset = 0;
     int offset1 = 0;
-    snprintf(act_addr, sizeof(act_addr), "%02d%02d%02d%02d%02d%02d%02d%02d", mac_addr[0],mac_addr[1],mac_addr[2],mac_addr[3],mac_addr[4],mac_addr[5],mac_addr[6],mac_addr[7]);
+
+    snprintf(act_addr, sizeof(act_addr), "%02d%02d%02d%02d%02d%02d%02d%02d",
+             mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4],
+             mac_addr[5], mac_addr[6], mac_addr[7]);
     // snprintf(act_addr, sizeof(act_addr), "%02d", mac_addr);
     print_mcd("%s", act_addr);
-//func2
-    for(i = 0; i < 8; i++){
-        offset+=snprintf(act_addr1+offset,sizeof(act_addr1), "%02d",mac_addr[i]);  // 格式化的数据写入字符串
+    // func2
+    for (i = 0; i < 8; i++) {
+        offset += snprintf(act_addr1 + offset, sizeof(act_addr1), "%02d",
+                           mac_addr[i]);  // 格式化的数据写入字符串
     }
     // act_addr1[offset]= '\0';
-    print_mcd("%s",act_addr1);
+    print_mcd("%s", act_addr1);
 
-//func3
-    for(i = 0; i < 8; i++){
-        offset1+=sprintf(act_addr2+offset1, "%02d",mac_addr[i]);  // 格式化的数据写入字符串
+    // func3
+    for (i = 0; i < 8; i++) {
+        offset1 += sprintf(act_addr2 + offset1, "%02d",
+                           mac_addr[i]);  // 格式化的数据写入字符串
     }
-    act_addr2[offset]= '\0';
-    print_mcd("%s",act_addr2);
+    act_addr2[offset] = '\0';
+    print_mcd("%s", act_addr2);
 }
 
 // my func
@@ -427,58 +439,57 @@ static int _test_macaddr_string_to_macaddr_hex()
     char *mac_addr = "11164F0E102D0100";
     size_t i = 0;
     uint8_t data1, data2;
-    uint8_t  val;
-    
+    uint8_t val;
+
     // print_mcd("%d", strlen(mac_addr));
-    for(i = 0; i < strlen(mac_addr); ){
+    for (i = 0; i < strlen(mac_addr);) {
         data1 = mac_addr[i];
         data2 = mac_addr[i + 1];
-        switch(data1){
-        case '0'...'9': 
-            val = (data1 - '0');   
-            break;
-        case 'a'...'f':
-            val = (data1 - 'a') + 0x0A; 
-            break;
-        case 'A'...'F':
-            val = (data1 - 'A') + 0x0A; 
-            break;
-        default:
-            return -1;
-            // break;
+        switch (data1) {
+            case '0' ... '9':
+                val = (data1 - '0');
+                break;
+            case 'a' ... 'f':
+                val = (data1 - 'a') + 0x0A;
+                break;
+            case 'A' ... 'F':
+                val = (data1 - 'A') + 0x0A;
+                break;
+            default:
+                return -1;
+                // break;
         }
-        switch(data2){
-        case '0'...'9': 
-            val = (val << 4) | (data2 - '0');   
-            break;
-        case 'a'...'f':
-            val = val << 4 | (data2 - 'a') + 0x0A; 
-            break;
-        case 'A'...'F':
-            val = val << 4 | (data2 - 'A') + 0x0A; 
-            break;
-        default:
-            return -1;
-            // break;
+        switch (data2) {
+            case '0' ... '9':
+                val = (val << 4) | (data2 - '0');
+                break;
+            case 'a' ... 'f':
+                val = val << 4 | (data2 - 'a') + 0x0A;
+                break;
+            case 'A' ... 'F':
+                val = val << 4 | (data2 - 'A') + 0x0A;
+                break;
+            default:
+                return -1;
+                // break;
         }
         // data = (mac_addr[i] - '0') * 16 + (mac_addr[i+1] - '0');
         printf("%02X", val);
         i += 2;
     }
     return 0;
-
 }
 
 static void _test_index(int index)
 {
-    if(index < 0 )
+    if (index < 0)
         index = 0;
 }
 
 typedef enum {
     MSG_TEST = 0,
     MSG_TEST1 = 2,
-}msg_test_e;
+} msg_test_e;
 
 static int _test_argv(void *arg)
 {
@@ -486,10 +497,9 @@ static int _test_argv(void *arg)
 
     // num = (uint8_t *)arg;
     print_mcd("num = %d", (uint8_t *)arg);
-    int num  = 100;
+    int num = 100;
     return num;
 }
-
 
 int main(int argc, char const *argv[])
 {
@@ -501,16 +511,15 @@ int main(int argc, char const *argv[])
     int len = 0;
     int i = 0;
     uint8_t num1 = MSG_TEST1;
-    int  num2;
-
+    int num2;
 
     num2 = _test_argv(MSG_TEST1);
 
     print_mcd("num2 = %d", num2);
 
     return 0;
-    
-    #if 0
+
+#if 0
     crc = ((crc & 0x000F) | (flag & 0x0F)) << 12;
 
     print_mcd("crc = %x", crc);
@@ -526,7 +535,7 @@ int main(int argc, char const *argv[])
 
     char tmp_buf2[27] = {0x1D, 0x00, 0x01, 0x00, 0x00, 0x00, 0x12, 0x23, 0x34, 0x45, 0x56, 0x67, 0x78, 0x89, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x01, 0x00, 0x00, 0x02};
     print_mcd("0x%x", do_crc16_XMODEM(tmp_buf2, sizeof(tmp_buf2)));
-    #endif
+#endif
     // _test_macaddr_string_to_macaddr_hex();
     // _test_macaddr_to_decstring();
 #if 0
@@ -582,10 +591,10 @@ Error:
     // for (i = 0; i < 10; i++){
     //     print_mcd("%d, %d", test_len[i].data_code, test_len[i].data[0]);
     // }
-    
+
     // print_mcd("%d", sizeof(eide_rs485_payload_t));
     // PRINT_SIZEOF(eide_rs485_payload_t *);
-    
+
     // char *data = test->data;
 
     // *data = 0x71;
@@ -597,7 +606,6 @@ Error:
     // print_mcd("0x%x", payload.data[2]);
 
     // test_ctrl_devs();
-
 
 #if 0
     eide_rs485_ctrl_t ctrl_test;
