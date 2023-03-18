@@ -33,11 +33,13 @@
         "unistd.h": "c"
     },
     "cSpell.words": [
+        "dpid",
         "EPOLLET",
         "EPOLLIN",
         "isnonblocking",
         "kfree",
         "kzalloc",
+        "LESHI",
         "LISH",
         "NBLOCK",
         "nwritten",
@@ -50,5 +52,6 @@
         "timerj",
         "writen"
     ],
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.sourceDirectory": "/home/mcd/MyWorkSpace/MyGithub_Project/My_C_Test/epoll_serials"
 }

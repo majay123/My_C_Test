@@ -1,13 +1,12 @@
 # **********************************************
 # Application Makefile Config
 # **********************************************
-TARGET := test
+TARGET := select_test
 
 LOCAL_INCS := . ./include
 LOCAL_SRCS := .
 
-CC ?= arm-openwrt-linux-gcc
-# CC ?= gcc
+CC ?= gcc
 
 LOCAL_CFLAGS :=
 LOCAL_LDFLAGS := -lpthread  -lm -L./

@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:39:45
  * @LastEditors  : MCD
- * @LastEditTime : 2021-11-22 10:09:19
+ * @LastEditTime : 2023-03-18 15:07:50
  * @FilePath     : /My_C_Test/include/common.h
  * @Description  : 
  * 
@@ -42,51 +42,46 @@
 #define __COMMON_H__
 
 // #include <sqlite3.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <stdint.h>
 #include <errno.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include <time.h>
 
-#define MAX_BUFFER_SIZE	2048
+#define MAX_BUFFER_SIZE 2048
 
-#define PRINT_MCD_ENABLE  1
-#define PRINT_LOG_ENABLE  0
-#define NAME_MAX_LEN        (32)
+#define PRINT_MCD_ENABLE 1
+#define PRINT_LOG_ENABLE 0
+#define NAME_MAX_LEN     (32)
 
+#define MAX_DEVICES_NUM  (80)
+#define DEVICE_NAME_LEN  (32)
+#define DEVICE_ID_LEN    (32)
+#define ELE_DEVICE_NUM   (4)
+#define SCENE_TYPE_LEN   (16)
+#define START_INDEX      (0)
+#define SENSOR_DATA_LEN  (8)
+#define MSG_CONTENT_SIZE (1024)
 
-#define MAX_DEVICES_NUM         (80)
-#define DEVICE_NAME_LEN         (32)
-#define DEVICE_ID_LEN           (32)
-#define ELE_DEVICE_NUM          (4)
-#define SCENE_TYPE_LEN          (16)
-#define START_INDEX             (0)
-#define SENSOR_DATA_LEN         (8)
-#define MSG_CONTENT_SIZE        (1024)
-
-
-typedef enum
-{
-    HOPE_DB_LIGHT_TYPE = 1,         //灯
-    HOPE_DB_CURTAIN_TYPE,           //窗帘
-    HOPE_DB_AIR_CONDITIONER_TYPE,   //空调
-    HOPE_DB_SCENE_TYPE,             //情景
-}db_info_type_e;
+typedef enum {
+    HOPE_DB_LIGHT_TYPE = 1,        //灯
+    HOPE_DB_CURTAIN_TYPE,          //窗帘
+    HOPE_DB_AIR_CONDITIONER_TYPE,  //空调
+    HOPE_DB_SCENE_TYPE,            //情景
+} db_info_type_e;
 
 // action
-typedef enum
-{
-    HOPE_DB_ACTION_NULL = 0,        //无动作
-    HOPE_DB_ACTION_CLOSE = 1,       //设备关
-    HOPE_DB_ACTION_OPEN,            //设备开
-    HOPE_DB_ACTION_STOP,            //设备停止
-    HOPE_DB_ACTION_MODE,            //设置模式（空调）
-    HOPE_DB_ACTION_SPEED,           //设置风速（空调）
+typedef enum {
+    HOPE_DB_ACTION_NULL = 0,   //无动作
+    HOPE_DB_ACTION_CLOSE = 1,  //设备关
+    HOPE_DB_ACTION_OPEN,       //设备开
+    HOPE_DB_ACTION_STOP,       //设备停止
+    HOPE_DB_ACTION_MODE,       //设置模式（空调）
+    HOPE_DB_ACTION_SPEED,      //设置风速（空调）
     // HOPE_DB_ACTION_TO,              //设置温度,风速（空调）
-    HOPE_DB_ACTION_ADD,             //控制加（空调）
-    HOPE_DB_ACTION_REDUCE,          //控制减（空调）
-}db_action_e;
+    HOPE_DB_ACTION_ADD,     //控制加（空调）
+    HOPE_DB_ACTION_REDUCE,  //控制减（空调）
+} db_action_e;
 
 // typedef enum
 // {
@@ -97,23 +92,21 @@ typedef enum
 // }db_attribute_e;
 
 // 空调模式 attribute
-typedef enum
-{
+typedef enum {
     MODE_COOL = 0,
     MODE_HEAT,
     MODE_AIR,
     MODE_DRY,
-}db_ac_mode_e;
+} db_ac_mode_e;
 
 // 空调风速 attribute
-typedef enum
-{
+typedef enum {
     VALUE_NULL = 0,
     VALUE_LOW = 1,
     VALUE_MIDDLE,
     VALUE_HIGH,
     VALUE_AUTO,
-}db_ac_speed_e;
+} db_ac_speed_e;
 
 typedef struct
 {
@@ -121,81 +114,128 @@ typedef struct
     char name[NAME_MAX_LEN];
     char action;
     char attribute;
-}db_ctrl_t;
+} db_ctrl_t;
 
-typedef struct  
+typedef struct
 {
     uint8_t action;
     char name_action[NAME_MAX_LEN];
     char do_action[NAME_MAX_LEN];
     // uint8_t attribute;
-}_db_rs485_dis_t;
+} _db_rs485_dis_t;
 
 typedef struct
 {
     uint8_t mode;
     char m_name[NAME_MAX_LEN];
-}_db_rs485_ms_t;
-
-
-
+} _db_rs485_ms_t;
 
 #define PRINT_MCD_ENABLE 1
 #define PRINT_ERR_ENABLE 1
-
 
 #ifndef COMMON_DEBUG
 #define COMMON_DEBUG 0
 #endif
 
 #if COMMON_DEBUG == 1
-    #define print_common(format, arg...)   do { printf("\033[31m[REQUIRE common]\033[0m:%s,%d--- "format"\n",__FILE__,__LINE__, ## arg);} while (0)
-    #define print_log(format, arg...)   do { printf("\033[31m[REQUIRE log]\033[0m:%s,%d--- "format"\n",__FILE__,__LINE__, ## arg);} while (0)
+#define print_common(format, arg...)                                                                \
+    do {                                                                                            \
+        printf("\033[31m[REQUIRE common]\033[0m:%s,%d--- " format "\n", __FILE__, __LINE__, ##arg); \
+    } while (0)
+#define print_log(format, arg...)                                                                \
+    do {                                                                                         \
+        printf("\033[31m[REQUIRE log]\033[0m:%s,%d--- " format "\n", __FILE__, __LINE__, ##arg); \
+    } while (0)
 #else
-    #define print_common(format, arg...)   NULL
-    #define print_log(format, arg...)   NULL
+#define print_common(format, arg...) NULL
+#define print_log(format, arg...)    NULL
 #endif
 
 #if PRINT_MCD_ENABLE == 1
-    #define print_mcd(format, arg...)                                                          \
-    do                                                                                     			\
-    {                                                                                      			\
-        char ctime[30] = { 0 };																		\
-        char ctime1[30] = { 0 };																	\
-        struct tm tm1 = { 0 };																		\
-        struct timespec ts; 																		\
-        clock_gettime(CLOCK_REALTIME, &ts); 														\
-        localtime_r(&ts.tv_sec,&tm1);																\
-        strftime(ctime,sizeof(ctime),"%Y-%m-%d %H:%M:%S",&tm1); 									\
-        snprintf(ctime1,sizeof(ctime),"%s.%.3ld",ctime,ts.tv_nsec/1000/1000);	                	\
-        printf("\033[31m[--mcd--][%s]\033[0m:%s,%s,%d--- " format "\n", ctime1,__FILE__,__func__,__LINE__, ##arg); 	\
+#define print_mcd(format, arg...)                                                                                     \
+    do {                                                                                                              \
+        char ctime[30] = {0};                                                                                         \
+        char ctime1[30] = {0};                                                                                        \
+        struct tm tm1 = {0};                                                                                          \
+        struct timespec ts;                                                                                           \
+        clock_gettime(CLOCK_REALTIME, &ts);                                                                           \
+        localtime_r(&ts.tv_sec, &tm1);                                                                                \
+        strftime(ctime, sizeof(ctime), "%Y-%m-%d %H:%M:%S", &tm1);                                                    \
+        snprintf(ctime1, sizeof(ctime), "%s.%.3ld", ctime, ts.tv_nsec / 1000 / 1000);                                 \
+        printf("\033[31m[--mcd--][%s]\033[0m:%s,%s,%d--- " format "\n", ctime1, __FILE__, __func__, __LINE__, ##arg); \
     } while (0)
 #else
-    #define print_mcd(format, arg...)   do {} while (0)
-#endif  
-
-
-#if PRINT_ERR_ENABLE == 1                   
-    #define print_err(format, arg...)   do { printf("\033[4;35m[ERROR]\033[0m(%d,%s)-pid:%d-%s,%d,%s, "format"\n",\
-                                                    errno,strerror(errno),getpid(),__FILE__,__LINE__,__func__, ## arg);} \
-                                        while (0)
-
-    #define print_err_simple(format, arg...)   do { printf(format, ## arg);} while (0)
-#else
-    #define print_err(format, arg...)   do {} while (0)
-    #define print_err_simple(format, arg...)   do {} while (0)
+#define print_mcd(format, arg...) \
+    do {                          \
+    } while (0)
 #endif
 
-#define REQUIRE(in,tag)                     do{if(in){print_mcd("%s %s", #tag, #in); goto tag;}}while(0)
-#define REQUIRE_NOLOG(in,tag)              	do{if(in){print_mcd("%s %s", #tag, #in); goto tag;}}while(0)
-#define REQ_JSON_OBJ(des,item,tag)        	cJSON_GetObjectItem(des,#item); \
-                                                           REQUIRE((item==NULL),tag)
-#define REQ_JSON_PARSE(str,item,tag)     	cJSON_Parse(str); \
-                                                            REQUIRE((item==NULL),tag)
+#if PRINT_ERR_ENABLE == 1
+#define print_err(format, arg...)                                                      \
+    do {                                                                               \
+        printf("\033[4;35m[ERROR]\033[0m(%d,%s)-pid:%d-%s,%d,%s, " format "\n",        \
+               errno, strerror(errno), getpid(), __FILE__, __LINE__, __func__, ##arg); \
+    } while (0)
 
-#define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))
-#define ARRAY_SIZE(A)    (sizeof(A)/sizeof((A)[0]))
+#define print_err_simple(format, arg...) \
+    do {                                 \
+        printf(format, ##arg);           \
+    } while (0)
+#else
+#define print_err(format, arg...) \
+    do {                          \
+    } while (0)
+#define print_err_simple(format, arg...) \
+    do {                                 \
+    } while (0)
+#endif
 
+#define REQUIRE(in, tag)                   \
+    do {                                   \
+        if (in) {                          \
+            print_mcd("%s %s", #tag, #in); \
+            goto tag;                      \
+        }                                  \
+    } while (0)
+
+#define REQUIRE_NOLOG(in, tag)             \
+    do {                                   \
+        if (in) {                          \
+            print_mcd("%s %s", #tag, #in); \
+            goto tag;                      \
+        }                                  \
+    } while (0)
+
+#define REQ_JSON_OBJ(des, item, tag) \
+    cJSON_GetObjectItem(des, #item); \
+    REQUIRE((item == NULL), tag)
+    
+#define REQ_JSON_PARSE(str, item, tag) \
+    cJSON_Parse(str);                  \
+    REQUIRE((item == NULL), tag)
+
+#define MY_RELLOC(data, num, type)            \
+    do {                                      \
+        if (data) {                           \
+            free(data);                       \
+            data = NULL;                      \
+        }                                     \
+        if (num > 0) {                        \
+            data = calloc(num, sizeof(type)); \
+        }                                     \
+    } while (0)
+
+#define MY_RELLOC_REQUIRE(data, num, type, tag)             \
+    do {                                                    \
+        MY_RELLOC(data, num, type);                         \
+        if (!data) {                                        \
+            print_mcd("%s %s malloc is null", #tag, #data); \
+            goto tag;                                       \
+        }                                                   \
+    } while (0)
+
+#define NELEM(x)      ((int)(sizeof(x) / sizeof((x)[0])))
+#define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
 /*!
  * \brief
@@ -204,13 +244,12 @@ typedef struct
 typedef struct
 {
     /*! 消息类型 */
-    int  code;
+    int code;
     /*! 消息内容 */
     char *content;
     /*! 消息长度 */
     int size;
-}mqtt_msg_apps_t;
-
+} mqtt_msg_apps_t;
 
 /*!
  * \brief
@@ -219,12 +258,12 @@ typedef struct
 typedef struct
 {
     /*! 消息类型 */
-    int  type;
+    int type;
     /*! 消息内容 */
     char content[MSG_CONTENT_SIZE];
     /*! 发送者进程pid */
     pid_t sender_pid;
-}msg_apps_t;
+} msg_apps_t;
 
 typedef struct
 {
@@ -233,31 +272,31 @@ typedef struct
     int eleCata;
     char deviceName[DEVICE_NAME_LEN];
     char deviceId[DEVICE_NAME_LEN];
-}ctrl_device_t;
+} ctrl_device_t;
 
 typedef struct
 {
     bool on;
     char ele_name[DEVICE_NAME_LEN];
     char deviceId[DEVICE_NAME_LEN];
-}ele_device_t;
+} ele_device_t;
 
 typedef struct
 {
     char time[DEVICE_NAME_LEN];
-    char power[SENSOR_DATA_LEN];        //power	电量	电量低时值为LOW
+    char power[SENSOR_DATA_LEN];  //power	电量	电量低时值为LOW
     uint16_t state;
-    int16_t temp_value;                //temperature  2009 => 20.09℃         
-    uint16_t wet_value;                 //wet  6522 => 35.22%|
+    int16_t temp_value;  //temperature  2009 => 20.09℃
+    uint16_t wet_value;  //wet  6522 => 35.22%|
     // char pm_value[SENSOR_DATA_LEN];     //pm	细颗粒物	单位ug/m3
     // char cho_value[SENSOR_DATA_LEN];    //cho	甲醛	数值30转换成0.03 mg/m3
     // char co2_value[SENSOR_DATA_LEN];    //co2	二氧化碳	单位：ppm
     // char voc_value[SENSOR_DATA_LEN];    //voc	易挥发的有机物	数值220转换成0.22 mg/m3
-    uint16_t pm_value;                           //pm	细颗粒物	单位ug/m3
-    uint16_t cho_value;                          //cho	甲醛	数值30转换成0.03 mg/m3
-    uint16_t co2_value;                          //co2	二氧化碳	单位：ppm
-    uint16_t voc_value;                          //voc	易挥发的有机物	数值220转换成0.22 mg/m3
-}sensor_t;
+    uint16_t pm_value;   //pm	细颗粒物	单位ug/m3
+    uint16_t cho_value;  //cho	甲醛	数值30转换成0.03 mg/m3
+    uint16_t co2_value;  //co2	二氧化碳	单位：ppm
+    uint16_t voc_value;  //voc	易挥发的有机物	数值220转换成0.22 mg/m3
+} sensor_t;
 
 typedef struct
 {
@@ -276,16 +315,15 @@ typedef struct
     sensor_t sensor_data;
     uint8_t ele_num;
     ele_device_t ele_dev[ELE_DEVICE_NUM];
-}device_info_t;
-
+} device_info_t;
 
 //device struct max 80
-typedef struct 
+typedef struct
 {
     int num;
     int deviceTotalNum;
     device_info_t *device_info;
-}device_t;
+} device_t;
 
 //one scenen struct
 typedef struct
@@ -296,18 +334,18 @@ typedef struct
     char name[DEVICE_NAME_LEN];
     char type[SCENE_TYPE_LEN];
     char sceneId[DEVICE_NAME_LEN];
-}scene_info_t;
+} scene_info_t;
 
-typedef struct 
+typedef struct
 {
     int num;
     scene_info_t scene_info[MAX_DEVICES_NUM];
-}all_scene_t;
+} all_scene_t;
 
 typedef struct
 {
     device_t mainpage_devices;
     all_scene_t mainpage_scenes;
-}mainpage_all_t;
+} mainpage_all_t;
 
-#endif // !__COMMON_H__
+#endif  // !__COMMON_H__

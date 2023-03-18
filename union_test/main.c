@@ -31,9 +31,9 @@
  * @Author       : MCD
  * @Date         : 2022-09-07 10:17:41
  * @LastEditors  : MCD
- * @LastEditTime : 2022-09-07 15:37:38
+ * @LastEditTime : 2022-09-09 08:46:57
  * @FilePath     : /My_C_Test/union_test/main.c
- * @Description  : 
+ * @Description  : 联合体和字段位
  * 
  * ******************************************
  */
@@ -115,22 +115,22 @@ struct {
 		uint16_t data;
 		struct flag_t flag;
 	};
-}flags;
+}flags[10];
 
 struct {
 	union {
 		uint16_t data;
 		struct flag1_t flag;
 	};
-}flags1;
+}flags1[10];
 
-struct pedestal_gpio_control_t test;
 
 int main(int argc, char const *argv[])
 {
     
-    printf("sizeof = %lu\n", sizeof(flags));
 #if 0
+	struct pedestal_gpio_control_t test;
+    printf("sizeof = %lu\n", sizeof(flags));
     test.gpio_out.audio_sw = 1;
     test.gpio_out.pa_0 = 12;
     printf("out data = %d\n", test.out_data);
@@ -139,18 +139,30 @@ int main(int argc, char const *argv[])
     test.out_data = 44;
     printf("pa_0 = %d, pa_1 = %d, audio_sw = %d\n",test.gpio_out.pa_0, test.gpio_out.pa_1, test.gpio_out.audio_sw);
 #endif
+	memset(&flags, 0, sizeof(flags));
+	memset(&flags1, 0, sizeof(flags1));
 
-    flags.data = 0x5f05;
+    flags[0].data = 0x5f05;
 	printf("stop = %d, sta = %d, dir = %d, wauto = %d, ven = %d\n", 
-		flags.flag.stop,
-		flags.flag.sta,
-		flags.flag.dir,
-		flags.flag.wauto,
-		flags.flag.ven);
+		flags[0].flag.stop,
+		flags[0].flag.sta,
+		flags[0].flag.dir,
+		flags[0].flag.wauto,
+		flags[0].flag.ven);
+	flags[0].flag.stop = 0;
+	flags[0].flag.dir = 3;
+	printf("data = %04x\n", flags[0].data);
+	printf("stop = %d, sta = %d, dir = %d, wauto = %d, ven = %d\n", 
+		flags[0].flag.stop,
+		flags[0].flag.sta,
+		flags[0].flag.dir,
+		flags[0].flag.wauto,
+		flags[0].flag.ven);
+
 
 	// flags1.data = 0x8100;
-	// printf("sen = %d, rev = %d\n", flags1.flag.sen, flags1.flag.rev);
-	flags1.flag.sen = 1; flags1.flag.rev = 1;
-	printf("data = %04x\n", flags1.data);
+	flags1[0].flag.sen = 0; flags1[0].flag.rev = 1;
+	printf("data = %04x\n", flags1[0].data);
+	printf("sen = %d, rev = %d\n", flags1[0].flag.sen, flags1[1].flag.rev);
     return 0;
 }

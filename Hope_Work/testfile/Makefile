@@ -21,13 +21,13 @@ LOCAL_CFLAGS += -Wno-multichar -fno-exceptions -ffunction-sections -fdata-sectio
 			-fno-short-enums -fno-builtin-sin -fno-strict-volatile-bitfields -fmessage-length=0 \
 			-fgcse-after-reload -frerun-cse-after-loop -frename-registers -fomit-frame-pointer \
 			-fno-strict-aliasing -flto -D_FILE_OFFSET_BITS=64
-LOCAL_LDFLAGS += -Wl,--gc-sections -Wl,--no-undefined
+LOCAL_LDFLAGS += -Wl,--gc-sections -Wl,--no-undefined 
 
 # **********************************************
 # Common Makefile Rules (C Source Files)
 # **********************************************
 CFLAGS += $(LOCAL_CFLAGS) -Wall $(foreach dir, $(LOCAL_INCS), -I$(dir)) 
-LDFLAGS += $(LOCAL_LDFLAGS)
+LDFLAGS += $(LOCAL_LDFLAGS) 
 
 ifeq ($(suffix $(TARGET)),.so)
 	CFLAGS += -fPIC 

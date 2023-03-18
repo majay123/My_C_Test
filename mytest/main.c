@@ -31,35 +31,34 @@
  * @Author       : MCD
  * @Date         : 2021-05-20 14:28:57
  * @LastEditors  : MCD
- * @LastEditTime : 2022-08-26 16:30:20
+ * @LastEditTime : 2022-11-15 10:53:07
  * @FilePath     : /My_C_Test/mytest/main.c
  * @Description  : 
  * 
  * ******************************************
  */
 
-
-#include <stdio.h>
-#include <string.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* somewhat unix-specific */
+#include <fcntl.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include <time.h>
+#include <unistd.h>
 // #include <sqlite3.h>
 #include <sys/sysinfo.h>
 
-#include "common.h"
 #include "cJSON.h"
+#include "common.h"
 // #include "cJSON.h"
-#define NAME_MAX_LEN        (32)
-#define INFO_MAX_NUM        (80)
-#define SRV_CONTENT_SIZE   	(4*1024)
+#define NAME_MAX_LEN     (32)
+#define INFO_MAX_NUM     (80)
+#define SRV_CONTENT_SIZE (4 * 1024)
 // typedef struct
 // {
 //     char num;
@@ -67,17 +66,17 @@
 //     char info[];
 // }all_db_info_t;
 
-typedef struct 
+typedef struct
 {
     char dev_type;
     char name[NAME_MAX_LEN];
-}db_info_t;
+} db_info_t;
 
 typedef struct
 {
     char num;
     db_info_t info[INFO_MAX_NUM];
-}all_db_info_t;
+} all_db_info_t;
 
 typedef struct
 {
@@ -88,25 +87,24 @@ typedef struct
     /* content real size */
     int c_size;
     char content[SRV_CONTENT_SIZE];
-}srv_msg_t;
-
+} srv_msg_t;
 
 static char *_print_time(void)
 {
     struct timeval tv;
     struct tm *t;
-	static tbuf[32] = {0};
+    static tbuf[32] = {0};
     gettimeofday(&tv, NULL);
     t = localtime(&tv.tv_sec);
 
     // printf("[ %d-%d-%d %d:%d:%d.%ld ] \n", 1900+t->tm_year, 1+t->tm_mon, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
-	sprintf(tbuf, "[ %d-%d-%d %d:%d:%d.%ld ]", 1900+t->tm_year, 1+t->tm_mon, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
-	// printf("%s\n", tbuf);
-	return tbuf;
+    sprintf(tbuf, "[ %d-%d-%d %d:%d:%d.%ld ]", 1900 + t->tm_year, 1 + t->tm_mon, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
+    // printf("%s\n", tbuf);
+    return tbuf;
 }
 void _tmp_test(all_db_info_t *infos)
 {
-	#if 0
+#if 0
 	// all_db_info_t *all_db_info;
 	infos->num = 10;
 	print_mcd("111");
@@ -120,61 +118,56 @@ void _tmp_test(all_db_info_t *infos)
 		// snprintf(infos->info[i], NAME_MAX_LEN, "%s", "test");
 	}
 	print_mcd("get memory = %p", infos->info);
-	#endif
-	// all_db_info_t *malloc_devs = (all_db_info_t *)calloc(1, sizeof(all_db_info_t));
+#endif
+    // all_db_info_t *malloc_devs = (all_db_info_t *)calloc(1, sizeof(all_db_info_t));
 }
 
-#define CONDITION_PATH      "test.json"
+#define CONDITION_PATH "test.json"
 
 int _get_file_size()
 {
-	char *buffer = NULL;
-	long length;
-	FILE *fp;
-	int i = 0;
-	int size = 0;
-	
-	fp = fopen(CONDITION_PATH, "rb");
+    char *buffer = NULL;
+    long length;
+    FILE *fp;
+    int i = 0;
+    int size = 0;
 
-	fseek(fp, 0, SEEK_END);
-	length = ftell(fp);
-	print_mcd("get length = %d", length);
+    fp = fopen(CONDITION_PATH, "rb");
 
-	buffer = (char *)calloc(1, length + 1);
-	fseek(fp, 0, SEEK_SET);
-	fread(buffer, 1, length, fp);
-	close(fp);
-	// print_mcd("get data : %s", buffer);
+    fseek(fp, 0, SEEK_END);
+    length = ftell(fp);
+    print_mcd("get length = %d", length);
 
-	cJSON *root = cJSON_Parse(buffer);
-	free(buffer);
-	cJSON *params_js = cJSON_GetObjectItem(root, "params");
-	cJSON *scene_js = cJSON_GetObjectItem(params_js, "sce");
-	cJSON *dev_js = cJSON_GetObjectItem(params_js, "dev");
-	
-	size = cJSON_GetArraySize(scene_js);
-	print_mcd("%d", size);
-	for(i= 0 ; i < size; i++)
-	{
-		cJSON *item_js = cJSON_GetArrayItem(scene_js, i);
-		print_mcd("name  = %s", item_js->string);
-	}
+    buffer = (char *)calloc(1, length + 1);
+    fseek(fp, 0, SEEK_SET);
+    fread(buffer, 1, length, fp);
+    close(fp);
+    // print_mcd("get data : %s", buffer);
 
-	size = cJSON_GetArraySize(dev_js);
-	print_mcd("%d", size);
-	for(i= 0 ; i < size; i++)
-	{
-		cJSON *item_js = cJSON_GetArrayItem(dev_js, i);
-		print_mcd("name  = %s", item_js->string);
-	}
-	
-	
+    cJSON *root = cJSON_Parse(buffer);
+    free(buffer);
+    cJSON *params_js = cJSON_GetObjectItem(root, "params");
+    cJSON *scene_js = cJSON_GetObjectItem(params_js, "sce");
+    cJSON *dev_js = cJSON_GetObjectItem(params_js, "dev");
 
-	if(root == NULL)
-		return;
-	char *out = cJSON_PrintUnformatted(root);
-	// print_mcd("out : %s", out);
-	
+    size = cJSON_GetArraySize(scene_js);
+    print_mcd("%d", size);
+    for (i = 0; i < size; i++) {
+        cJSON *item_js = cJSON_GetArrayItem(scene_js, i);
+        print_mcd("name  = %s", item_js->string);
+    }
+
+    size = cJSON_GetArraySize(dev_js);
+    print_mcd("%d", size);
+    for (i = 0; i < size; i++) {
+        cJSON *item_js = cJSON_GetArrayItem(dev_js, i);
+        print_mcd("name  = %s", item_js->string);
+    }
+
+    if (root == NULL)
+        return;
+    char *out = cJSON_PrintUnformatted(root);
+    // print_mcd("out : %s", out);
 }
 
 void ctrl_db_device_scene1(void)
@@ -183,7 +176,7 @@ void ctrl_db_device_scene1(void)
     cJSON *command = NULL;
     cJSON *param = NULL;
     // char *out = NULL;
-	
+
     REQUIRE((root = cJSON_CreateObject()) == NULL, Error);
     REQUIRE((command = cJSON_CreateObject()) == NULL, Error);
     cJSON_AddItemToObject(root, "command", command);
@@ -191,46 +184,48 @@ void ctrl_db_device_scene1(void)
     cJSON_AddItemToObject(command, "param", param);
     cJSON_AddStringToObject(root, "api", "dev_ctrl");
 
-	cJSON_AddStringToObject(param, "设备名称", "廊灯");
+    cJSON_AddStringToObject(param, "设备名称", "廊灯");
 
+    char *out = cJSON_PrintUnformatted(root);
+    print_mcd("out = %s", out);
 
-	char *out = cJSON_PrintUnformatted(root);
-	print_mcd("out = %s", out);
-
-	free(out);
+    free(out);
 Error:
-    if(root != NULL)
-    {
+    if (root != NULL) {
         cJSON_Delete(root);
         root = NULL;
     }
 }
 
 // {"command":{"param":{"操作":"打开","设备名称":"廊灯", "name":"廊灯"},"api":"dev_ctrl"}}
-_db_rs485_dis_t db_ctrl_lc[] = 
-{
-    {HOPE_DB_ACTION_NULL  , {0},   {0},   },
-    {HOPE_DB_ACTION_CLOSE , "操作", "关闭"},
-    {HOPE_DB_ACTION_OPEN  , "操作", "打开"},
-    {HOPE_DB_ACTION_STOP  , "操作", "暂停"},
-    {HOPE_DB_ACTION_MODE  , "模式",  ""  },
-    {HOPE_DB_ACTION_SPEED , "风速",  ""  },
-    {HOPE_DB_ACTION_ADD   , "温度",  "+"  },
-    {HOPE_DB_ACTION_REDUCE, "温度",  "-"  },
+_db_rs485_dis_t db_ctrl_lc[] =
+    {
+        {
+            HOPE_DB_ACTION_NULL,
+            {0},
+            {0},
+        },
+        {HOPE_DB_ACTION_CLOSE, "操作", "关闭"},
+        {HOPE_DB_ACTION_OPEN, "操作", "打开"},
+        {HOPE_DB_ACTION_STOP, "操作", "暂停"},
+        {HOPE_DB_ACTION_MODE, "模式", ""},
+        {HOPE_DB_ACTION_SPEED, "风速", ""},
+        {HOPE_DB_ACTION_ADD, "温度", "+"},
+        {HOPE_DB_ACTION_REDUCE, "温度", "-"},
 };
 
 _db_rs485_ms_t db_ctrl_ac_mode[] = {
     {MODE_COOL, "制冷"},
     {MODE_HEAT, "制热"},
-    {MODE_AIR , "通风"},
-    {MODE_DRY , "除湿"},
+    {MODE_AIR, "通风"},
+    {MODE_DRY, "除湿"},
 };
 _db_rs485_ms_t db_ctrl_ac_speed[] = {
-    {VALUE_NULL  , ""},
-    {VALUE_LOW   , "低"},
+    {VALUE_NULL, ""},
+    {VALUE_LOW, "低"},
     {VALUE_MIDDLE, "中"},
-    {VALUE_HIGH  , "高"},
-    {VALUE_AUTO  , "自动"},
+    {VALUE_HIGH, "高"},
+    {VALUE_AUTO, "自动"},
 };
 
 void ctrl_db_device_scene(db_ctrl_t *db_ctrl)
@@ -246,52 +241,42 @@ void ctrl_db_device_scene(db_ctrl_t *db_ctrl)
     REQUIRE((param = cJSON_CreateObject()) == NULL, Error);
     cJSON_AddItemToObject(command, "param", param);
     cJSON_AddStringToObject(root, "api", "dev_ctrl");
-    
 
-    switch (db_ctrl->dev_type)
-    {
+    switch (db_ctrl->dev_type) {
         case HOPE_DB_LIGHT_TYPE:
         case HOPE_DB_CURTAIN_TYPE:
-        case HOPE_DB_AIR_CONDITIONER_TYPE:
-        {
+        case HOPE_DB_AIR_CONDITIONER_TYPE: {
             cJSON_AddStringToObject(param, "设备名称", db_ctrl->name);
-            if(db_ctrl->action == HOPE_DB_ACTION_MODE)
-            {
-                cJSON_AddStringToObject(param, db_ctrl_lc[db_ctrl->action].name_action, db_ctrl_ac_mode[db_ctrl->attribute].m_name); 
-            }   
-            else if(db_ctrl->action == HOPE_DB_ACTION_SPEED)   
-            {
-                cJSON_AddStringToObject(param, db_ctrl_lc[db_ctrl->action].name_action, db_ctrl_ac_speed[db_ctrl->attribute].m_name); 
+            if (db_ctrl->action == HOPE_DB_ACTION_MODE) {
+                cJSON_AddStringToObject(param, db_ctrl_lc[db_ctrl->action].name_action, db_ctrl_ac_mode[db_ctrl->attribute].m_name);
             }
-            else if(db_ctrl->action > 0)
-                cJSON_AddStringToObject(param, db_ctrl_lc[db_ctrl->action].name_action, db_ctrl_lc[db_ctrl->action].do_action); 
-        }
-            break;
-        case HOPE_DB_SCENE_TYPE:
-        {
+            else if (db_ctrl->action == HOPE_DB_ACTION_SPEED) {
+                cJSON_AddStringToObject(param, db_ctrl_lc[db_ctrl->action].name_action, db_ctrl_ac_speed[db_ctrl->attribute].m_name);
+            }
+            else if (db_ctrl->action > 0)
+                cJSON_AddStringToObject(param, db_ctrl_lc[db_ctrl->action].name_action, db_ctrl_lc[db_ctrl->action].do_action);
+        } break;
+        case HOPE_DB_SCENE_TYPE: {
             cJSON_AddStringToObject(param, "模式", db_ctrl->name);
-            if((db_ctrl->action == HOPE_DB_ACTION_CLOSE) || (db_ctrl->action == HOPE_DB_ACTION_OPEN))
-                cJSON_AddStringToObject(param, db_ctrl_lc[db_ctrl->action].name_action, db_ctrl_lc[db_ctrl->action].do_action); 
-        }
-            break;
-        
+            if ((db_ctrl->action == HOPE_DB_ACTION_CLOSE) || (db_ctrl->action == HOPE_DB_ACTION_OPEN))
+                cJSON_AddStringToObject(param, db_ctrl_lc[db_ctrl->action].name_action, db_ctrl_lc[db_ctrl->action].do_action);
+        } break;
+
         default:
-        goto Error;
+            goto Error;
             break;
     }
 
     out = cJSON_PrintUnformatted(root);
-	print_mcd("get data %s", out);
-    if(out != NULL)
-    {
+    print_mcd("get data %s", out);
+    if (out != NULL) {
         // parse_speech_cmd(out);
         free(out);
         out = NULL;
     }
-    
+
 Error:
-    if(root != NULL)
-    {
+    if (root != NULL) {
         cJSON_Delete(root);
         root = NULL;
     }
@@ -299,47 +284,43 @@ Error:
 
 static int _my_sort(int *a, int l)
 {
-	int i , j;
-	int v;
+    int i, j;
+    int v;
 
-	for(i = 0; i < l -1; i++)
-	{
-		for(j = i+1; j < l ; j++)
-		{
-			if(a[j] < a[i])
-			{
-				v = a[i];
-				a[i] = a[j];
-				a[j]  = v;
-			}
-		}
-	}
+    for (i = 0; i < l - 1; i++) {
+        for (j = i + 1; j < l; j++) {
+            if (a[j] < a[i]) {
+                v = a[i];
+                a[i] = a[j];
+                a[j] = v;
+            }
+        }
+    }
 }
 
-
-#define KEYWORD_PATH       ".speech_keyword" 
-static int32_t _get_tuya_keyword_to_speech(void) 
+#define KEYWORD_PATH ".speech_keyword"
+static int32_t _get_tuya_keyword_to_speech(void)
 {
     int ret = 0;
     // char sv_name[128] = "HOPE情景";
 
     FILE *file = fopen(KEYWORD_PATH, "r");
-    if(file == NULL) {
+    if (file == NULL) {
         print_mcd("open file failed: %s", KEYWORD_PATH);
         return -1;
     }
     fseek(file, 0, SEEK_END);
     long size = ftell(file);
     char *buffer = (char *)calloc(size + 1, sizeof(char));
-    if(buffer == NULL) {
+    if (buffer == NULL) {
         print_mcd("calloc memeory failed");
         ret = -1;
         goto error;
     }
-	rewind(file);
+    rewind(file);
     size_t rsize = fread(buffer, 1, size, file);
     print_mcd("get size: %ld, rsize: %ld\n", size, rsize);
-    if(rsize != (size_t)size) {
+    if (rsize != (size_t)size) {
         print_mcd("read file failed");
         ret = -1;
         goto error;
@@ -348,110 +329,119 @@ static int32_t _get_tuya_keyword_to_speech(void)
     print_mcd("get speech keywords : %s", buffer);
     // ai_engine_set_cinfo("HOPE情景", buffer, 1);
 error:
-    if(buffer != NULL) {
+    if (buffer != NULL) {
         free(buffer);
     }
-    if(file != NULL) {
+    if (file != NULL) {
         fclose(file);
     }
     return ret;
-
 }
 
 static _json_test(void)
 {
-	char buffer[1024] = "{\"comName\":\"顺舟科技\",\"deviceCata\":\"Host3\",\"deviceName\":\"Host3\",\"parentId\":\"820930244371648512\",\"deviceSN\":\"44415106030037\",\"deviceVO\":true}\"}";
-	char buffer1[1024] = "{\"comName\":\"顺舟科技\",\"deviceCata\":\"Host3\",\"deviceName\":\"Host3\",\"parentId\":\"820930244371648512\",\"deviceSN\":\"44415106030037\",\"deviceVO\":1}\"}";
+    char buffer[1024] = "{\"comName\":\"顺舟科技\",\"deviceCata\":\"Host3\",\"deviceName\":\"Host3\",\"parentId\":\"820930244371648512\",\"deviceSN\":\"44415106030037\",\"deviceVO\":true}\"}";
+    char buffer1[1024] = "{\"comName\":\"顺舟科技\",\"deviceCata\":\"Host3\",\"deviceName\":\"Host3\",\"parentId\":\"820930244371648512\",\"deviceSN\":\"44415106030037\",\"deviceVO\":1}\"}";
 
-	cJSON *root = cJSON_Parse(buffer);
-	if(root != NULL) {
-		cJSON *comName = cJSON_GetObjectItem(root, "comName");
-		print_mcd("comName: %s\n", comName->valuestring);
-		cJSON *deviceVO = cJSON_GetObjectItem(root, "deviceVO");
-		print_mcd("deviceVO: %d\n", deviceVO->valueint);
-	}
+    cJSON *root = cJSON_Parse(buffer);
+    if (root != NULL) {
+        cJSON *comName = cJSON_GetObjectItem(root, "comName");
+        print_mcd("comName: %s\n", comName->valuestring);
+        cJSON *deviceVO = cJSON_GetObjectItem(root, "deviceVO");
+        print_mcd("deviceVO: %d\n", deviceVO->valueint);
+    }
 }
 
-char* itoa(int num, char* str, int radix)
+char *itoa(int num, char *str, int radix)
 {
-    char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//索引表
-    unsigned unum;//存放要转换的整数的绝对值,转换的整数可能是负数
-    int i=0,j,k;//i用来指示设置字符串相应位，转换之后i其实就是字符串的长度；转换后顺序是逆序的，有正负的情况，k用来指示调整顺序的开始位置;j用来指示调整顺序时的交换。
- 
+    char index[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";  //索引表
+    unsigned unum;                                          //存放要转换的整数的绝对值,转换的整数可能是负数
+    int i = 0, j, k;                                        //i用来指示设置字符串相应位，转换之后i其实就是字符串的长度；转换后顺序是逆序的，有正负的情况，k用来指示调整顺序的开始位置;j用来指示调整顺序时的交换。
+
     //获取要转换的整数的绝对值
-    if(radix==10&&num<0)//要转换成十进制数并且是负数
+    if (radix == 10 && num < 0)  //要转换成十进制数并且是负数
     {
-        unum=(unsigned)-num;//将num的绝对值赋给unum
-        str[i++]='-';//在字符串最前面设置为'-'号，并且索引加1
+        unum = (unsigned)-num;  //将num的绝对值赋给unum
+        str[i++] = '-';         //在字符串最前面设置为'-'号，并且索引加1
     }
-    else unum=(unsigned)num;//若是num为正，直接赋值给unum
- 
+    else
+        unum = (unsigned)num;  //若是num为正，直接赋值给unum
+
     //转换部分，注意转换后是逆序的
-    do
-    {
-        str[i++]=index[unum%(unsigned)radix];//取unum的最后一位，并设置为str对应位，指示索引加1
-        unum/=radix;//unum去掉最后一位
- 
-    }while(unum);//直至unum为0退出循环
- 
-    str[i]='\0';//在字符串最后添加'\0'字符，c语言字符串以'\0'结束。
- 
+    do {
+        str[i++] = index[unum % (unsigned)radix];  //取unum的最后一位，并设置为str对应位，指示索引加1
+        unum /= radix;                             //unum去掉最后一位
+
+    } while (unum);  //直至unum为0退出循环
+
+    str[i] = '\0';  //在字符串最后添加'\0'字符，c语言字符串以'\0'结束。
+
     //将顺序调整过来
-    if(str[0]=='-') k=1;//如果是负数，符号不用调整，从符号后面开始调整
-    else k=0;//不是负数，全部都要调整
- 
-    char temp;//临时变量，交换两个值时用到
-    for(j=k;j<=(i-1)/2;j++)//头尾一一对称交换，i其实就是字符串的长度，索引最大值比长度少1
+    if (str[0] == '-')
+        k = 1;  //如果是负数，符号不用调整，从符号后面开始调整
+    else
+        k = 0;  //不是负数，全部都要调整
+
+    char temp;                          //临时变量，交换两个值时用到
+    for (j = k; j <= (i - 1) / 2; j++)  //头尾一一对称交换，i其实就是字符串的长度，索引最大值比长度少1
     {
-        temp=str[j];//头部赋值给临时变量
-        str[j]=str[i-1+k-j];//尾部赋值给头部
-        str[i-1+k-j]=temp;//将临时变量的值(其实就是之前的头部值)赋给尾部
+        temp = str[j];                //头部赋值给临时变量
+        str[j] = str[i - 1 + k - j];  //尾部赋值给头部
+        str[i - 1 + k - j] = temp;    //将临时变量的值(其实就是之前的头部值)赋给尾部
     }
- 
-    return str;//返回转换后的字符串
- 
+
+    return str;  //返回转换后的字符串
 }
 
 char aaa[] = "[{\"value1\":\"自定义话术1\"},{\"value2\":\"\"},{\"value3\":\"回家模式的自定义话术\"},{\"title\":\"回家模式\"}]";
-#define DSP_MAX_DATA_SIZE		(32 - 1)
+#define DSP_MAX_DATA_SIZE (32 - 1)
+#define BUILD_UINT16(loByte, hiByte) \
+    ((uint16_t)(((loByte)&0x00FF) + (((hiByte)&0x00FF) << 8)))
 int main(int argc, const char *argv[])
 {
-	char utf8_tmp_buf[128] = "}12123";
-	int len = strlen(utf8_tmp_buf);
-	int i = 10;
-	all_db_info_t *temp;
-	srv_msg_t *msg;
-	db_ctrl_t db_ctrl;
-	int64_t userid = 1005039295;
-	char *user = NULL;
+    char utf8_tmp_buf[128] = "}12123";
+    int len = strlen(utf8_tmp_buf);
+    int i = 10;
+    all_db_info_t *temp;
+    srv_msg_t *msg;
+    db_ctrl_t db_ctrl;
+    int64_t userid = 1005039295;
+    char *user = NULL;
 
-	char str[32] = {0};
-	char str1[32] = {0};
+    char str[32] = {0};
+    char str1[32] = {0};
+    uint8_t out = 0x11;
+    uint8_t in = 0x66;
 
-	// itoa(userid, str, 10);
-	// printf("userid = %d, %s\n", userid, str);
-	// snprintf(str1, sizeof(str1), "%d", userid);
-	// printf("userid = %d, %s\n", userid, str1);
-	// printf("user = %d\n", strlen(user));
+    uint32_t ID = (in << 8) | out ;
+    // uint32_t ID = 0;
+    // ID = BUILD_UINT16(out, in) & 0x0000FFFF;
+    printf("ID : 0x%04X\n", ID);
 
-	// printf("get addr %d\n", INDOOR_MACH_WORK_MODE_INP_REG(1, 14));
-	// printf("get addr %d\n", INDOOR_MACH_REF_TMP_UPPER_AND_LOWER_LIMIT_INP_REG(1, 14));
-	// printf("get addr %d\n", INDOOR_MACH_HEAT_TMP_UPPER_AND_LOWER_LIMIT_INP_REG(1, 14));
-	// printf("get addr %d\n", INDOOR_MACH_OPERATION_DETAILS_HOLD_REG(1, 14));
+    // itoa(userid, str, 10);
+    // printf("userid = %d, %s\n", userid, str);
+    // snprintf(str1, sizeof(str1), "%d", userid);
+    // printf("userid = %d, %s\n", userid, str1);
+    // printf("user = %d\n", strlen(user));
 
-	// _json_test(	);
+    // printf("get addr %d\n", INDOOR_MACH_WORK_MODE_INP_REG(1, 14));
+    // printf("get addr %d\n", INDOOR_MACH_REF_TMP_UPPER_AND_LOWER_LIMIT_INP_REG(1, 14));
+    // printf("get addr %d\n", INDOOR_MACH_HEAT_TMP_UPPER_AND_LOWER_LIMIT_INP_REG(1, 14));
+    // printf("get addr %d\n", INDOOR_MACH_OPERATION_DETAILS_HOLD_REG(1, 14));
 
-	// srv_msg_t *mtest = (srv_msg_t *)calloc(10, sizeof(srv_msg_t));
-	// for ( i = 0; i < 10; i++)
-	// {
-	// 	mtest[i].type = i;
-	// 	// printf("%p\n", mtest[i]);
-	// }
-	// for ( i = 0; i < 10; i++)
-	// {
-	// 	// mtest[i].type = i;
-	// 	printf("%d\n", mtest[i].type);
-	// }
+    // _json_test(	);
+
+    // srv_msg_t *mtest = (srv_msg_t *)calloc(10, sizeof(srv_msg_t));
+    // for ( i = 0; i < 10; i++)
+    // {
+    // 	mtest[i].type = i;
+    // 	// printf("%p\n", mtest[i]);
+    // }
+    // for ( i = 0; i < 10; i++)
+    // {
+    // 	// mtest[i].type = i;
+    // 	printf("%d\n", mtest[i].type);
+    // }
 #if 0
 	char buf[1024] = "播放周杰伦的歌";
 	printf("size = %d\n", strlen(buf));
@@ -470,10 +460,10 @@ int main(int argc, const char *argv[])
 	default:
 		break;
 	}
-	
+
 #endif
-	// int ret = strcmp("9.0.2.20211101", "9.0.2.20200101");
-	// print_mcd("ret = %d", ret);
+    // int ret = strcmp("9.0.2.20211101", "9.0.2.20200101");
+    // print_mcd("ret = %d", ret);
 #if 0
 	int *size = 1;
 	// _get_tuya_keyword_to_speech();
@@ -546,9 +536,8 @@ int main(int argc, const char *argv[])
 		sleep(2);
 	}
 #endif
-	// print_mcd("%p, out = %s", out, out);
+    // print_mcd("%p, out = %s", out, out);
 
-	
 #if 0
 	cJSON *root = cJSON_Parse(aaa);
 	if(root){
@@ -674,8 +663,8 @@ int main(int argc, const char *argv[])
 	print_mcd("out");
 #endif
 
-return 0;
-	// _get_file_size();
+    return 0;
+    // _get_file_size();
 
 #if 0
 	// ctrl_db_device_scene();
@@ -767,5 +756,5 @@ return 0;
 
 	print_mcd("end time = %s", _print_time());
 	// print_mcd("ret = %d", ret);
-	#endif
+#endif
 }

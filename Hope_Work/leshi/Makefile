@@ -1,13 +1,15 @@
 # **********************************************
 # Application Makefile Config
 # **********************************************
-TARGET := test
+TARGET := leshi
 
-LOCAL_INCS := . ./include
+LOCAL_INCS := . ./include \
+				../include \
+				../../include 
 LOCAL_SRCS := .
 
-CC ?= arm-openwrt-linux-gcc
-# CC ?= gcc
+# CC = arm-openwrt-linux-gcc
+CC = gcc
 
 LOCAL_CFLAGS :=
 LOCAL_LDFLAGS := -lpthread  -lm -L./
@@ -18,7 +20,8 @@ LOCAL_LDFLAGS := -lpthread  -lm -L./
 LOCAL_CFLAGS += -Wno-multichar -fno-exceptions -ffunction-sections -fdata-sections -funwind-tables \
 			-fno-short-enums -fno-builtin-sin -fno-strict-volatile-bitfields -fmessage-length=0 \
 			-fgcse-after-reload -frerun-cse-after-loop -frename-registers -fomit-frame-pointer \
-			-fno-strict-aliasing -flto
+			-fno-strict-aliasing -flto  -lm \
+			-fsanitize=address -fsanitize-recover=address -fno-stack-protector -fno-omit-frame-pointer -fno-var-tracking 
 LOCAL_LDFLAGS += -Wl,--gc-sections -Wl,--no-undefined
 
 # **********************************************
@@ -42,9 +45,16 @@ SRCS  := $(foreach file, $(foreach dir, $(LOCAL_SRCS), $(wildcard $(dir)/*.S)), 
 
 OBJS := $(patsubst %.S,%.o, $(patsubst %.c,%.o, $(patsubst %.cpp, %.o, $(SRCS))))
 
+TAR_PATH := $(shell pwd)
+TMP_PATH := __tmp__/
+
 .PHONY : all clean
 
+
 all : $(TARGET)
+	-mkdir $(TMP_PATH)
+	-mv $(OBJS) $(TMP_PATH)
+	@echo "make successfully"
 
 $(TARGET) : $(OBJS)
 ifeq ($(suffix $(TARGET)),.a)
@@ -55,6 +65,7 @@ else
 endif
 
 clean :
+	-rm $(TMP_PATH) -rf
 	rm -rf $(OBJS)
 	rm -rf $(TARGET)
 

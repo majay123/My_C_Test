@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-07-15 15:07:39
  * @LastEditors  : MCD
- * @LastEditTime : 2022-08-22 15:13:27
+ * @LastEditTime : 2022-11-02 16:09:25
  * @FilePath     : /My_C_Test/CRC16_MODBUS/crc16_modbus.c
  * @Description  : 
  * 
@@ -52,22 +52,31 @@
 #include <unistd.h>
 
 // #define MY_RELLOC(data, num, type)           \
-// do{if(data){free(data);data = calloc(num, sizeof(type));}}while(0);            
-#define MY_RELLOC(data, num, type)              \
-do{                                             \
-    if(data){                                   \
-        free(data);                             \
-        data = NULL;}                           \
-    if(num > 0) {data = calloc(num, sizeof(type));}           \
-}while(0)
+// do{if(data){free(data);data = calloc(num, sizeof(type));}}while(0);
+#define MY_RELLOC(data, num, type)            \
+    do {                                      \
+        if (data) {                           \
+            free(data);                       \
+            data = NULL;                      \
+        }                                     \
+        if (num > 0) {                        \
+            data = calloc(num, sizeof(type)); \
+        }                                     \
+    } while (0)
 
-#define MY_RELLOC_REQUIRE(data, num, type, tag)                               \
-do{                                             \
-    MY_RELLOC(data, num, type);                 \
-    if(!data){print_mcd("%s %s malloc is null", #tag, #data); goto tag;}}while(0)
+#define MY_RELLOC_REQUIRE(data, num, type, tag)             \
+    do {                                                    \
+        MY_RELLOC(data, num, type);                         \
+        if (!data) {                                        \
+            print_mcd("%s %s malloc is null", #tag, #data); \
+            goto tag;                                       \
+        }                                                   \
+    } while (0)
 
-#define PRINT_SIZEOF(type)      \
-do{printf("%d\n",sizeof(type));}while(0);
+#define PRINT_SIZEOF(type)            \
+    do {                              \
+        printf("%d\n", sizeof(type)); \
+    } while (0);
 
 // 该位称为预置值，使用人工算法（长除法）时
 //需要将除数多项式先与该与职位 异或 ，才能得到最后的除数多项式
@@ -142,15 +151,12 @@ unsigned short do_crc16_XMODEM(unsigned char *ptr, int len)
 
 unsigned short do_crc(unsigned char *ptr, int len)
 {
-
     unsigned int i;
     unsigned short crc = 0x0000;
 
     while (len--) {
-
         crc ^= (unsigned short)(*ptr++) << 8;
         for (i = 0; i < 8; ++i) {
-
             if (crc & 0x8000)
                 crc = (crc << 1) ^ 0x1021;
             else
@@ -176,7 +182,8 @@ unsigned short do_crc16_MODBUS(unsigned char *ptr, int len)
             if (crc & 1) {
                 crc >>= 1;
                 crc ^= 0xA001;
-            } else {
+            }
+            else {
                 crc >>= 1;
             }
         }
@@ -224,7 +231,8 @@ uint16_t crc16bitbybit(uint8_t *ptr, uint16_t len)
             if (crc & 1) {
                 crc >>= 1;
                 crc ^= polynom;
-            } else {
+            }
+            else {
                 crc >>= 1;
             }
         }
@@ -252,24 +260,24 @@ static size_t _test_get_data_len(uint8_t data_type)
     size_t len = 0;
 
     switch (data_type) {
-    case EIDE_DATA_TYPE_NO:
-        break;
-    case EIDE_DATA_TYPE_BOOLEAN:
-    case EIDE_DATA_TYPE_CHAR:
-    case EIDE_DATA_TYPE_UNSIGNED_CHAR:
-        len += sizeof(char);
-        break;
-    case EIDE_DATA_TYPE_SHORE_INT:
-    case EIDE_DATA_TYPE_UNSIGNED_SHORT_INT:
-        len += sizeof(short);
-        break;
-    case EIDE_DATA_TYPE_INT:
-    case EIDE_DATA_TYPE_UNSIGNED_INT:
-    case EIDE_DATA_TYPE_FLOAT:
-        len += sizeof(int);
-        break;
-    default:
-        break;
+        case EIDE_DATA_TYPE_NO:
+            break;
+        case EIDE_DATA_TYPE_BOOLEAN:
+        case EIDE_DATA_TYPE_CHAR:
+        case EIDE_DATA_TYPE_UNSIGNED_CHAR:
+            len += sizeof(char);
+            break;
+        case EIDE_DATA_TYPE_SHORE_INT:
+        case EIDE_DATA_TYPE_UNSIGNED_SHORT_INT:
+            len += sizeof(short);
+            break;
+        case EIDE_DATA_TYPE_INT:
+        case EIDE_DATA_TYPE_UNSIGNED_INT:
+        case EIDE_DATA_TYPE_FLOAT:
+            len += sizeof(int);
+            break;
+        default:
+            break;
     }
 
     return len;
@@ -309,7 +317,7 @@ static size_t _test_data_fill(eide_rs485_devs_ctrl_t *ctrl_data, eide_rs485_payl
             *data = data_type;
             len += 1;
             data++;
-            data_len= _test_get_data_len(data_type);
+            data_len = _test_get_data_len(data_type);
             // print_mcd("data len: %d", data_len);
             memcpy(data, ctrl_data->ctrl[i].funcs[j].data, data_len);
             len += data_len;
@@ -320,7 +328,6 @@ static size_t _test_data_fill(eide_rs485_devs_ctrl_t *ctrl_data, eide_rs485_payl
     return len;
 }
 
-
 static void _test_prase_msg(eide_rs485_payload_t *payload, size_t len)
 {
     uint8_t *data = payload->data;
@@ -328,7 +335,7 @@ static void _test_prase_msg(eide_rs485_payload_t *payload, size_t len)
     size_t i, j;
     uint8_t dev_num = 0, fun_num = 0, data_type = 0;
     size_t data_len = 0;
-    for(i = 0; i < len; i++) {
+    for (i = 0; i < len; i++) {
         printf("%02x ", data[i]);
     }
     printf("\n");
@@ -351,18 +358,18 @@ static void _test_prase_msg(eide_rs485_payload_t *payload, size_t len)
             rep_dev_ctrl.ctrl[i].funcs[j].data_type = data_type;
             data++;
             data_len = _test_get_data_len(data_type);
-            if(data_len > 4)
+            if (data_len > 4)
                 data_len = 4;
             memcpy(&rep_dev_ctrl.ctrl[i].funcs[j].data, data, data_len);
             data += data_len;
         }
     }
-    
+
     print_mcd("get device num = %02x", rep_dev_ctrl.ctrl_dev_count);
-    for(i = 0; i < rep_dev_ctrl.ctrl_dev_count; i++) {
+    for (i = 0; i < rep_dev_ctrl.ctrl_dev_count; i++) {
         rep_dev_ctrl.ctrl[i].dev_id;
         print_mcd("dev id = %02x, dev func num = %02x", rep_dev_ctrl.ctrl[i].dev_id, rep_dev_ctrl.ctrl[i].dev_func_num);
-        for(j = 0; j < rep_dev_ctrl.ctrl[i].dev_func_num; j++) {
+        for (j = 0; j < rep_dev_ctrl.ctrl[i].dev_func_num; j++) {
             print_mcd("func id = %02x, data type = %02x", rep_dev_ctrl.ctrl[i].funcs[j].func_id, rep_dev_ctrl.ctrl[i].funcs[j].data_type);
             data_type = rep_dev_ctrl.ctrl[i].funcs[j].data_type;
             data_len = _test_get_data_len(data_type);
@@ -389,7 +396,7 @@ static int test_ctrl_devs()
     ctrl_data.ctrl_dev_count = 4;
     for (i = 0; i < ctrl_data.ctrl_dev_count; i++) {
         ctrl_data.ctrl[i].dev_id = i + 1;
-        if( i== 3)
+        if (i == 3)
             ctrl_data.ctrl[i].dev_func_num = 3;
         else
             ctrl_data.ctrl[i].dev_func_num = 2;
@@ -398,7 +405,8 @@ static int test_ctrl_devs()
             if (j == 0) {
                 ctrl_data.ctrl[i].funcs[j].data_type = 1;
                 ctrl_data.ctrl[i].funcs[j].data[0] = 1;
-            } else {
+            }
+            else {
                 ctrl_data.ctrl[i].funcs[j].data_type = 3;
                 ctrl_data.ctrl[i].funcs[j].data[0] = 50;
             }
@@ -408,7 +416,7 @@ static int test_ctrl_devs()
     // size_t len = 30;
     print_mcd("data len: %d", len);
 
-    for(i = 0; i < len; i++) {
+    for (i = 0; i < len; i++) {
         printf("%02x ", payload.data[i]);
     }
     printf("\n");
@@ -416,34 +424,33 @@ static int test_ctrl_devs()
     _test_prase_msg(&payload, len);
 }
 
-
-static void _test_macaddr_to_decstring(void )
+static void _test_macaddr_to_decstring(void)
 {
     int i = 0;
     // mac addr hex to dec string
-// func1
+    // func1
     uint8_t mac_addr[8] = {0xF0, 0x0A, 0x4F, 0x04, 0x10, 0x2D, 0x01, 0x01};
     uint8_t act_addr[25] = {0};
     uint8_t act_addr1[25] = {0};
     uint8_t act_addr2[25] = {0};
     int offset = 0;
     int offset1 = 0;
-    snprintf(act_addr, sizeof(act_addr), "%02d%02d%02d%02d%02d%02d%02d%02d", mac_addr[0],mac_addr[1],mac_addr[2],mac_addr[3],mac_addr[4],mac_addr[5],mac_addr[6],mac_addr[7]);
+    snprintf(act_addr, sizeof(act_addr), "%02d%02d%02d%02d%02d%02d%02d%02d", mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5], mac_addr[6], mac_addr[7]);
     // snprintf(act_addr, sizeof(act_addr), "%02d", mac_addr);
     print_mcd("%s", act_addr);
-//func2
-    for(i = 0; i < 8; i++){
-        offset+=snprintf(act_addr1+offset,sizeof(act_addr1), "%02d",mac_addr[i]);  // 格式化的数据写入字符串
+    //func2
+    for (i = 0; i < 8; i++) {
+        offset += snprintf(act_addr1 + offset, sizeof(act_addr1), "%02d", mac_addr[i]);  // 格式化的数据写入字符串
     }
     // act_addr1[offset]= '\0';
-    print_mcd("%s",act_addr1);
+    print_mcd("%s", act_addr1);
 
-//func3
-    for(i = 0; i < 8; i++){
-        offset1+=sprintf(act_addr2+offset1, "%02d",mac_addr[i]);  // 格式化的数据写入字符串
+    //func3
+    for (i = 0; i < 8; i++) {
+        offset1 += sprintf(act_addr2 + offset1, "%02d", mac_addr[i]);  // 格式化的数据写入字符串
     }
-    act_addr2[offset]= '\0';
-    print_mcd("%s",act_addr2);
+    act_addr2[offset] = '\0';
+    print_mcd("%s", act_addr2);
 }
 
 // my func
@@ -452,58 +459,57 @@ static int _test_macaddr_string_to_macaddr_hex()
     char *mac_addr = "11164F0E102D0100";
     size_t i = 0;
     uint8_t data1, data2;
-    uint8_t  val;
-    
+    uint8_t val;
+
     // print_mcd("%d", strlen(mac_addr));
-    for(i = 0; i < strlen(mac_addr); ){
+    for (i = 0; i < strlen(mac_addr);) {
         data1 = mac_addr[i];
         data2 = mac_addr[i + 1];
-        switch(data1){
-        case '0'...'9': 
-            val = (data1 - '0');   
-            break;
-        case 'a'...'f':
-            val = (data1 - 'a') + 0x0A; 
-            break;
-        case 'A'...'F':
-            val = (data1 - 'A') + 0x0A; 
-            break;
-        default:
-            return -1;
-            // break;
+        switch (data1) {
+            case '0' ... '9':
+                val = (data1 - '0');
+                break;
+            case 'a' ... 'f':
+                val = (data1 - 'a') + 0x0A;
+                break;
+            case 'A' ... 'F':
+                val = (data1 - 'A') + 0x0A;
+                break;
+            default:
+                return -1;
+                // break;
         }
-        switch(data2){
-        case '0'...'9': 
-            val = (val << 4) | (data2 - '0');   
-            break;
-        case 'a'...'f':
-            val = val << 4 | (data2 - 'a') + 0x0A; 
-            break;
-        case 'A'...'F':
-            val = val << 4 | (data2 - 'A') + 0x0A; 
-            break;
-        default:
-            return -1;
-            // break;
+        switch (data2) {
+            case '0' ... '9':
+                val = (val << 4) | (data2 - '0');
+                break;
+            case 'a' ... 'f':
+                val = val << 4 | (data2 - 'a') + 0x0A;
+                break;
+            case 'A' ... 'F':
+                val = val << 4 | (data2 - 'A') + 0x0A;
+                break;
+            default:
+                return -1;
+                // break;
         }
         // data = (mac_addr[i] - '0') * 16 + (mac_addr[i+1] - '0');
         printf("%02X", val);
         i += 2;
     }
     return 0;
-
 }
 
 static void _test_index(int index)
 {
-    if(index < 0 )
+    if (index < 0)
         index = 0;
 }
 
 typedef enum {
     MSG_TEST = 0,
     MSG_TEST1 = 2,
-}msg_test_e;
+} msg_test_e;
 
 static int _test_argv(void *arg)
 {
@@ -511,10 +517,72 @@ static int _test_argv(void *arg)
 
     // num = (uint8_t *)arg;
     print_mcd("num = %d", (uint8_t *)arg);
-    int num  = 100;
+    int num = 100;
     return num;
 }
 
+void dump_rs485_data1(uint8_t *src, uint8_t *dst, size_t ssize, size_t dsize)
+{
+    int i = 0;
+    int offset = 0;
+
+    if (src == NULL || dst == NULL || ssize <= 0 || dsize <= 0)
+        return;
+
+    for (i = 0; i < ssize; i++) {
+        offset += snprintf(dst + offset, dsize, " 0x%02x", src[i]);  // 格式化的数据写入字符串
+        // offset += 5;
+        printf("%d, %s\n", offset, dst);
+    }
+}
+
+uint8_t *dump_rs485_data2(uint8_t *src, size_t ssize)
+{
+    int i = 0;
+    int offset = 0;
+    uint8_t *dst;
+    size_t dsize;
+
+    if (src == NULL || ssize <= 0)
+        return NULL;
+
+    dst = (uint8_t *)calloc(ssize * 5 + 1, sizeof(uint8_t));
+    if (dst == NULL)
+        return NULL;
+    dsize = ssize * 5 + 1;
+
+    for (i = 0; i < ssize; i++) {
+        offset += snprintf(dst + offset, dsize, " 0x%02x", src[i]);  // 格式化的数据写入字符串
+        printf("%d, %s\n", offset, dst);
+    }
+
+    return dst;
+}
+
+int maisi_select(int fd, fd_set *rset, struct timeval *tv, int length_to_read)
+{
+    int s_rc;
+
+    while ((s_rc = select(0, NULL, NULL, NULL, tv)) == -1) {
+        if (errno == EINTR) {
+            printf("A non blocked signal was caught\n");
+            /* Necessary after an error */
+            FD_ZERO(rset);
+            FD_SET(fd, rset);
+        }
+        else {
+            return -1;
+        }
+    }
+
+    if (s_rc == 0) {
+        /* Timeout */
+        errno = ETIMEDOUT;
+        return -1;
+    }
+    printf("out function\n");
+    return s_rc;
+}
 
 int main(int argc, char const *argv[])
 {
@@ -526,16 +594,32 @@ int main(int argc, char const *argv[])
     int len = 0;
     int i = 0;
     uint8_t num1 = MSG_TEST1;
-    int  num2;
+    int num2;
     unsigned char buf[] = {0x05, 0x04, 0x00, 0x1d, 0x00, 0x04};
     unsigned char buf1[] = {0x03, 0x06, 0x00, 0x95, 0x03, 0xe8};
+    unsigned char test[100] = {0};
+    int offset = 0;
 
-    crc = do_crc16_MODBUS(buf, sizeof(buf));
-    printf("get crc 0x%04X\n", crc);
-    crc = do_crc16_MODBUS(buf1, sizeof(buf1));
-    printf("get crc 0x%04X\n", crc);
+    // crc = do_crc16_MODBUS(buf, sizeof(buf));
+    // printf("get crc 0x%04X\n", crc);
+    // crc = do_crc16_MODBUS(buf1, sizeof(buf1));
+    // printf("get crc 0x%04X\n", crc);
+    // dump_rs485_data1(buf, test, sizeof(buf), sizeof(test));
+    uint8_t *test1 = dump_rs485_data2(buf, sizeof(buf));
+    if (test1) {
+        printf("data:%s\n", test1);
+        free(test1);
+    }
+    maisi_select(0, NULL, NULL, 0);
+    printf("out main\n");
+    // for (i = 0; i < sizeof(buf); i++) {
+    //     snprintf(test + offset, sizeof(test), " 0x%02x", buf[i]);  // 格式化的数据写入字符串
+    //     offset += 5;
+    //     // printf("%d, %s\n", offset, dst);
+    // }
+    // printf("data:%s\n", test1);
 
-    #if 0
+#if 0
     num2 = _test_argv(MSG_TEST1);
 
     print_mcd("num2 = %d", num2);
@@ -557,7 +641,7 @@ int main(int argc, char const *argv[])
 
     char tmp_buf2[27] = {0x1D, 0x00, 0x01, 0x00, 0x00, 0x00, 0x12, 0x23, 0x34, 0x45, 0x56, 0x67, 0x78, 0x89, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x01, 0x00, 0x00, 0x02};
     print_mcd("0x%x", do_crc16_XMODEM(tmp_buf2, sizeof(tmp_buf2)));
-    #endif
+#endif
     // _test_macaddr_string_to_macaddr_hex();
     // _test_macaddr_to_decstring();
 #if 0
@@ -613,10 +697,10 @@ Error:
     // for (i = 0; i < 10; i++){
     //     print_mcd("%d, %d", test_len[i].data_code, test_len[i].data[0]);
     // }
-    
+
     // print_mcd("%d", sizeof(eide_rs485_payload_t));
     // PRINT_SIZEOF(eide_rs485_payload_t *);
-    
+
     // char *data = test->data;
 
     // *data = 0x71;
@@ -628,7 +712,6 @@ Error:
     // print_mcd("0x%x", payload.data[2]);
 
     // test_ctrl_devs();
-
 
 #if 0
     eide_rs485_ctrl_t ctrl_test;
@@ -757,5 +840,5 @@ Error:
 
     print_mcd("%s", buf1);
 #endif
-    return 0;
+        return 0;
 }

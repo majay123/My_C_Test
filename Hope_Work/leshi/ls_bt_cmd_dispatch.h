@@ -24,39 +24,31 @@
  * 
  * 
  * 
- * ************Copyright 2022 MCD************
+ * ************Copyright 2023 MCD************
  * 
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2022-02-24 17:13:11
+ * @Date         : 2023-03-18 10:24:11
  * @LastEditors  : MCD
- * @LastEditTime : 2022-10-14 10:16:00
- * @FilePath     : /My_C_Test/test_library/library.c
+ * @LastEditTime : 2023-03-18 10:31:26
+ * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_cmd_dispatch.h
  * @Description  : 
  * 
  * ******************************************
  */
 
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _LS_BT_CMD_DISPATCH
+#define _LS_BT_CMD_DISPATCH
 
-static uint8_t check(const uint8_t *data, int len)
+#include "ls_bt_mesh.h"
+
+typedef int (*command_callback)(const uint8_t *data);
+
+typedef struct
 {
-    int i;
-    uint8_t sum;
+    uint8_t cmd_id;
+    command_callback cmd_cbk;
+} ls_command_list_t;
 
-    for (i = 0; i < len; i++) {
-        sum += data[i];
-    }
-    return sum;
-}
-
-int hello_world()
-{
-    uint8_t chk;
-    uint8_t data[] = {0x01, 0x08, 0x00, 0x02, 0x42, 0x01, 0x42, 0x42, 0x02};
-    printf("hello world");
-	printf("len = %d\n", sizeof(data));
-}
+#endif  // !_LS_BT_CMD_DISPATCH
