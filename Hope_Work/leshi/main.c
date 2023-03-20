@@ -49,11 +49,14 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include "ls_bt_mesh.h"
+#include "ls_bt_cmd_dispatch.h"
+
 
 int main(int argc, char const *argv[])
 {
-    leshi_sure_band();
-    // leshi_datapoint_parse();
+    // leshi_sure_band();
+    leshi_datapoint_parse();
     // leshi_ctrl_switch_dev();
     // leshi_delete_one_dev();
     // leshi_addto_group();

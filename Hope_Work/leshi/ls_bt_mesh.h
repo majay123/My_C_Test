@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-16 16:36:52
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-18 15:03:05
+ * @LastEditTime : 2023-03-20 10:56:39
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh.h
  * @Description  : 
  * 
@@ -53,46 +53,14 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define BUILD_UINT16(loByte, hiByte) \
-    ((uint16_t)(((loByte)&0x00FF) + (((hiByte)&0x00FF) << 8)))
-
-#define HI_UINT16(a) (((a) >> 8) & 0xFF)
-#define LO_UINT16(a) ((a)&0xFF)
-
-#define BREAK_UINT32(var, ByteNum) \
-    (uint8_t)((uint32_t)(((var) >> ((ByteNum)*8)) & 0x00FF))
-
-#define BUILD_UINT32(Byte0, Byte1, Byte2, Byte3) \
-    ((uint32_t)((uint32_t)((Byte0)&0x00FF) + ((uint32_t)((Byte1)&0x00FF) << 8) + ((uint32_t)((Byte2)&0x00FF) << 16) + ((uint32_t)((Byte3)&0x00FF) << 24)))
-
-#define REQUIRE(in, tag)                   \
-    do {                                   \
-        if (in) {                          \
-            print_log("%s %s", #tag, #in); \
-            goto tag;                      \
-        }                                  \
-    } while (0)
-#define REQUIRE_NOLOG(in, tag)                \
-    do {                                      \
-        if (in) {                             \
-            print_common("%s %s", #tag, #in); \
-            goto tag;                         \
-        }                                     \
-    } while (0)
-#define REQ_JSON_OBJ(des, item, tag) \
-    cJSON_GetObjectItem(des, #item); \
-    REQUIRE((item == NULL), tag)
-#define REQ_JSON_PARSE(str, item, tag) \
-    cJSON_Parse(str);                  \
-    REQUIRE((item == NULL), tag)
-
-#define LESHI_DATA_HEADER     (0x55AA)
-#define LESHI_DATA_VERSION    (0x00)
-#define LESHI_DATA_DEVKEY     "01"
-#define LESHI_DATA_HEADER_LEN (0x06)
-#define LESHI_DATA_CHECK_LEN  (0x01)
-#define LESHI_MAX_CMD_LEN     (220)
-#define LESHI_MAX_DATA_LEN    (220 - LESHI_DATA_HEADER_LEN - 1)
+#define LESHI_DATA_HEADER          (0x55AA)
+#define LESHI_DATA_VERSION         (0x00)
+#define LESHI_DATA_DEVKEY          "01"
+#define LESHI_DATA_HEADER_LEN      (0x06)
+#define LESHI_DATA_CHECK_LEN       (0x01)
+#define LESHI_MAX_CMD_LEN          (220)
+#define LESHI_MAX_DATA_LEN         (220 - LESHI_DATA_HEADER_LEN - 1)
+#define LESHI_DATAPOINT_HEADER_LEN (0x04)
 
 typedef struct
 {
@@ -121,7 +89,8 @@ typedef struct
 {
     uint8_t id_len;
     uint8_t *sub_id;
-    _leshi_dp_t **datapoint;
+    _leshi_dp_t *datapoint;
+    uint8_t dp_num;
 } leshi_ctrl_data_t;
 
 typedef enum {

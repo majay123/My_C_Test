@@ -31,20 +31,21 @@
  * @Author       : MCD
  * @Date         : 2023-03-16 16:36:00
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-17 10:41:13
+ * @LastEditTime : 2023-03-20 13:39:56
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh.c
  * @Description  : 
  * 
  * ******************************************
  */
 #include "ls_bt_mesh.h"
+#include "common.h"
 
 void leshi_sure_band(void)
 {
     leshi_mesh_t test_cmd;
     // uint8_t *data = "{\"cid\":[\"b2838807f1\", \"b223f59481\"],\"rets\":[0, 0]}";
-    uint8_t *data = "{\"cid\":[\"b223f59481\"],\"rets\":[0]}";
-    uint32_t lenght = 0;
+    char *data = "{\"cid\":[\"b223f59481\"],\"rets\":[0]}";
+    // uint32_t lenght = 0;
     int i = 0;
     uint32_t sum = 0;
 
@@ -56,9 +57,9 @@ void leshi_sure_band(void)
     printf("datalen = %d\n", datalen);
     test_cmd.header.data_len[0] = HI_UINT16(datalen);
     test_cmd.header.data_len[1] = LO_UINT16(datalen);
-    test_cmd.data = data;
+    test_cmd.data = (uint8_t *)data;
 
-    lenght = sizeof(leshi_mesh_header_t) + datalen;
+    // lenght = sizeof(leshi_mesh_header_t) + datalen;
     uint8_t *header = (uint8_t *)&test_cmd.header;
     for (i = 0; i < sizeof(leshi_mesh_header_t); i++) {
         printf("%02x ", header[i]);
@@ -122,49 +123,74 @@ void leshi_datapoint_parse(void)
                       0x6A, 0x03, 0x00, 0x08, 0x36, 0x64, 0x62, 0x62, 0x35, 0x31, 0x39, 0x34};
     uint8_t data_len;
 
-    leshi_ctrl_data_t ctrl_data;
-    _leshi_dp_t dp;
-    uint8_t len = 0;
+    leshi_ctrl_data_t *ctrl_data;
+    _leshi_dp_t *dp;
+    uint16_t len = 0;
+    uint16_t tmp_len = 0;
+    uint8_t dp_num = 0;
+    uint8_t i = 0;
 
-    memset(&ctrl_data, 0, sizeof(leshi_ctrl_data_t));
-    memset(&dp, 0, sizeof(_leshi_dp_t));
 
-    // ctrl_data.datapoint = &dp;
+    // ctrl_data->datapoint = &dp;
     data_len = sizeof(data);
     printf("data len = %d\n", data_len);
-    ctrl_data.id_len = data[0];
+    ctrl_data = (leshi_ctrl_data_t *)calloc(1, sizeof(leshi_ctrl_data_t));
+    // REQUIRE(NULL == ctrl_data, Error);
+    ctrl_data->id_len = data[0];
     len++;
-    printf("id len = %d\n", ctrl_data.id_len);
+    printf("id len = %d\n", ctrl_data->id_len);
 
     // 实际长度是10，但是需要多申请一位内存
     // 如果不多申请一位，可能会导致溢出
-    ctrl_data.sub_id = calloc(ctrl_data.id_len + 1, sizeof(uint8_t));
-    if (ctrl_data.sub_id) {
-        memcpy(ctrl_data.sub_id, &data[1], ctrl_data.id_len);
-        printf("sub id = %s, subid len = %d\n", ctrl_data.sub_id, strlen(ctrl_data.sub_id));
-        len += ctrl_data.id_len;
+    ctrl_data->sub_id = calloc(ctrl_data->id_len + 1, sizeof(uint8_t));
+    if (ctrl_data->sub_id) {
+        memcpy(ctrl_data->sub_id, &data[1], ctrl_data->id_len);
+        printf("sub id = %s, subid len = %ld\n", ctrl_data->sub_id, strlen((const char*)(ctrl_data->sub_id)));
+        len += ctrl_data->id_len;
         printf("len = %d\n", len);
     }
     else {
         printf("malloc failed!!");
         return;
     }
-    while (data_len > len) {
-        memcpy(&dp, &data[len], 4);
-        len += 4;
-        // printf("dp len = %d\n", BUILD_UINT16(dp.len[1], dp.len[0]));
-        dp.value = calloc(BUILD_UINT16(dp.len[1], dp.len[0]) + 1, sizeof(uint8_t));
-        memcpy(dp.value, &data[len], BUILD_UINT16(dp.len[1], dp.len[0]));
-        _leshi_show_dp(&dp);
-
-        len += BUILD_UINT16(dp.len[1], dp.len[0]);
-        free(dp.value);
-        memset(&dp, 0, sizeof(_leshi_dp_t));
+    tmp_len = len;
+        
+    _leshi_dp_t tdp;
+    while (data_len > tmp_len) {
+        memset(&tdp, 0, sizeof(_leshi_dp_t));
+        memcpy(&tdp, &data[tmp_len], LESHI_DATAPOINT_HEADER_LEN);
+        tmp_len += LESHI_DATAPOINT_HEADER_LEN;
+        tmp_len += BUILD_UINT16(tdp.len[1], tdp.len[0]);
+        dp_num++;
+    }
+    printf("get dp num = %d\n", dp_num);
+    ctrl_data->dp_num = dp_num;
+    if(dp_num > 0) {
+        ctrl_data->datapoint = (_leshi_dp_t *)calloc(dp_num, sizeof(_leshi_dp_t));
+        while (data_len > len) {
+            dp = &ctrl_data->datapoint[i];
+            memcpy(dp, &data[len], 4);
+            len += 4;
+            uint16_t dp_len = BUILD_UINT16(dp->len[1], dp->len[0]);
+            dp->value = calloc(dp_len + 1, sizeof(uint8_t));
+            memcpy(dp->value, &data[len], dp_len);
+            len += dp_len;
+            i++;
+        }
+    #if 1
+        for(i = 0; i < dp_num; i++) {
+            _leshi_show_dp(&ctrl_data->datapoint[i]);
+        }
+    #endif
     }
 
     printf("finally len = %d\n", len);
-
-    free(ctrl_data.sub_id);
+    for(i = 0; i < dp_num; i++) {
+        free(ctrl_data->datapoint[i].value);
+    }
+    free(ctrl_data->datapoint);
+    free(ctrl_data->sub_id);
+    free(ctrl_data);
 }
 
 void leshi_ctrl_switch_dev(void)
@@ -204,8 +230,8 @@ void leshi_delete_one_dev(void)
 {
     leshi_mesh_t test_cmd;
     // uint8_t *data = "{\"cid\":[\"b2838807f1\", \"b223f59481\"],\"rets\":[0, 0]}";
-    uint8_t *data = "{\"sub_id\":\"b09451bb6d\",\"devkey\":\"01\"}"; /* ,\"devkey\":\"\" */
-    uint32_t lenght = 0;
+    char *data = "{\"sub_id\":\"b09451bb6d\",\"devkey\":\"01\"}"; /* ,\"devkey\":\"\" */
+    // uint32_t lenght = 0;
     int i = 0;
     uint32_t sum = 0;
 
@@ -213,13 +239,13 @@ void leshi_delete_one_dev(void)
     test_cmd.header.head[1] = 0xaa;
     test_cmd.header.version = 0x00;
     test_cmd.header.cmd = 0x09;
-    uint16_t datalen = strlen(data);
+    uint16_t datalen = strlen((const char*)data);
     printf("datalen = %d\n", datalen);
     test_cmd.header.data_len[0] = HI_UINT16(datalen);
     test_cmd.header.data_len[1] = LO_UINT16(datalen);
-    test_cmd.data = data;
+    test_cmd.data = (uint8_t *)data;
 
-    lenght = sizeof(leshi_mesh_header_t) + datalen;
+    // lenght = sizeof(leshi_mesh_header_t) + datalen;
     uint8_t *header = (uint8_t *)&test_cmd.header;
     for (i = 0; i < sizeof(leshi_mesh_header_t); i++) {
         printf("%02x ", header[i]);
@@ -241,8 +267,8 @@ void leshi_addto_group(void)
 {
     leshi_mesh_t test_cmd;
     // uint8_t *data = "{\"cid\":[\"b2838807f1\", \"b223f59481\"],\"rets\":[0, 0]}";
-    uint8_t *data = "{\"gid\":\"01\",\"cids\":[\"b223f59481\"]}"; /* ,\"devkey\":\"\" */
-    uint32_t lenght = 0;
+    char *data = "{\"gid\":\"01\",\"cids\":[\"b223f59481\"]}"; /* ,\"devkey\":\"\" */
+    // uint32_t lenght = 0;
     int i = 0;
     uint32_t sum = 0;
 
@@ -250,13 +276,13 @@ void leshi_addto_group(void)
     test_cmd.header.head[1] = 0xaa;
     test_cmd.header.version = 0x00;
     test_cmd.header.cmd = 0x0e;
-    uint16_t datalen = strlen(data);
+    uint16_t datalen = strlen((const char*)data);
     printf("datalen = %d\n", datalen);
     test_cmd.header.data_len[0] = HI_UINT16(datalen);
     test_cmd.header.data_len[1] = LO_UINT16(datalen);
-    test_cmd.data = data;
+    test_cmd.data = (uint8_t *)data;
 
-    lenght = sizeof(leshi_mesh_header_t) + datalen;
+    // lenght = sizeof(leshi_mesh_header_t) + datalen;
     uint8_t *header = (uint8_t *)&test_cmd.header;
     for (i = 0; i < sizeof(leshi_mesh_header_t); i++) {
         printf("%02x ", header[i]);
@@ -311,8 +337,8 @@ void leshi_delfrom_group(void)
 {
     leshi_mesh_t test_cmd;
     // uint8_t *data = "{\"cid\":[\"b2838807f1\", \"b223f59481\"],\"rets\":[0, 0]}";
-    uint8_t *data = "{\"gid\":\"01\",\"cids\":[\"b223f59481\"]}"; /* ,\"devkey\":\"\" */
-    uint32_t lenght = 0;
+    char *data = "{\"gid\":\"01\",\"cids\":[\"b223f59481\"]}"; /* ,\"devkey\":\"\" */
+    // uint32_t lenght = 0;
     int i = 0;
     uint32_t sum = 0;
 
@@ -320,13 +346,13 @@ void leshi_delfrom_group(void)
     test_cmd.header.head[1] = 0xaa;
     test_cmd.header.version = 0x00;
     test_cmd.header.cmd = 0x0F;
-    uint16_t datalen = strlen(data);
+    uint16_t datalen = strlen((const char *)data);
     printf("datalen = %d\n", datalen);
     test_cmd.header.data_len[0] = HI_UINT16(datalen);
     test_cmd.header.data_len[1] = LO_UINT16(datalen);
-    test_cmd.data = data;
+    test_cmd.data = (uint8_t *)data;
 
-    lenght = sizeof(leshi_mesh_header_t) + datalen;
+    // lenght = sizeof(leshi_mesh_header_t) + datalen;
     uint8_t *header = (uint8_t *)&test_cmd.header;
     for (i = 0; i < sizeof(leshi_mesh_header_t); i++) {
         printf("%02x ", header[i]);
@@ -348,8 +374,8 @@ void leshi_heart_beat(void)
 {
     leshi_mesh_t test_cmd;  //b09451bb6d
     // uint8_t *data = "{\"cid\":[\"b2838807f1\", \"b223f59481\"],\"rets\":[0, 0]}";
-    uint8_t *data = "{\"sub_id\":\"b223f59481\"}";
-    uint32_t lenght = 0;
+    char *data = "{\"sub_id\":\"b223f59481\"}";
+    // uint32_t lenght = 0;
     int i = 0;
     uint32_t sum = 0;
 
@@ -357,13 +383,13 @@ void leshi_heart_beat(void)
     test_cmd.header.head[1] = 0xaa;
     test_cmd.header.version = 0x00;
     test_cmd.header.cmd = 0x0A;
-    uint16_t datalen = strlen(data);
+    uint16_t datalen = strlen((const char *)data);
     printf("datalen = %d\n", datalen);
     test_cmd.header.data_len[0] = HI_UINT16(datalen);
     test_cmd.header.data_len[1] = LO_UINT16(datalen);
-    test_cmd.data = data;
+    test_cmd.data = (uint8_t *)data;
 
-    lenght = sizeof(leshi_mesh_header_t) + datalen;
+    // lenght = sizeof(leshi_mesh_header_t) + datalen;
     uint8_t *header = (uint8_t *)&test_cmd.header;
     for (i = 0; i < sizeof(leshi_mesh_header_t); i++) {
         printf("%02x ", header[i]);

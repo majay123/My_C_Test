@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-18 10:24:11
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-18 10:31:26
+ * @LastEditTime : 2023-03-20 10:37:17
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_cmd_dispatch.h
  * @Description  : 
  * 
@@ -43,7 +43,7 @@
 
 #include "ls_bt_mesh.h"
 
-typedef int (*command_callback)(const uint8_t *data);
+typedef int (*command_callback)(const uint8_t *data, uint16_t cdata_len);
 
 typedef struct
 {

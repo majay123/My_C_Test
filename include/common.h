@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:39:45
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-18 15:07:50
+ * @LastEditTime : 2023-03-20 09:52:47
  * @FilePath     : /My_C_Test/include/common.h
  * @Description  : 
  * 
@@ -233,6 +233,18 @@ typedef struct
             goto tag;                                       \
         }                                                   \
     } while (0)
+
+#define BUILD_UINT16(loByte, hiByte) \
+    ((uint16_t)(((loByte)&0x00FF) + (((hiByte)&0x00FF) << 8)))
+
+#define HI_UINT16(a) (((a) >> 8) & 0xFF)
+#define LO_UINT16(a) ((a)&0xFF)
+
+#define BREAK_UINT32(var, ByteNum) \
+    (uint8_t)((uint32_t)(((var) >> ((ByteNum)*8)) & 0x00FF))
+
+#define BUILD_UINT32(Byte0, Byte1, Byte2, Byte3) \
+    ((uint32_t)((uint32_t)((Byte0)&0x00FF) + ((uint32_t)((Byte1)&0x00FF) << 8) + ((uint32_t)((Byte2)&0x00FF) << 16) + ((uint32_t)((Byte3)&0x00FF) << 24)))
 
 #define NELEM(x)      ((int)(sizeof(x) / sizeof((x)[0])))
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
