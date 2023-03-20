@@ -44,6 +44,9 @@ OBJS := $(patsubst %.S,%.o, $(patsubst %.c,%.o, $(patsubst %.cpp, %.o, $(SRCS)))
 .PHONY : all clean
 
 all : $(TARGET)
+	-mkdir $(TMP_PATH)
+	-mv $(OBJS) $(TMP_PATH)
+	-mv $(TARGET) $(TMP_PATH)
 
 $(TARGET) : $(OBJS)
 ifeq ($(suffix $(TARGET)),.a)

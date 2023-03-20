@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-16 16:36:00
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-20 13:39:56
+ * @LastEditTime : 2023-03-20 16:37:28
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh.c
  * @Description  : 
  * 
@@ -406,3 +406,4 @@ void leshi_heart_beat(void)
 
     printf("sum = %x\n", sum % 256);
 }
+

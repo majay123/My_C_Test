@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-16 16:36:52
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-20 10:56:39
+ * @LastEditTime : 2023-03-20 15:51:19
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh.h
  * @Description  : 
  * 
@@ -53,14 +53,19 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define LESHI_DATA_HEADER          (0x55AA)
-#define LESHI_DATA_VERSION         (0x00)
-#define LESHI_DATA_DEVKEY          "01"
-#define LESHI_DATA_HEADER_LEN      (0x06)
-#define LESHI_DATA_CHECK_LEN       (0x01)
-#define LESHI_MAX_CMD_LEN          (220)
-#define LESHI_MAX_DATA_LEN         (220 - LESHI_DATA_HEADER_LEN - 1)
-#define LESHI_DATAPOINT_HEADER_LEN (0x04)
+#define LESHI_DATA_HEADER                      (0x55AA)
+#define LESHI_DATA_VERSION                     (0x00)
+#define LESHI_DATA_DEVKEY                      "01"
+#define LESHI_DATA_HEADER_LEN                  (0x06)
+#define LESHI_DATA_CHECK_LEN                   (0x01)
+#define LESHI_MAX_CMD_LEN                      (220)
+#define LESHI_MAX_DATA_LEN                     (220 - LESHI_DATA_HEADER_LEN - 1)
+#define LESHI_DATAPOINT_HEADER_LEN             (0x04)
+#define LESHI_UPGRADE_PACKET_TRANSFER_DATA_LEN (0x01)
+#define LESHI_UPGRADE_PACKET_TRANSFER_128BY    (128)
+#define LESHI_UPGRADE_PACKET_TRANSFER_256BY    (256)
+#define LESHI_UPGRADE_PACKET_TRANSFER_512BY    (512)
+#define LESHI_UPGRADE_PACKET_TRANSFER_1024BY   (1024)
 
 typedef struct
 {
@@ -130,6 +135,31 @@ typedef enum {
     LESHI_CMD_MCU_STARTUP_UPGRADE = 0x1D,
     LESHI_CMD_MCU_UPGRADE_PACKAGE_TRANSFER = 0x1E,
 } leshi_cmd_e;
+
+typedef enum {
+    LS_PACKAGE_SIZE_256_BYTE = 0,
+    LS_PACKAGE_SIZE_512_BYTE,
+    LS_PACKAGE_SIZE_1024_BYTE,
+    LS_PACKAGE_SIZE_128_BYTE,
+} leshi_upgrade_packet_size_e;
+
+typedef enum {
+    LS_GROUP_ADD_SUB_DEVICE_SUCCESS = 0,
+    LS_GROUP_ADD_SUB_DEVICE_OUT_UPPER_LIMIT,
+    LS_GROUP_ADD_SUB_DEVICE_TIMEOUT,
+    LS_GROUP_ADD_SUB_DEVICE_SET_OUT_OF_RANGE,
+    LS_GROUP_ADD_SUB_DEVICE_WRITE_FILE_ERR,
+    LS_GROUP_ADD_SUB_DEVICE_OTHER_ERR,
+} leshi_group_add_sub_res_e;
+
+typedef enum {
+    LS_GROUP_DEL_SUB_DEVICE_SUCCESS = 0,
+    LS_GROUP_DEL_SUB_DEVICE_OUT_UPPER_LIMIT,
+    LS_GROUP_DEL_SUB_DEVICE_TIMEOUT,
+    LS_GROUP_DEL_SUB_DEVICE_SET_OUT_OF_RANGE,
+    LS_GROUP_DEL_SUB_DEVICE_WRITE_FILE_ERR,
+    LS_GROUP_DEL_SUB_DEVICE_OTHER_ERR,
+} leshi_group_del_sub_res_e;
 
 void leshi_sure_band(void);
 void leshi_datapoint_parse(void);
