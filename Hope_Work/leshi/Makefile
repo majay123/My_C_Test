@@ -54,6 +54,7 @@ TMP_PATH := __tmp__/
 all : $(TARGET)
 	-mkdir $(TMP_PATH)
 	-mv $(OBJS) $(TMP_PATH)
+	-mv $(TARGET) $(TMP_PATH)
 	@echo "make successfully"
 
 $(TARGET) : $(OBJS)

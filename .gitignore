@@ -59,6 +59,7 @@ simple_test/core
 peda-session-test.txt
 test_library/build
 *.mp3
+__tmp__
 .gdb_history
 .gitignore
 .vscode/launch.json
