@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-14 16:33:07
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-20 16:53:06
+ * @LastEditTime : 2023-03-21 12:49:38
  * @FilePath     : /My_C_Test/Hope_Work/leshi/main.c
  * @Description  : 
  * 
@@ -39,6 +39,11 @@
  */
 #include <errno.h>
 #include <fcntl.h>
+#include <getopt.h>
+#include <libubox/uloop.h>
+#include <libubox/usock.h>
+#include <libubox/ustream.h>
+#include <linux/types.h>
 #include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -49,87 +54,254 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#include "ls_bt_mesh.h"
-#include "ls_bt_cmd_dispatch.h"
+#include "app_context.h"
 #include "cJSON.h"
 #include "common.h"
+#include "debug.h"
+#include "ls_bt_cmd_dispatch.h"
+#include "ls_bt_mesh.h"
+#include "ls_bt_mesh_dev.h"
+#include "queue.h"
 
-#if 0
-static void _ls_back_cmd_group_delete_sub_devices_status_string(char *group, char *cid, int rest)
-{
-    switch (rest) {
-        case LS_GROUP_DEL_SUB_DEVICE_SUCCESS:
-            print_mcd("group [%s], delete sub device [%s] success!!", group, cid);
-            break;
-        case LS_GROUP_DEL_SUB_DEVICE_OUT_UPPER_LIMIT:
-            print_mcd("group [%s], delete sub device [%s] exceed the upper limit of the number of groups!!", group, cid);
-            break;
-        case LS_GROUP_DEL_SUB_DEVICE_TIMEOUT:
-            print_mcd("group [%s], delete sub device [%s] timeout!!", group, cid);
-            break;
-        case LS_GROUP_DEL_SUB_DEVICE_SET_OUT_OF_RANGE:
-            print_mcd("group [%s], delete sub device [%s] setting value out of range!!", group, cid);
-            break;
-        case LS_GROUP_DEL_SUB_DEVICE_WRITE_FILE_ERR:
-            print_mcd("group [%s], delete sub device [%s] written file error!!", group, cid);
-            break;
-        case LS_GROUP_DEL_SUB_DEVICE_OTHER_ERR:
-            print_mcd("group [%s], delete sub device [%s] other errors!!", group, cid);
-            break;
+/*********************************************************************
+* MACROS
+*/
+#define COMPILE_TIME (__DATE__ "." __TIME__)
 
-        default:
-            break;
-    }
-}
-
-static void _test_json(void)
-{
-    char *data = "{\"gid\":\"01\",\"cids\":[\"b223f59481\", \"baa3219481\"],\"rets\":[0, 1]}";
-
-    cJSON *root = NULL;
-    int i = 0;
-
-    REQUIRE(NULL == data, Error);
-
-    root = REQ_JSON_PARSE((const char *)data, root, Error);
-
-    /* Processe cjson information */
-    cJSON *gid = REQ_JSON_OBJ(root, gid, Error);
-    cJSON *cids = REQ_JSON_OBJ(root, cids, Error);
-    cJSON *rets = REQ_JSON_OBJ(root, rets, Error);
-
-    if (gid->valuestring) {
-        int csize = cJSON_GetArraySize(cids);
-        int rsize = cJSON_GetArraySize(rets);
-        if (csize == rsize) {
-            for (i = 0; i < csize; i++) {
-                cJSON *cid_js = cJSON_GetArrayItem(cids, i);
-                cJSON *ret_js = cJSON_GetArrayItem(rets, i);
-                _ls_back_cmd_group_delete_sub_devices_status_string(gid->valuestring, cid_js->valuestring, ret_js->valueint);
-            }
-        }
-    }
-
-Error:
-    if (root != NULL)
-        cJSON_Delete(root);
-
-    return;
-}
+#ifndef APP_VERSION
+#define APP_VERSION ("V1.00.00")
 #endif
 
+#ifndef APP_NAME
+#define APP_NAME ("leshi_service")
+#endif
+
+/*********************************************************************
+* GLOBAL VARIABLES
+*/
+appContext_t appContext;
+llq_t llq_uart_send_stream;
+llq_t llq_uart_dispatch_stream;
+
+/*********************************************************************
+* LOCAL VARIABLE
+*/
+static uint8_t thread_exit = 0;
+static int uart_fd = -1;
+
+/* Vals for long options */
+enum {
+    GETOPT_VAL_HELP = 257,
+    GETOPT_VAL_BAUDRATE,
+    GETOPT_VAL_TTYPORT,
+    GETOPT_VAL_PARITY,
+    GETOPT_VAL_BITWIDTH,
+    GETOPT_VAL_STOPBIT,
+    GETOPT_VAL_EXTEND,
+};
+
+/*********************************************************************
+* LOCAL FUNCTIONS
+*/
+
+static void usage()
+{
+    printf("Usage: uart service [OPTION]\n"
+           "\n"
+           "  -h, --help\n"
+           "  -b, --baud         Baud rate, 9600, etc (9600 is default)\n"
+           "  -p, --port         Port (/dev/ttyS0, etc) (must be specified)\n"
+           "  -a, --slaveaddr    Slaveaddr (/dev/ttyS0, etc) (must be specified)\n"
+           "\n");
+}
+
+void *_ls_bt_mesh_read_thread(void *argv)
+{
+    while (!thread_exit) {
+        pthread_testcancel();
+    }
+
+    return NULL;
+}
+
+static void *_ls_bt_mesh_dispatch_thread(void *argv)
+{
+    while (!thread_exit) {
+        pthread_testcancel();
+    }
+
+    return NULL;
+}
+
+static void *_ls_bt_mesh_send_thread(void *argv)
+{
+    while (!thread_exit) {
+        pthread_testcancel();
+    }
+
+    return NULL;
+}
 
 int main(int argc, char const *argv[])
 {
-    // _test_json();
-    // leshi_sure_band();
-    // leshi_datapoint_parse();
-    // leshi_ctrl_switch_dev();
-    // leshi_delete_one_dev();
-    // leshi_addto_group();
-    // leshi_group_ctrl_devs();
-    // leshi_delfrom_group();
-    // leshi_heart_beat();
+    pthread_t r_thread;
+    pthread_t d_thread;
+    pthread_t s_thread;
+    int c;
+    int s_ret = -1;
+    int d_ret = -1;
+    int r_ret = -1;
+
+    /* required_argument,no_argument,optional_argument */
+    struct option long_options[] =
+        {
+            {"help", no_argument, NULL, GETOPT_VAL_HELP},
+            {"baud", required_argument, NULL, GETOPT_VAL_BAUDRATE},
+            {"port", required_argument, NULL, GETOPT_VAL_TTYPORT},
+            {"parity", required_argument, NULL, GETOPT_VAL_PARITY},
+            {"bitwidth", required_argument, NULL, GETOPT_VAL_BITWIDTH},
+            {"stopbit", required_argument, NULL, GETOPT_VAL_STOPBIT},
+            {"extend", required_argument, NULL, GETOPT_VAL_EXTEND},
+            {NULL, 0, NULL, 0}};
+
+    memset(&appContext, 0, sizeof(appContext_t));
+    pthread_mutex_init(&appContext.logFileMutex, NULL);
+
+    opterr = 0;
+    while ((c = getopt_long(argc, (char *const *)argv, "b:p:hv",
+                            long_options, NULL)) != -1) {
+        switch (c) {
+            case 'v':
+                appContext.verbose = 1;
+                break;
+            case GETOPT_VAL_BAUDRATE:
+            case 'b':
+                appContext._cl_baud = atoi(optarg);
+                break;
+            case GETOPT_VAL_TTYPORT:
+            case 'p':
+                appContext._cl_port = strdups(optarg);
+                break;
+            case GETOPT_VAL_PARITY:
+                /*
+				* option of parity type
+				* "NONE"(default)   无校验
+				* "ODD"             奇校验
+				* "EVEN"            偶校验
+				* "MARK"
+				* "SPACE"           空格
+            	*/
+                appContext._cl_parity = strdups(optarg);
+                break;
+            case GETOPT_VAL_BITWIDTH:
+                /*
+           		* option of bit width
+           		* 5,
+           		* 6,
+           		* 7,
+           		* 8(default)
+           		*/
+                appContext._cl_bitwidth = atoi(optarg);
+                break;
+            case GETOPT_VAL_STOPBIT:
+                /*
+           		* option of stop bit
+           		* 10, 1 bit stop(default)
+           		* 15, 1.5 bit stop
+           		* 20, 2 bit stop
+           		*/
+                appContext._cl_stopbit = atoi(optarg);
+                break;
+            case GETOPT_VAL_EXTEND:
+                /*
+           		* extend params,JSON string format,cJSON_Parse
+           		*/
+                break;
+            case GETOPT_VAL_HELP:
+            case 'h':
+                usage();
+                exit(EXIT_SUCCESS);
+            case '?':
+                // The option character is not recognized.
+                fprintf(stderr, "Unrecognized option: %s\n", optarg);
+                opterr = 1;
+                break;
+        }
+    }
+
+    if (opterr) {
+        usage();
+        exit(EXIT_FAILURE);
+    }
+
+    /* support maximum 115200 baudrate */
+    if (appContext._cl_baud == 0 || appContext._cl_baud > 115200 || !appContext._cl_port) {
+        fprintf(stderr, "app tty port or baudrate error\n");
+        exit(EXIT_FAILURE);
+    }
+
+    /* find the proper serial port */
+    char *uart_port = strrchr(appContext._cl_port, '/');
+    uart_port++;
+    if (!uart_port || !strstr(appContext._cl_port, "tty")) {
+        fprintf(stderr, "app tty port format error\n");
+        exit(EXIT_FAILURE);
+    }
+
+    snprintf(appContext.app_log_file, sizeof(appContext.app_log_file), "/tmp/%s.log", uart_port);
+    DEBUG_INFO("** compile time : %s version:%s\n", COMPILE_TIME, APP_VERSION);
+    uloop_init();
+
+    llq_open(&llq_uart_send_stream);
+    llq_open(&llq_uart_dispatch_stream);
+
+    r_ret = pthread_create(&r_thread, NULL, _ls_bt_mesh_read_thread, NULL);
+    if (r_ret != 0) {
+        DEBUG_ERROR("create r thread failed\n");
+        goto ERROUT;
+    }
+    d_ret = pthread_create(&d_thread, NULL, _ls_bt_mesh_dispatch_thread, NULL);
+    if (r_ret != 0) {
+        DEBUG_ERROR("create d thread failed\n");
+        goto ERROUT;
+    }
+    s_ret = pthread_create(&s_thread, NULL, _ls_bt_mesh_send_thread, NULL);
+    if (r_ret != 0) {
+        DEBUG_ERROR("create s thread failed\n");
+        goto ERROUT;
+    }
+
+    /* wait main thread exit */
+    uloop_run();
+
+ERROUT:
+    if (appContext._cl_port)
+        free(appContext._cl_port);
+
+    if (appContext._cl_parity)
+        free(appContext._cl_parity);
+
+    thread_exit = 1;
+    if (r_ret == 0) {
+        pthread_cancel(r_thread);
+        pthread_join(r_thread, NULL);
+    }
+    if (d_ret == 0) {
+        pthread_cancel(d_thread);
+        pthread_join(d_thread, NULL);
+    }
+    if (s_ret == 0) {
+        pthread_cancel(s_thread);
+        pthread_join(s_thread, NULL);
+    }
+
+    pthread_mutex_destroy(&appContext.logFileMutex);
+
+    uloop_done();
+
+    DEBUG_INFO("main exit\n");
+
+    return 0;
 
     return 0;
 }

@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-18 10:02:29
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-20 16:50:37
+ * @LastEditTime : 2023-03-21 15:31:32
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_cmd_dispatch.c
  * @Description  : 
  * 
@@ -41,6 +41,7 @@
 #include "ls_bt_cmd_dispatch.h"
 #include "cJSON.h"
 #include "common.h"
+#include "debug.h"
 
 static int _ls_back_cmd_get_device_info(const uint8_t *cmd_data, uint16_t cdata_len);
 static int _ls_back_cmd_allow_sub_device_join(const uint8_t *cmd_data, uint16_t cdata_len);
@@ -145,23 +146,23 @@ static void _ls_back_cmd_show_dp(_leshi_dp_t *dp)
     if (NULL == dp)
         return;
 
-    print_mcd("dpid = %d, type = %d, len = %d ", dp->dpid, dp->type, BUILD_UINT16(dp->len[1], dp->len[0]));
+    DEBUG_INFO("dpid = %d, type = %d, len = %d ", dp->dpid, dp->type, BUILD_UINT16(dp->len[1], dp->len[0]));
     switch (dp->type) {
         case DP_TYPE_RAW:
-            print_mcd("this is type raw!");
+            DEBUG_INFO("this is type raw!");
             break;
         case DP_TYPE_BOOL:
         case DP_TYPE_ENUM:
-            print_mcd("value = %d\n", dp->value[0]);
+            DEBUG_INFO("value = %d\n", dp->value[0]);
             break;
         case DP_TYPE_VALUE:
-            print_mcd("value %d\n", BUILD_UINT32(dp->value[3], dp->value[2], dp->value[1], dp->value[0]));
+            DEBUG_INFO("value %d\n", BUILD_UINT32(dp->value[3], dp->value[2], dp->value[1], dp->value[0]));
             break;
         case DP_TYPE_STRING:
-            print_mcd("value %s\n", dp->value);
+            DEBUG_INFO("value %s\n", dp->value);
             break;
         case DP_TYPE_BITMAP:
-            print_mcd("this is type bitmap!");
+            DEBUG_INFO("this is type bitmap!");
             break;
 
         default:
@@ -220,7 +221,7 @@ static leshi_ctrl_data_t *_ls_datapoint_parse(const uint8_t *cmd_data, uint16_t 
 
     memcpy(ctrl_data->sub_id, &cmd_data[1], ctrl_data->id_len);
     len += ctrl_data->id_len;
-    print_mcd("sub id = %s, len = %d", ctrl_data->sub_id, len);
+    DEBUG_INFO("sub id = %s, len = %d", ctrl_data->sub_id, len);
     tmp_len = len;
 
     /* get dp num */
@@ -232,7 +233,7 @@ static leshi_ctrl_data_t *_ls_datapoint_parse(const uint8_t *cmd_data, uint16_t 
         memset(&tdp, 0, sizeof(_leshi_dp_t));
         dp_num++;
     }
-    print_mcd("get dp num = %d\n", dp_num);
+    DEBUG_INFO("get dp num = %d\n", dp_num);
 
     ctrl_data->dp_num = dp_num;
     if (dp_num > 0) {
@@ -481,22 +482,22 @@ static void _ls_back_cmd_group_add_sub_devices_status_string(char *group, char *
 {
     switch (rest) {
         case LS_GROUP_ADD_SUB_DEVICE_SUCCESS:
-            print_mcd("group [%s], add sub device [%s] success!!", group, cid);
+            DEBUG_INFO("group [%s], add sub device [%s] success!!", group, cid);
             break;
         case LS_GROUP_ADD_SUB_DEVICE_OUT_UPPER_LIMIT:
-            print_mcd("group [%s], add sub device [%s] exceed the upper limit of the number of groups!!", group, cid);
+            DEBUG_INFO("group [%s], add sub device [%s] exceed the upper limit of the number of groups!!", group, cid);
             break;
         case LS_GROUP_ADD_SUB_DEVICE_TIMEOUT:
-            print_mcd("group [%s], add sub device [%s] timeout!!", group, cid);
+            DEBUG_INFO("group [%s], add sub device [%s] timeout!!", group, cid);
             break;
         case LS_GROUP_ADD_SUB_DEVICE_SET_OUT_OF_RANGE:
-            print_mcd("group [%s], add sub device [%s] setting value out of range!!", group, cid);
+            DEBUG_INFO("group [%s], add sub device [%s] setting value out of range!!", group, cid);
             break;
         case LS_GROUP_ADD_SUB_DEVICE_WRITE_FILE_ERR:
-            print_mcd("group [%s], add sub device [%s] written file error!!", group, cid);
+            DEBUG_INFO("group [%s], add sub device [%s] written file error!!", group, cid);
             break;
         case LS_GROUP_ADD_SUB_DEVICE_OTHER_ERR:
-            print_mcd("group [%s], add sub device [%s] other errors!!", group, cid);
+            DEBUG_INFO("group [%s], add sub device [%s] other errors!!", group, cid);
             break;
 
         default:
@@ -564,22 +565,22 @@ static void _ls_back_cmd_group_delete_sub_devices_status_string(char *group, cha
 {
     switch (rest) {
         case LS_GROUP_DEL_SUB_DEVICE_SUCCESS:
-            print_mcd("group [%s], delete sub device [%s] success!!", group, cid);
+            DEBUG_INFO("group [%s], delete sub device [%s] success!!", group, cid);
             break;
         case LS_GROUP_DEL_SUB_DEVICE_OUT_UPPER_LIMIT:
-            print_mcd("group [%s], delete sub device [%s] exceed the upper limit of the number of groups!!", group, cid);
+            DEBUG_INFO("group [%s], delete sub device [%s] exceed the upper limit of the number of groups!!", group, cid);
             break;
         case LS_GROUP_DEL_SUB_DEVICE_TIMEOUT:
-            print_mcd("group [%s], delete sub device [%s] timeout!!", group, cid);
+            DEBUG_INFO("group [%s], delete sub device [%s] timeout!!", group, cid);
             break;
         case LS_GROUP_DEL_SUB_DEVICE_SET_OUT_OF_RANGE:
-            print_mcd("group [%s], delete sub device [%s] setting value out of range!!", group, cid);
+            DEBUG_INFO("group [%s], delete sub device [%s] setting value out of range!!", group, cid);
             break;
         case LS_GROUP_DEL_SUB_DEVICE_WRITE_FILE_ERR:
-            print_mcd("group [%s], delete sub device [%s] written file error!!", group, cid);
+            DEBUG_INFO("group [%s], delete sub device [%s] written file error!!", group, cid);
             break;
         case LS_GROUP_DEL_SUB_DEVICE_OTHER_ERR:
-            print_mcd("group [%s], delete sub device [%s] other errors!!", group, cid);
+            DEBUG_INFO("group [%s], delete sub device [%s] other errors!!", group, cid);
             break;
 
         default:
@@ -713,7 +714,7 @@ static int _ls_back_cmd_batch_add_sub_devices(const uint8_t *cmd_data, uint16_t 
         if (csize > 0) {
             for (i = 0; i < csize; i++) {
                 cJSON *cid_js = cJSON_GetArrayItem(cids, i);
-                print_mcd("cid = %s", cid_js->valuestring);
+                DEBUG_INFO("cid = %s", cid_js->valuestring);
             }
         }
     }
@@ -876,7 +877,7 @@ int ls_bt_back_cmd_dispatch(const uint8_t *data)
             if (leshi_cmd_list[i].cmd_id == cmd) {
                 cmd_data = calloc(cdata_len + 1, sizeof(uint8_t));
                 REQUIRE(NULL == cmd_data, Error);
-                print_mcd("Execution cmd : %s", cmd_data);
+                DEBUG_INFO("Execution cmd : %s", cmd_data);
                 memcpy(cmd_data, &data[LESHI_DATA_HEADER_LEN], cdata_len);
                 if (leshi_cmd_list[i].cmd_cbk != NULL) {
                     ret = leshi_cmd_list[i].cmd_cbk(cmd_data, cdata_len);
@@ -887,7 +888,7 @@ int ls_bt_back_cmd_dispatch(const uint8_t *data)
     else if (cdata_len == 0) {
         for (i = 0; i < NELEM(leshi_cmd_list); i++) {
             if (leshi_cmd_list[i].cmd_id == cmd) {
-                print_mcd("Execution cmd : %s", cmd_data);
+                DEBUG_INFO("Execution cmd : %s", cmd_data);
                 if (leshi_cmd_list[i].cmd_cbk != NULL) {
                     ret = leshi_cmd_list[i].cmd_cbk(cmd_data, cdata_len);
                 }
@@ -895,7 +896,7 @@ int ls_bt_back_cmd_dispatch(const uint8_t *data)
         }
     }
     else {
-        print_mcd("do nothing cmd=>[0x%02x], just back!!!", cmd);
+        DEBUG_INFO("do nothing cmd=>[0x%02x], just back!!!", cmd);
     }
 
 Error:

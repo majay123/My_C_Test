@@ -31,8 +31,8 @@
  * @Author       : MCD
  * @Date         : 2023-03-16 16:36:52
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-20 15:51:19
- * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh.h
+ * @LastEditTime : 2023-03-21 13:10:38
+ * @FilePath     : /My_C_Test/Hope_Work/leshi/include/ls_bt_mesh.h
  * @Description  : 
  * 
  * ******************************************
@@ -53,7 +53,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define LESHI_DATA_HEADER                      (0x55AA)
+#define LESHI_DATA_HEADER1                     (0x55)
+#define LESHI_DATA_HEADER2                     (0xAA)
 #define LESHI_DATA_VERSION                     (0x00)
 #define LESHI_DATA_DEVKEY                      "01"
 #define LESHI_DATA_HEADER_LEN                  (0x06)
@@ -161,6 +162,7 @@ typedef enum {
     LS_GROUP_DEL_SUB_DEVICE_OTHER_ERR,
 } leshi_group_del_sub_res_e;
 
+#if 0
 void leshi_sure_band(void);
 void leshi_datapoint_parse(void);
 void leshi_ctrl_switch_dev(void);
@@ -169,5 +171,6 @@ void leshi_addto_group(void);
 void leshi_group_ctrl_devs(void);
 void leshi_delfrom_group(void);
 void leshi_heart_beat(void);
+#endif
 
 #endif  // !_LS_BT_MESH_H

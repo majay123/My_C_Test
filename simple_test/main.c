@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2022-11-14 09:48:08
+ * @LastEditTime : 2023-03-21 13:54:57
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -335,11 +335,15 @@ int main(int argc, char const *argv[])
     uint8_t buf[20] = {0};
     _Bool test = 0;
     uint8_t data2[10] = {0x03, 0x44, 0x21, 0xdd, 0x1d, 0xa1, 0x4c, 0x4d, 0x1f, 0x9a};
+    uint8_t i = 10;
     // char *end;
     uint32_t running_time = 10 * 1000;
-    char *text = "Res_test";
+    // char *text = "Res_test";
 
-    strdup(text "ok");
+    // strdup(text "ok");
+
+    i += 3;
+    printf("i = %d\n", i);
 
     // char ip[20] = "192.168.2.110";
     // char *test11 = strrchr(ip, '.');
@@ -485,5 +489,6 @@ int main(int argc, char const *argv[])
     // printf("test = %d\n", test);
     // test ^= test;
     // printf("test = %d\n", test);
+#endif
     return 0;
 }

@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-06-29 10:39:45
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-20 09:52:47
+ * @LastEditTime : 2023-03-21 10:13:37
  * @FilePath     : /My_C_Test/include/common.h
  * @Description  : 
  * 
@@ -248,6 +248,29 @@ typedef struct
 
 #define NELEM(x)      ((int)(sizeof(x) / sizeof((x)[0])))
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
+
+
+#ifndef TRUE
+#define TRUE (1 == 1)
+#endif
+
+#ifndef FALSE
+#define FALSE (!TRUE)
+#endif
+
+//define the safety strlen
+#ifndef strlens
+#define strlens(s) (s==NULL?0:strlen((char *)(s)))
+#else
+#error "strlens conflict build give up"
+#endif
+
+//define the safety strdup
+#ifndef strdups
+#define strdups(s) ((s)==NULL?NULL:strdup((char *)(s)))
+#else
+#error "strdups conflict build give up"
+#endif
 
 /*!
  * \brief

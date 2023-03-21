@@ -4,15 +4,14 @@
 TARGET := leshi
 
 LOCAL_INCS := . ./include \
-				../include \
-				../../include 
+				../include 
 LOCAL_SRCS := .
 
 # CC = arm-openwrt-linux-gcc
 CC = gcc
 
 LOCAL_CFLAGS :=
-LOCAL_LDFLAGS := -lpthread  -lm -L./
+LOCAL_LDFLAGS := -lpthread  -lm -lubox -L./
 
 # **********************************************
 # Common CFLAGS & LDFLAGS
@@ -22,7 +21,7 @@ LOCAL_CFLAGS += -Wno-multichar -fno-exceptions -ffunction-sections -fdata-sectio
 			-fgcse-after-reload -frerun-cse-after-loop -frename-registers -fomit-frame-pointer \
 			-fno-strict-aliasing -flto  -lm \
 			-fsanitize=address -fsanitize-recover=address -fno-stack-protector -fno-omit-frame-pointer -fno-var-tracking 
-LOCAL_LDFLAGS += -Wl,--gc-sections -Wl,--no-undefined
+LOCAL_LDFLAGS += -Wl,--gc-sections -Wl,--no-undefined 
 
 # **********************************************
 # Common Makefile Rules (C Source Files)

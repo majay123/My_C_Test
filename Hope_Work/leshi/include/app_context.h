@@ -29,33 +29,43 @@
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2023-03-16 16:36:00
+ * @Date         : 2023-03-21 09:59:50
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 13:07:33
- * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh.c
+ * @LastEditTime : 2023-03-21 10:12:42
+ * @FilePath     : /My_C_Test/Hope_Work/leshi/include/app_context.h
  * @Description  : 
  * 
  * ******************************************
  */
-#include <fcntl.h>
-#include <getopt.h>  //for getopt_long
-#include <libubox/uloop.h>
-#include <limits.h>
-#include <pthread.h>
-#include <signal.h>
-#include <stdbool.h>
+
+#ifndef __APP_CONTEXT_H_
+#define __APP_CONTEXT_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// #include "dmessage.pb-c.h"
+#include <linux/limits.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/termios.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
 
-#include "app_context.h"
-#include "common.h"
-#include "debug.h"
-#include "ls_bt_mesh.h"
-#include "queue.h"
+typedef struct
+{
+    int _cl_baud;
+    char *_cl_port;
+    char *_cl_parity;
+    int _cl_bitwidth;
+    int _cl_stopbit;
+    int src;  //message source direction
+    pthread_mutex_t logFileMutex;
+    char app_log_file[PATH_MAX];
+    char verbose;  // verbose debug info output control
+} appContext_t;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /*__APP_CONTEXT_H_*/
