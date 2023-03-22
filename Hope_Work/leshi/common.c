@@ -949,12 +949,11 @@ uint8_t *dump_rs485_data1(uint8_t *src, size_t ssize)
 
 uint8_t check_sum_ls(uint8_t *src, size_t ssize)
 {
-    uint8_t crc = 0;
+    uint32_t sum = 0;
 
     while (ssize--) {
-        crc += *src++;
+        sum += *src++;
     }
-    crc = (crc & 0xff);
 
-    return (crc);
+    return sum % 256;
 }

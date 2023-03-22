@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-18 10:02:29
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 15:31:32
+ * @LastEditTime : 2023-03-22 17:09:45
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_cmd_dispatch.c
  * @Description  : 
  * 
@@ -65,25 +65,25 @@ static int _ls_back_cmd_mcu_upgrade_package_transfer(const uint8_t *cmd_data, ui
 
 const ls_command_list_t leshi_cmd_list[] =
     {
-        {LESHI_CMD_DEV_INFO, (command_callback)_ls_back_cmd_get_device_info},
-        {LESHI_CMD_ALLOW_SUB_DEVICE_JOIN, (command_callback)_ls_back_cmd_allow_sub_device_join},
-        {LESHI_CMD_CLOSE_SUB_DEVICE_JOIN, (command_callback)_ls_back_cmd_close_sub_device_join},
-        {LESHI_CMD_SUB_DEVICE_ADD, (command_callback)_ls_back_cmd_sub_device_add},
-        {LESHI_CMD_SUB_DEVICE_DELETE, (command_callback)_ls_back_cmd_sub_device_delete},
-        {LESHI_CMD_HEARTBEAT_CHECK, (command_callback)_ls_back_cmd_heartbeat_check},
-        {LESHI_CMD_SUB_DEVICES_STATUS_QUERY, (command_callback)_ls_back_cmd_sub_devices_status_query},
-        {LESHI_CMD_SUB_DEVICES_STATUS_REPORT, (command_callback)_ls_back_cmd_sub_device_status_report},
-        {LESHI_CMD_GROUP_ADD_SUB_DEVICES, (command_callback)_ls_back_cmd_group_add_sub_devices},
-        {LESHI_CMD_GROUP_DELETE_SUB_DEVICES, (command_callback)_ls_back_cmd_group_delete_sub_devices},
-        {LESHI_CMD_GET_SYSTEM_DATE, (command_callback)_ls_back_cmd_get_system_date},
-        {LESHI_CMD_GET_LOCAL_DATE, (command_callback)_ls_back_cmd_get_local_date},
-        {LESHI_CMD_BATCH_ADD_SUB_DEVICES, (command_callback)_ls_back_cmd_batch_add_sub_devices},
-        {LESHI_CMD_RETURN_TO_ADD_DEVICE_RESULTS, (command_callback)_ls_back_cmd_return_to_add_device_results},
-        {LESHI_CMD_CONTROL_GROUP_DEVICES, (command_callback)_ls_back_cmd_control_group_devices},
-        {LESHI_CMD_GET_WIFI_STATUS, (command_callback)_ls_back_cmd_get_wifi_status},
-        {LESHI_CMD_RESTORE_FACTORY_SETTINGS, (command_callback)_ls_back_cmd_restore_factory_settings},
-        {LESHI_CMD_MCU_STARTUP_UPGRADE, (command_callback)_ls_back_cmd_mcu_startup_upgrade},
-        {LESHI_CMD_MCU_UPGRADE_PACKAGE_TRANSFER, (command_callback)_ls_back_cmd_mcu_upgrade_package_transfer},
+        {LESHI_CMD_DEV_INFO                     , (command_callback)_ls_back_cmd_get_device_info},
+        {LESHI_CMD_ALLOW_SUB_DEVICE_JOIN        , (command_callback)_ls_back_cmd_allow_sub_device_join},
+        {LESHI_CMD_CLOSE_SUB_DEVICE_JOIN        , (command_callback)_ls_back_cmd_close_sub_device_join},
+        {LESHI_CMD_SUB_DEVICE_ADD               , (command_callback)_ls_back_cmd_sub_device_add},
+        {LESHI_CMD_SUB_DEVICE_DELETE            , (command_callback)_ls_back_cmd_sub_device_delete},
+        {LESHI_CMD_HEARTBEAT_CHECK              , (command_callback)_ls_back_cmd_heartbeat_check},
+        {LESHI_CMD_SUB_DEVICES_STATUS_QUERY     , (command_callback)_ls_back_cmd_sub_devices_status_query},
+        {LESHI_CMD_SUB_DEVICES_STATUS_REPORT    , (command_callback)_ls_back_cmd_sub_device_status_report},
+        {LESHI_CMD_GROUP_ADD_SUB_DEVICES        , (command_callback)_ls_back_cmd_group_add_sub_devices},
+        {LESHI_CMD_GROUP_DELETE_SUB_DEVICES     , (command_callback)_ls_back_cmd_group_delete_sub_devices},
+        {LESHI_CMD_GET_SYSTEM_DATE              , (command_callback)_ls_back_cmd_get_system_date},
+        {LESHI_CMD_GET_LOCAL_DATE               , (command_callback)_ls_back_cmd_get_local_date},
+        {LESHI_CMD_BATCH_ADD_SUB_DEVICES        , (command_callback)_ls_back_cmd_batch_add_sub_devices},
+        {LESHI_CMD_RETURN_TO_ADD_DEVICE_RESULTS , (command_callback)_ls_back_cmd_return_to_add_device_results},
+        {LESHI_CMD_CONTROL_GROUP_DEVICES        , (command_callback)_ls_back_cmd_control_group_devices},
+        {LESHI_CMD_GET_WIFI_STATUS              , (command_callback)_ls_back_cmd_get_wifi_status},
+        {LESHI_CMD_RESTORE_FACTORY_SETTINGS     , (command_callback)_ls_back_cmd_restore_factory_settings},
+        {LESHI_CMD_MCU_STARTUP_UPGRADE          , (command_callback)_ls_back_cmd_mcu_startup_upgrade},
+        {LESHI_CMD_MCU_UPGRADE_PACKAGE_TRANSFER , (command_callback)_ls_back_cmd_mcu_upgrade_package_transfer},
 
         /* 函数指针为NULL表示最后一项*/
         {0, NULL},
@@ -288,9 +288,13 @@ static int _ls_back_cmd_get_device_info(const uint8_t *cmd_data, uint16_t cdata_
 
     REQUIRE(NULL == cmd_data, Error);
 
+    DEBUG_INFO("dev info: %s", cmd_data);
     root = REQ_JSON_PARSE((const char *)cmd_data, root, Error);
 
     /* Processe cjson information */
+    cJSON *v = REQ_JSON_OBJ(root, v, Error);
+    cJSON *m = REQ_JSON_OBJ(root, m, Error);
+    cJSON *cap = REQ_JSON_OBJ(root, cap, Error);
 
     ret = 0;
 
@@ -351,13 +355,17 @@ static int _ls_back_cmd_close_sub_device_join(const uint8_t *cmd_data, uint16_t 
 static int _ls_back_cmd_sub_device_add(const uint8_t *cmd_data, uint16_t cdata_len)
 {
     int ret = -1;
-    cJSON *root = NULL;
+    cJSON *root = NULL; 
 
     REQUIRE(NULL == cmd_data, Error);
-
+    
+    DEBUG_INFO("sub dev add: %s", cmd_data);
     root = REQ_JSON_PARSE((const char *)cmd_data, root, Error);
 
     /* Processe cjson information */
+    cJSON *pid = REQ_JSON_OBJ(root, pid, Error);
+    cJSON *ver = REQ_JSON_OBJ(root, ver, Error);
+    cJSON *sub_id = REQ_JSON_OBJ(root, sub_id, Error);
 
     ret = 0;
 
@@ -406,9 +414,12 @@ static int _ls_back_cmd_heartbeat_check(const uint8_t *cmd_data, uint16_t cdata_
 
     REQUIRE(NULL == cmd_data, Error);
 
+    DEBUG_INFO("heartbeat: %s", cmd_data);
     root = REQ_JSON_PARSE((const char *)cmd_data, root, Error);
 
     /* Processe cjson information */
+    cJSON *sub_id = REQ_JSON_OBJ(root, sub_id, Error);
+    cJSON *hb_time = REQ_JSON_OBJ(root, hb_time, Error);
 
     ret = 0;
 
@@ -437,15 +448,15 @@ Error:
 static int _ls_back_cmd_sub_devices_status_query(const uint8_t *cmd_data, uint16_t cdata_len)
 {
     int ret = 0;
-    leshi_ctrl_data_t *dp_data = NULL;
+//     leshi_ctrl_data_t *dp_data = NULL;
 
-    dp_data = _ls_datapoint_parse(cmd_data, cdata_len);
-    REQUIRE(dp_data == NULL, Error);
+//     dp_data = _ls_datapoint_parse(cmd_data, cdata_len);
+//     REQUIRE(dp_data == NULL, Error);
 
-    /* Processe datapoint information */
+//     /* Processe datapoint information */
 
-    _ls_datapoint_data_free(dp_data);
-Error:
+//     _ls_datapoint_data_free(dp_data);
+// Error:
     return ret;
 }
 
@@ -533,6 +544,7 @@ static int _ls_back_cmd_group_add_sub_devices(const uint8_t *cmd_data, uint16_t 
 
     REQUIRE(NULL == cmd_data, Error);
 
+    DEBUG_INFO("group add sub dev: %s", cmd_data);
     root = REQ_JSON_PARSE((const char *)cmd_data, root, Error);
 
     /* Processe cjson information */
@@ -616,6 +628,7 @@ static int _ls_back_cmd_group_delete_sub_devices(const uint8_t *cmd_data, uint16
 
     REQUIRE(NULL == cmd_data, Error);
 
+    DEBUG_INFO("group delete sub dev: %s", cmd_data);
     root = REQ_JSON_PARSE((const char *)cmd_data, root, Error);
 
     /* Processe cjson information */
@@ -702,6 +715,7 @@ static int _ls_back_cmd_batch_add_sub_devices(const uint8_t *cmd_data, uint16_t 
 
     REQUIRE(NULL == cmd_data, Error);
 
+    DEBUG_INFO("batch add sub dev: %s", cmd_data);
     root = REQ_JSON_PARSE((const char *)cmd_data, root, Error);
 
     /* Processe cjson information */
@@ -859,6 +873,16 @@ static int _ls_back_cmd_mcu_upgrade_package_transfer(const uint8_t *cmd_data, ui
     return ret;
 }
 
+/**
+* @details  	处理接收到的指
+* @param[in]	
+* @param[out]	
+* @retval  		
+* @brief		
+* <date>       <version>         <author>          <brief>
+*--------------------------------------------------------------------
+* 2023-03-21-16:38 V1.0.0				MCD				create
+*/
 int ls_bt_back_cmd_dispatch(const uint8_t *data)
 {
     int ret = -1;

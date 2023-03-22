@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-08-09 09:48:32
  * @LastEditors  : MCD
- * @LastEditTime : 2022-10-14 10:20:17
+ * @LastEditTime : 2023-03-22 09:12:59
  * @FilePath     : /My_C_Test/CRC8/crc8func.c
  * @Description  :
  *
@@ -149,22 +149,39 @@ static uint8_t check(const uint8_t *data, int len)
     return sum;
 }
 
+
+uint8_t check_sum_ls(uint8_t *src, size_t ssize)
+{
+    uint32_t crc = 0;
+
+    while (ssize--) {
+        crc += *src++;
+        printf("crc = %x\n", crc);
+    }
+    crc = crc % 0x100;
+
+    return crc;
+}
+
 int main(int argc, char const *argv[])
 {
     unsigned char test[] = {0xA5, 0x13, 0x01, 0x01, 0x01, 0x01, 0x10, 0x00, 0xC0, 0x07, 0x01, 0x01, 0x3C, 0x01, 0x3C, 0x01, 0x3C, 0x6A, 0x55};
+    uint8_t data_on[] = {0x55, 0xaa, 0x00, 0x0c, 0x00, 0x13,
+                         0x0A, 0x62, 0x30, 0x39, 0x34, 0x35, 0x31, 0x62, 0x62, 0x36, 0x64,
+                         0x02, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x32};
     unsigned char crc = 0;
     uint8_t chk;
     uint8_t data[] = {0x01, 0x81, 0x00, 0x02, 0x42, 0x01, 0x42, 0x02};
     // printf("hello world\n");
-    printf("len = %d\n", sizeof(data));
-    chk = check(data, sizeof(data));
-    printf("chk = 0x%02x\n", chk);
+    // printf("len = %d\n", sizeof(data));
+    // chk = check(data, sizeof(data));
+    // printf("chk = 0x%02x\n", chk);
 
     // crc = Crc8CheckSum(&test[10], 7);
     // crc = cal_crc_table(&test[10], 7);
     // crc = crc_high_first(&test[10], 7);
-
-    // printf("crc = %02x\n", crc);
+    crc = check_sum_ls(data_on, sizeof(data_on) - 1);
+    printf("crc = %x\n", crc);
 
     return 0;
 }

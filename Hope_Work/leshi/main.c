@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-14 16:33:07
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 12:49:38
+ * @LastEditTime : 2023-03-22 17:14:53
  * @FilePath     : /My_C_Test/Hope_Work/leshi/main.c
  * @Description  : 
  * 
@@ -118,6 +118,7 @@ static void usage()
 void *_ls_bt_mesh_read_thread(void *argv)
 {
     while (!thread_exit) {
+        ls_bt_mesh_dev_rev(uart_fd, &llq_uart_dispatch_stream);
         pthread_testcancel();
     }
 
@@ -127,6 +128,7 @@ void *_ls_bt_mesh_read_thread(void *argv)
 static void *_ls_bt_mesh_dispatch_thread(void *argv)
 {
     while (!thread_exit) {
+        ls_bt_mesh_dispatch(&llq_uart_dispatch_stream);
         pthread_testcancel();
     }
 
@@ -136,12 +138,28 @@ static void *_ls_bt_mesh_dispatch_thread(void *argv)
 static void *_ls_bt_mesh_send_thread(void *argv)
 {
     while (!thread_exit) {
+        ls_process_cmd_back_send(uart_fd, &llq_uart_send_stream);
         pthread_testcancel();
     }
 
     return NULL;
 }
 
+static void _ls_bt_mesh_deinit(void)
+{
+    ls_mesh_dev_data_t data;
+
+    /* send empty message,The goal is to let the thread exit blocking */
+    memset(&data, 0, sizeof(ls_mesh_dev_data_t));
+    llq_add(&llq_uart_send_stream, (char *)&data, sizeof(ls_mesh_dev_data_t), 0);
+    llq_add(&llq_uart_dispatch_stream, (char *)&data, sizeof(ls_mesh_dev_data_t), 0);
+    // mqtt_deinit();
+    ls_bt_mesh_dev_close(uart_fd);
+    llq_close(&llq_uart_send_stream);
+    llq_close(&llq_uart_dispatch_stream);
+}
+
+#if 1
 int main(int argc, char const *argv[])
 {
     pthread_t r_thread;
@@ -282,6 +300,8 @@ ERROUT:
         free(appContext._cl_parity);
 
     thread_exit = 1;
+    _ls_bt_mesh_deinit();
+
     if (r_ret == 0) {
         pthread_cancel(r_thread);
         pthread_join(r_thread, NULL);
@@ -302,6 +322,11 @@ ERROUT:
     DEBUG_INFO("main exit\n");
 
     return 0;
-
-    return 0;
 }
+#else 
+int main(int argc, char const *argv[])
+{
+    // leshi_sure_band();
+    leshi_datapoint_parse();
+}
+#endif

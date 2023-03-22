@@ -31,21 +31,26 @@
  * @Author       : MCD
  * @Date         : 2023-03-21 12:50:39
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 12:52:27
+ * @LastEditTime : 2023-03-22 16:40:09
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh_examples.c
  * @Description  : 
  * 
  * ******************************************
  */
-#include "ls_bt_mesh.h"
 #include "ls_bt_mesh_examples.h"
 #include "common.h"
+#include "ls_bt_mesh.h"
+
+// {"pid":"fkxcslivaluonzdp","cids":["01d1dfb06a"],"ver":"1.0.2"}   调光灯
+// {"pid":"5zkpavp5cxonvvxl","cids":["b223f59481"],"ver":"1.0.1"}   调光灯
+// {"pid":"lroj54nnitbqwfct","cids":["b2838807f1"],"ver":"1.0.1"}   4键开关
+// {"pid":"h536ubqx1tui1jsj","cids":["b09451bb6d"],"ver":"1.0.2"}   电机
 
 void leshi_sure_band(void)
 {
     leshi_mesh_t test_cmd;
     // uint8_t *data = "{\"cid\":[\"b2838807f1\", \"b223f59481\"],\"rets\":[0, 0]}";
-    char *data = "{\"cid\":[\"b223f59481\"],\"rets\":[0]}";
+    char *data = "{\"cid\":[\"01d1dfb06a\"],\"rets\":[0]}";
     // uint32_t lenght = 0;
     int i = 0;
     uint32_t sum = 0;
@@ -72,10 +77,10 @@ void leshi_sure_band(void)
         sum += test_cmd.data[i];
         // printf("sum = %x\n", sum);
     }
-    printf("%x\n", sum % 256);
+    printf("%02x\n", sum % 256);
     printf("\n");
 
-    printf("sum = %x\n", sum % 256);
+    printf("sum = %02x\n", sum % 256);
 }
 
 static void _leshi_show_dp(_leshi_dp_t *dp)
@@ -117,11 +122,19 @@ void leshi_datapoint_parse(void)
     //                   0x6A, 0x03, 0x00, 0x08, 0x66, 0x31, 0x30, 0x37, 0x38, 0x38, 0x38, 0x33};
 
     /* 电机 */
-    uint8_t data[] = {0x0A, 0x62, 0x30, 0x39, 0x34, 0x35, 0x31, 0x62, 0x62, 0x36, 0x64,
-                      0x02, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x64,
-                      0x03, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x64,
-                      0x0B, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x64,
-                      0x6A, 0x03, 0x00, 0x08, 0x36, 0x64, 0x62, 0x62, 0x35, 0x31, 0x39, 0x34};
+    // uint8_t data[] = {0x0A, 0x62, 0x30, 0x39, 0x34, 0x35, 0x31, 0x62, 0x62, 0x36, 0x64,
+    //                   0x02, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x64,
+    //                   0x03, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x64,
+    //                   0x0B, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x64,
+    //                   0x6A, 0x03, 0x00, 0x08, 0x36, 0x64, 0x62, 0x62, 0x35, 0x31, 0x39, 0x34};
+
+    /* 调光开关 */
+    uint8_t data[] = {0x0A, 0x30, 0x31, 0x64, 0x31, 0x64, 0x66, 0x62, 0x30, 0x36, 0x61,
+                      0x14, 0x01, 0x00, 0x01, 0x01, 
+                      0x16, 0x02, 0x00, 0x04, 0x00, 0x00, 0x03, 0xE8, 
+                      0x17, 0x02, 0x00, 0x04, 0x00, 0x00, 0x02, 0x79, 
+                      0x6A, 0x03, 0x00, 0x08, 0x36, 0x61, 0x62, 0x30, 0x64, 0x66, 0x64, 0x31};
+
     uint8_t data_len;
 
     leshi_ctrl_data_t *ctrl_data;
@@ -130,7 +143,6 @@ void leshi_datapoint_parse(void)
     uint16_t tmp_len = 0;
     uint8_t dp_num = 0;
     uint8_t i = 0;
-
 
     // ctrl_data->datapoint = &dp;
     data_len = sizeof(data);
@@ -146,7 +158,7 @@ void leshi_datapoint_parse(void)
     ctrl_data->sub_id = calloc(ctrl_data->id_len + 1, sizeof(uint8_t));
     if (ctrl_data->sub_id) {
         memcpy(ctrl_data->sub_id, &data[1], ctrl_data->id_len);
-        printf("sub id = %s, subid len = %ld\n", ctrl_data->sub_id, strlen((const char*)(ctrl_data->sub_id)));
+        printf("sub id = %s, subid len = %ld\n", ctrl_data->sub_id, strlen((const char *)(ctrl_data->sub_id)));
         len += ctrl_data->id_len;
         printf("len = %d\n", len);
     }
@@ -155,7 +167,7 @@ void leshi_datapoint_parse(void)
         return;
     }
     tmp_len = len;
-        
+
     _leshi_dp_t tdp;
     while (data_len > tmp_len) {
         memset(&tdp, 0, sizeof(_leshi_dp_t));
@@ -166,7 +178,7 @@ void leshi_datapoint_parse(void)
     }
     printf("get dp num = %d\n", dp_num);
     ctrl_data->dp_num = dp_num;
-    if(dp_num > 0) {
+    if (dp_num > 0) {
         ctrl_data->datapoint = (_leshi_dp_t *)calloc(dp_num, sizeof(_leshi_dp_t));
         while (data_len > len) {
             dp = &ctrl_data->datapoint[i];
@@ -178,15 +190,15 @@ void leshi_datapoint_parse(void)
             len += dp_len;
             i++;
         }
-    #if 1
-        for(i = 0; i < dp_num; i++) {
+#if 1
+        for (i = 0; i < dp_num; i++) {
             _leshi_show_dp(&ctrl_data->datapoint[i]);
         }
-    #endif
+#endif
     }
 
     printf("finally len = %d\n", len);
-    for(i = 0; i < dp_num; i++) {
+    for (i = 0; i < dp_num; i++) {
         free(ctrl_data->datapoint[i].value);
     }
     free(ctrl_data->datapoint);
@@ -240,7 +252,7 @@ void leshi_delete_one_dev(void)
     test_cmd.header.head[1] = 0xaa;
     test_cmd.header.version = 0x00;
     test_cmd.header.cmd = 0x09;
-    uint16_t datalen = strlen((const char*)data);
+    uint16_t datalen = strlen((const char *)data);
     printf("datalen = %d\n", datalen);
     test_cmd.header.data_len[0] = HI_UINT16(datalen);
     test_cmd.header.data_len[1] = LO_UINT16(datalen);
@@ -277,7 +289,7 @@ void leshi_addto_group(void)
     test_cmd.header.head[1] = 0xaa;
     test_cmd.header.version = 0x00;
     test_cmd.header.cmd = 0x0e;
-    uint16_t datalen = strlen((const char*)data);
+    uint16_t datalen = strlen((const char *)data);
     printf("datalen = %d\n", datalen);
     test_cmd.header.data_len[0] = HI_UINT16(datalen);
     test_cmd.header.data_len[1] = LO_UINT16(datalen);

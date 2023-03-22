@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-16 16:36:00
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 15:39:54
+ * @LastEditTime : 2023-03-22 15:54:49
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh_dev.c
  * @Description  : 
  * 
@@ -288,7 +288,7 @@ void ls_bt_mesh_dev_rev(int fd, llq_t *hndl)
 {
     unsigned short fcs, tmp_fcs = 0;
     uint8_t retryAttempts, bytesRead = 0, len = 0, rcpBuffIdx = 0, rcpTempLen;
-    uint8_t sofByte;
+    // uint8_t sofByte;
     uint8_t rcpBuff[LESHI_MAX_CMD_LEN] = {0};
     ls_mesh_dev_data_t llq_data;
 
