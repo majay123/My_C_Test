@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 13:54:57
+ * @LastEditTime : 2023-03-23 10:09:17
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -334,7 +334,7 @@ int main(int argc, char const *argv[])
     char test1[20] = "00:E0:99:13:C7:62";
     uint8_t buf[20] = {0};
     _Bool test = 0;
-    uint8_t data2[10] = {0x03, 0x44, 0x21, 0xdd, 0x1d, 0xa1, 0x4c, 0x4d, 0x1f, 0x9a};
+    uint8_t data2[10] = {0x03, 0x44, 0x21, 0xdd, 0x1d, 0xa1, 0x4c, 0x4d, 0x1f, 0x00};
     uint8_t i = 10;
     // char *end;
     uint32_t running_time = 10 * 1000;
@@ -342,8 +342,16 @@ int main(int argc, char const *argv[])
 
     // strdup(text "ok");
 
-    i += 3;
-    printf("i = %d\n", i);
+    // i += 3;
+    // printf("i = %d\n", i);
+    uint8_t *cmd_data = calloc(10 + 4, sizeof(uint8_t));
+    memcpy(cmd_data, (char *)data2, 10);
+    memcpy(cmd_data + 10, (char *)time1, 4);
+    for(i = 0; i < 10 + 4; i++)
+        printf("%02x ", cmd_data[i]);
+    free(cmd_data);
+
+
 
     // char ip[20] = "192.168.2.110";
     // char *test11 = strrchr(ip, '.');

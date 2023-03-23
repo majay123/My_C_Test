@@ -204,6 +204,13 @@ typedef struct
 
 typedef struct
 {
+    leshi_mesh_header_t header;
+    uint8_t crc;
+} leshi_mesh_base_t;
+
+
+typedef struct
+{
     uint8_t dpid;
     uint8_t type;
     uint8_t len[2];

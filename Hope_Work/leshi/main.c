@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-14 16:33:07
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-22 17:14:53
+ * @LastEditTime : 2023-03-23 10:46:11
  * @FilePath     : /My_C_Test/Hope_Work/leshi/main.c
  * @Description  : 
  * 
@@ -159,7 +159,7 @@ static void _ls_bt_mesh_deinit(void)
     llq_close(&llq_uart_dispatch_stream);
 }
 
-#if 1
+#if 0
 int main(int argc, char const *argv[])
 {
     pthread_t r_thread;
@@ -327,6 +327,7 @@ ERROUT:
 int main(int argc, char const *argv[])
 {
     // leshi_sure_band();
-    leshi_datapoint_parse();
+    // leshi_datapoint_parse();
+    leshi_ctrl_switch_dev();
 }
 #endif

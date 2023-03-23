@@ -31,7 +31,8 @@
         "rtnetlink.h": "c",
         "lua.h": "c",
         "unistd.h": "c",
-        "uloop.h": "c"
+        "uloop.h": "c",
+        "atomic": "c"
     },
     "cSpell.words": [
         "bytetol",
@@ -57,6 +58,7 @@
         "readlineb",
         "readn",
         "readnb",
+        "sdata",
         "strlwr",
         "timerj",
         "valueint",

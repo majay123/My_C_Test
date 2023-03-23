@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-21 12:51:38
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 12:52:03
+ * @LastEditTime : 2023-03-23 10:55:27
  * @FilePath     : /My_C_Test/Hope_Work/leshi/include/ls_bt_mesh_examples.h
  * @Description  : 
  * 
@@ -92,6 +92,10 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "queue.h"
+
+extern llq_t llq_uart_send_stream;
+extern llq_t llq_uart_dispatch_stream;
 
 void leshi_sure_band(void);
 void leshi_datapoint_parse(void);
