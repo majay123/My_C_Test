@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-21 10:00:16
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 10:00:18
+ * @LastEditTime : 2023-03-27 12:57:25
  * @FilePath     : /My_C_Test/Hope_Work/leshi/include/debug.h
  * @Description  : 
  * 
@@ -85,7 +85,7 @@ extern appContext_t appContext;
 
 #define DEBUG_INFO(param, ...)                                                                                                                            \
     do {                                                                                                                                                  \
-        if (appContext.verbose) {                                                                                                                         \
+        /* if (appContext.verbose) */ {                                                                                                                         \
             char ctime[30] = {0};                                                                                                                         \
             struct tm tm1 = {0};                                                                                                                          \
             struct timespec ts;                                                                                                                           \

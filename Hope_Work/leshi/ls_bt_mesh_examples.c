@@ -42,9 +42,11 @@
 #include "ls_bt_mesh.h"
 
 // {"pid":"fkxcslivaluonzdp","cids":["01d1dfb06a"],"ver":"1.0.2"}   调光灯
-// {"pid":"5zkpavp5cxonvvxl","cids":["b223f59481"],"ver":"1.0.1"}   调光灯
+// {"pid":"5zkpavp5cxonvvxl","cids":["b223f59481"],"ver":"1.0.1"}   2键开关
 // {"pid":"lroj54nnitbqwfct","cids":["b2838807f1"],"ver":"1.0.1"}   4键开关
 // {"pid":"h536ubqx1tui1jsj","cids":["b09451bb6d"],"ver":"1.0.2"}   电机
+// {"pid":"fkxcslivaluonzdp","cids":["01d1dac506"],"ver":"1.0.2"}   调光灯1
+// {"pid":"fkxcslivaluonzdp","cids":["01d1dac506"],"ver":"1.0.2"}   调光灯2
 
 void leshi_sure_band(void)
 {

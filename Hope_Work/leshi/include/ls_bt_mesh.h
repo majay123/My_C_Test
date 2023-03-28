@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-16 16:36:52
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-22 16:55:19
+ * @LastEditTime : 2023-03-27 15:13:53
  * @FilePath     : /My_C_Test/Hope_Work/leshi/include/ls_bt_mesh.h
  * @Description  : 
  * 
@@ -69,6 +69,50 @@
 #define LESHI_UPGRADE_PACKET_TRANSFER_256BY    (256)
 #define LESHI_UPGRADE_PACKET_TRANSFER_512BY    (512)
 #define LESHI_UPGRADE_PACKET_TRANSFER_1024BY   (1024)
+
+
+
+/* ********************************Product ID******************************** */
+
+#define PID_LESHI_BTMESH_MONOCHROMATIC_LAMP           ("drmec7gltih2y8dk")  // 单色灯
+#define PID_LESHI_BTMESH_DOUBLE_COLOR_LAMP            ("fkxcslivaluonzdp")  // 双色灯
+#define PID_LESHI_BTMESH_RGB_COLOR_LAMP               ("bajiy6qlrhkojes1")  // RGB灯
+#define PID_LESHI_BTMESH_WYRGB_COLOR_LAMP             ("zvkvdjg9zugnj24o")  // WYRGB灯
+#define PID_LESHI_BTMESH_DOUBLE_COLOR_AUXILIARY_LAMP  ("6esfe09radrtnhrw")  // 双色灯+辅灯
+#define PID_LESHI_BTMESH_MONOCHROMATIC_AUXILIARY_LAMP ("ahxotwaemo4laafa")  // 单色灯+辅灯
+#define PID_LESHI_BTMESH_WRGB_COLOR_LAMP              ("ovjddr13qzti3ak1")  // WRGB灯
+#define PID_LESHI_BTMESH_SWITCH_CONTROLLER            ("qr3d4hqa1cvmryqh")  // 开关控制器
+#define PID_LESHI_BTMESH_CLASSROOM_MONOCHROMATIC_LAMP ("o4tsf1polfhm5ihi")  // 教室单色灯
+#define PID_LESHI_BTMESH_ILLUMINANCE_SENSOR           ("fksd53uubkkrrzlt")  // 照度传感器
+#define PID_LESHI_BTMESH_86_HUMAN_PRESENCE_SENSOR     ("oexsr8buz4ssaikc")  // 86人体存在传感器
+#define PID_LESHI_BTMESH_8601_HUMAN_PRESENCE_SENSOR   ("lmaacizghyyjojk9")  // 8601人体存在传感器
+#define PID_LESHI_BTMESH_ELECTRIC_CURTAIN             ("h536ubqx1tui1jsj")  // 电动窗帘
+#define PID_LESHI_BTMESH_ON_OFF_DEVICE                ("qr3d4hqa1cvmryqh")  // 通断器
+#define PID_LESHI_BTMESH_01_SWITCH                    ("tj8sr3yxp0cqalbk")  // 1路开关
+#define PID_LESHI_BTMESH_02_SWITCH                    ("5zkpavp5cxonvvxl")  // 2路开关
+#define PID_LESHI_BTMESH_03_SWITCH                    ("kbp6a3sa72p3tgpg")  // 3路开关
+#define PID_LESHI_BTMESH_04_SWITCH                    ("lroj54nnitbqwfct")  // 4路开关
+#define PID_LESHI_BTMESH_01_SWITCH_CFG_01_KEY         ("hlx1f6gjshxoda1w")  // 1 路开关-按键可配置-1开1键
+#define PID_LESHI_BTMESH_02_SWITCH_CFG_02_KEY         ("ndamshy1ooxwcauz")  // 2 路开关-按键可配置-2开2键
+#define PID_LESHI_BTMESH_03_SWITCH_CFG_03_KEY         ("2lzmpca0avpyoalu")  // 3 路开关-按键可配置-3开3键
+#define PID_LESHI_BTMESH_04_SWITCH_CFG_04_KEY         ("zrwrkvpjintwhdov")  // 4 路开关-按键可配置-4开4键
+#define PID_LESHI_BTMESH_04_SWITCH_CFG_08_KEY         ("bb2g2m8jbmngg08t")  // 4 路开关-按键可配置-4开8键
+#define PID_LESHI_BTMESH_PLUG_IN_CARD_FOR_POWER_04    ("4ckwmpiilpnqolvn")  // 插卡取电04
+#define PID_LESHI_BTMESH_THERMOSTAT                   ("u6abdnaoesdttqsb")  // 温控器
+#define PID_LESHI_BTMESH_DOOR_LOCK                    ("oziw4jskdo4wuasy")  // 门锁
+#define PID_LESHI_BTMESH_WATER_SOAKING                ("q0jy234acen6fpcv")  // 水浸
+#define PID_LESHI_BTMESH_SMOKE                        ("pnnd48aqvxtvmrdu")  // 烟雾
+#define PID_LESHI_BTMESH_FUEL_GAS                     ("gvswh2hpggabuagh")  // 燃气
+#define PID_LESHI_BTMESH_01_SWITCH_SCENE_PANEL        ("pavlgpew3swkppx6")  // 1 键情景面板
+#define PID_LESHI_BTMESH_02_SWITCH_SCENE_PANEL        ("axlaycksi24fi5za")  // 2 键情景面板
+#define PID_LESHI_BTMESH_03_SWITCH_SCENE_PANEL        ("cny1dsyww6uxwif6")  // 3 键情景面板
+#define PID_LESHI_BTMESH_04_SWITCH_SCENE_PANEL        ("eeadlj0gkwm9nbcq")  // 4 键情景面板
+#define PID_LESHI_BTMESH_05_SWITCH_SCENE_PANEL        ("wlqadn8nivobqsfn")  // 5 键情景面板
+#define PID_LESHI_BTMESH_06_SWITCH_SCENE_PANEL        ("m3j6hfimgelnzqos")  // 6 键情景面板
+#define PID_LESHI_BTMESH_TEMPERATURE_HUMIDITY_SENSOR  ("fumjev3k4txhavh9")  // 温湿度传感器
+#define PID_LESHI_BTMESH_REMOTE_CONTROL               ("fkruzgm7aui46xby")  // 遥控器
+
+/* ********************************Datapoint ID******************************** */
 
 /* 调光开关 */
 #define DPID_SWITCH_LED    20   //开关-布尔类型

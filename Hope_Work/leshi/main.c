@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-14 16:33:07
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-23 10:46:11
+ * @LastEditTime : 2023-03-28 08:51:30
  * @FilePath     : /My_C_Test/Hope_Work/leshi/main.c
  * @Description  : 
  * 
@@ -72,8 +72,8 @@
 #define APP_VERSION ("V1.00.00")
 #endif
 
-#ifndef APP_NAME
-#define APP_NAME ("leshi_service")
+#ifndef APP_SER_NAME
+#define APP_SER_NAME ("leshi_service")
 #endif
 
 /*********************************************************************
@@ -267,7 +267,7 @@ int main(int argc, char const *argv[])
     }
 
     snprintf(appContext.app_log_file, sizeof(appContext.app_log_file), "/tmp/%s.log", uart_port);
-    DEBUG_INFO("** compile time : %s version:%s\n", COMPILE_TIME, APP_VERSION);
+    DEBUG_INFO("** compile time : %s, app name: %s, version:%s\n", COMPILE_TIME, APP_SER_NAME, APP_VERSION);
     uloop_init();
 
     llq_open(&llq_uart_send_stream);
@@ -326,8 +326,8 @@ ERROUT:
 #else 
 int main(int argc, char const *argv[])
 {
-    // leshi_sure_band();
+    leshi_sure_band();
     // leshi_datapoint_parse();
-    leshi_ctrl_switch_dev();
+    // leshi_ctrl_switch_dev();
 }
 #endif

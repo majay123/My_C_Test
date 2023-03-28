@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-02-18 09:59:05
  * @LastEditors  : MCD
- * @LastEditTime : 2023-02-27 09:39:38
+ * @LastEditTime : 2023-03-28 13:36:30
  * @FilePath     : /My_C_Test/music_info/main.c
  * @Description  : 
  * 
@@ -42,6 +42,7 @@
 #include <id3v2lib-2.0/id3v2lib.h>
 #include "mp3_id3_tags.h"
 #include "test.h"
+#include "stdint.h"
 
 // #define MP3_ID3_TAGS_USE_GENRES
 // #define MP3_ID3_TAGS_IMPLEMENTATION
@@ -137,11 +138,12 @@ int main(int argc, char const *argv[])
     // get_mp3_id3("Bone.mp3");
     // get_music_info_ID3v2("Bone.mp3");
     #endif
-    char *p = malloc(sizeof(char) * 10);
-    free(p);
-    free(p);
+    // char *p = malloc(sizeof(char) * 10);
+    // free(p);
+    // free(p);
 
-    printf("get num = %d\n", get_test());
+    // printf("get num = %d\n", get_test());
+    // printf("size is = %d\n", sizeof(ACM86xxVolTable) /);
 
     return EXIT_SUCCESS;
 }
