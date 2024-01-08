@@ -41,6 +41,9 @@ SRCS  := $(foreach file, $(foreach dir, $(LOCAL_SRCS), $(wildcard $(dir)/*.S)), 
 
 OBJS := $(patsubst %.S,%.o, $(patsubst %.c,%.o, $(patsubst %.cpp, %.o, $(SRCS))))
 
+TAR_PATH := $(shell pwd)
+TMP_PATH := __tmp__/
+
 .PHONY : all clean
 
 all : $(TARGET)

@@ -1,0 +1,40 @@
+syntax = "proto2";
+import "nanopb.proto";
+/*
+* protocol for hope 104 gateway gwservice communication with rs485 service
+*/
+
+// message Datapoint{
+// 	uint32 dpid=1;
+// 	messageDpType type=2;
+// 	uint32 len=3;
+// 	oneof t_value{
+// 		string v_raw=4;
+// 		bool v_bool=5;
+// 		int32 v_value=6;
+// 		string v_string=7;
+// 		int32 v_enum=8;
+// 		int32 v_bitmap=9;
+// 	}
+// }
+
+message leshiBTmeshGWMsg{     				//device id sub device id
+	required string deviceName=3;        				//device name
+	required int32 eleCata=4;							//derive from cloud server
+	required string devicePid=5;							//device pid
+}
+
+
+/*main page push and pop message*/
+message combineMsg{
+	required uint32 index=1;             //ordinal of item
+	oneof item{
+		leshiBTmeshGWMsg lsBTmeshGW_device=2;
+	}
+}
+
+message commonMessage {
+	required uint32 combo_size=10;
+	required string deviceName=3;
+	// repeated combineMsg combo=11;
+}

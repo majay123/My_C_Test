@@ -105,5 +105,6 @@ void leshi_addto_group(void);
 void leshi_group_ctrl_devs(void);
 void leshi_delfrom_group(void);
 void leshi_heart_beat(void);
+void leshi_sum_test(void);
 
 #endif  // !_LS_BT_MESH_EXAMPLES_H

@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-22 16:20:39
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-23 13:54:29
+ * @LastEditTime : 2023-03-28 13:46:18
  * @FilePath     : /My_C_Test/Hope_Work/leshi/ls_bt_mesh_cmd_send.c
  * @Description  : 
  * 
@@ -204,8 +204,8 @@ static int _ls_bt_mesh_add_queue(llq_t *llq_handle, uint8_t *data, size_t data_s
     send_msg.data = calloc(send_msg.data_len, sizeof(uint8_t));
     if (send_msg.data) {
         memcpy(send_msg.data, data, send_msg.data_len);
-        if (appContext.verbose)
-            DEBUG_INFO("llq dat len = %d", send_msg.data_len);
+        
+        DEBUG_INFO("llq dat len = %d", send_msg.data_len);
         if (llq_add(llq_handle, (char *)send_msg.data, send_msg.data_len, 0) < 0) {
             DEBUG_ERROR("llq_handler add error\n");
             free(send_msg.data);

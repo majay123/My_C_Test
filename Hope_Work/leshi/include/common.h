@@ -196,6 +196,8 @@ char *strlwr(char *s);
 void hextodecstring(uint8_t *src_data, size_t len, uint8_t *dest_data);
 uint8_t *dump_rs485_data1(uint8_t *src, size_t ssize);  // need free
 uint8_t check_sum_ls(uint8_t *src, size_t ssize);
+void hsv2rgb(float h, float s, float v, int* r, int* g, int* b);
+void rgb2hsv(int r, int g, int b, float* h, float* s, float* v);
 
 #ifdef __cplusplus
 }

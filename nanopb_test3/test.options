@@ -1,0 +1,2 @@
+#MyMessage.ptr type:FT_POINTER
+MyMessage.sub_messages type:FT_POINTER, max_count:20, fixed_count:true

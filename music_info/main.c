@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-02-18 09:59:05
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-28 13:36:30
+ * @LastEditTime : 2023-03-28 15:17:53
  * @FilePath     : /My_C_Test/music_info/main.c
  * @Description  : 
  * 
@@ -144,6 +144,13 @@ int main(int argc, char const *argv[])
 
     // printf("get num = %d\n", get_test());
     // printf("size is = %d\n", sizeof(ACM86xxVolTable) /);
+    int array[5] = {100,10,2023, 21031,3321};
+    char *ptr = array;
+
+    printf("%p\n", &array[0]);
+    printf("%p\n", &array[1]);
+    printf("%p, %d\n", ptr, *ptr);
+    // printf("%p, %d\n", ptr+1, *(ptr+1));
 
     return EXIT_SUCCESS;
 }

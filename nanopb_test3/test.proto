@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message SubMessage {
+    string sub_field = 1;
+}
+
+message MyMessage {
+    repeated SubMessage sub_messages = 1;
+}

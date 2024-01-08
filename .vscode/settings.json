@@ -32,9 +32,11 @@
         "lua.h": "c",
         "unistd.h": "c",
         "uloop.h": "c",
-        "atomic": "c"
+        "atomic": "c",
+        "pb_decode.h": "c"
     },
     "cSpell.words": [
+        "arraysize",
         "bytetol",
         "cids",
         "cjson",
@@ -43,6 +45,7 @@
         "EPOLLET",
         "EPOLLIN",
         "ERROUT",
+        "Gatewayinfo",
         "hextodecstring",
         "hndl",
         "isnonblocking",
@@ -50,6 +53,7 @@
         "kzalloc",
         "LESHI",
         "LISH",
+        "mdev",
         "NBLOCK",
         "nwritten",
         "oldtio",
@@ -60,6 +64,7 @@
         "readnb",
         "sdata",
         "strlwr",
+        "submessage",
         "timerj",
         "valueint",
         "valuestring",

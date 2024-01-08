@@ -1,0 +1,162 @@
+syntax = "proto3";
+// import "nanopb.proto";
+/*
+* protocol for hope 104 gateway gwservice communication with rs485 service
+*/
+enum messageType{
+	MSGCODE_INVALID=0;
+	MSGCODE_DISCOVER_RS485_DEV_REQ=1;
+	MSGCODE_DISCOVER_RS485_DEV_RSP=2;
+	MSGCODE_CTRL_RS485_ACTION_REQ=3;
+	MSGCODE_CTRL_RS485_ACTION_RSP=4;
+	MSGCODE_GET_DEVS_STATUS_REQ=5;
+	MSGCODE_GET_DEVS_STATUS_RSP=6;
+	MSGCODE_GET_ONE_DEV_STATUS_REQ=7;
+	MSGCODE_GET_ONE_DEV_STATUS_RSP=8;
+	MSGCODE_DEVICE_READY_NOTIFY=9;
+	MSGCODE_DEVICE_NOT_READY_NOTIFY=10;
+	MSGCODE_JOIN_ACTION_REQ=11;
+	MSGCODE_JOIN_ACTION_RSP=12;
+	MSGCODE_LEAVE_ACTION_REQ=13;
+	MSGCODE_LEAVE_ACTION_RSP=14;
+	MSGCODE_SYNC_DEVICE_NOTIFY=15;
+	MSGCODE_SYNC_SCENE_NOTIFY=16;
+	MSGCODE_ADD_GROUP_SUB_DEVS_REQ=17;
+	MSGCODE_ADD_GROUP_SUB_DEVS_RSP=18;
+	MSGCODE_CTRL_GOURP_SUB_DEVS_REQ=19;
+	MSGCODE_CTRL_GOURP_SUB_DEVS_RSP=20;
+	MSGCODE_DELETE_GOURP_SUB_DEVS_REQ=21;
+	MSGCODE_DELETE_GOURP_SUB_DEVS_RSP=22;
+	MSGCODE_DELETE_SUB_DEVS_REQ=23;
+	MSGCODE_DELETE_SUB_DEVS_RSP=24;
+	MSGCODE_HEARTBEAT_NOTIFY=25;
+	MSGCODE_ADD_SUB_DEVICE_REQ=26;
+	MSGCODE_ADD_SUB_DEVICE_RSP=27;
+	MSGCODE_GET_GATEWAY_INFO_REQ=28;
+	MSGCODE_GET_GATEWAY_INFO_RSP=29;
+	MSGCODE_GATEWAY_OTA_INFO_REQ=30;
+	MSGCODE_GATEWAY_OTA_INFO_RSP=31;
+	MSGCODE_GET_GATEWAY_MACADDR_REQ=32;
+	MSGCODE_GET_GATEWAY_MACADDR_RSP=33;
+	// MSGCODE_GATEWAY_START_OTA_REQ=30;
+	// MSGCODE_GATEWAY_START_OTA_RSP=31;
+	// MSGCODE_GATEWAY_OTA_PACKAGE_TRANSFER_REQ=32;
+	// MSGCODE_GATEWAY_OTA_PACKAGE_TRANSFER_RSP=33;
+}
+
+enum messageDirection{
+	MSG_DIR_INVALID=0;
+	MSG_DIR_UART1=1;        //physical UART port 1 on main SOC
+	MSG_DIR_UART2=2;        //physical UART port 2 on main SOC
+	MSG_DIR_UART3=3;        //physical UART port 4 on "SPI to UART"
+	MSG_DIR_UART4=4;        //physical UART port 5 on "SPI to UART"
+	MSG_DIR_UART5=5;        //physical UART port 6 on "SPI to UART"
+	MSG_DIR_UART6=6;        //physical UART port 7 on "SPI to UART"
+	MSG_DIR_BLESERVICE=7;   // BLE service
+	reserved 8 to 9;        //reserved for more UART port in the future
+	MSG_DIR_GWSERVICE=10;   //direction of gwservice
+}
+
+/*internal message not for manipulate,therefore don't contain pack and unpack API*/
+message direction{
+	messageDirection src=1;
+	messageDirection dst=2;
+}
+
+enum messageDpType{
+	DP_TYPE_RAW=0;
+	DP_TYPE_BOOL=1;
+	DP_TYPE_VALUE=2;
+	DP_TYPE_STRING=3;
+	DP_TYPE_ENUM=4;
+	DP_TYPE_BITMAP=5;
+}
+
+message type_raw{
+	uint32 raw_size=1;
+	repeated string raw=2;
+}
+message type_string{
+	uint32 string_size=1;
+	repeated string string=2;
+}
+
+message Datapoint{
+	uint32 dpid=1;
+	messageDpType type=2;
+	uint32 len=3;
+	oneof t_value{
+		string v_raw=4;
+		bool v_bool=5;
+		int32 v_value=6;
+		string v_string=7;
+		int32 v_enum=8;
+		int32 v_bitmap=9;
+	}
+	
+}
+
+message leshiBTmeshGWMsg{
+	
+	// message ota_data{
+	// 	uint32 offset_addr=1;	
+	// 	repeated uint32 pack_data=2;
+	// }
+	// message ota_item {
+	// 	uint32 file_size=1;					// 升级文件大小
+	// 	uint32 page_size=2;					// 升级包分包传输大小
+	// 	ota_data data=4;					// 数据包内容
+	// }
+	// reserved 1;
+	
+	string deviceId=2;          				//device id sub device id
+	string deviceName=3;        				//device name
+	int32 eleCata=4;							//derive from cloud server
+	string devicePid=5;							//device pid
+	bool online=6;              				//online status (status)
+	int32 dp_size=7;
+	repeated Datapoint dp=8;					//datapoint(ctrl and status)
+	int32 groupId=9; 							//group id
+	oneof rets{
+		int32 ret=10;
+	}
+	string deviceVer=11;						//device version
+	string hb_time=12;							//heartbeat time
+}
+
+
+message Gatewayinfo{
+	string v=1;
+	uint32 m=2;
+	uint32 cap=3;
+	string gw_macaddr=4;
+}
+message GatewayOta{
+	enum gw_ota_sta{
+		GW_OTA_FAILURE=0;
+		GW_OTA_SUCCESS=1;
+	}
+	string GwOtaPath=1;
+	gw_ota_sta OtaSta=2;
+}
+
+
+/*main page push and pop message*/
+message combineMsg{
+	uint32 index=1;             //ordinal of item
+	oneof item{
+		leshiBTmeshGWMsg lsBTmeshGW_device=2;
+	}
+}
+
+message commonMessage {
+	messageType type=1;              //message type
+	direction dir=2;                 //message direction
+	uint64 serial=3;                 //message sequence number
+	Gatewayinfo gw_info=4;			 //Gatewayinfo
+	uint32 groupId=5;				 //gourp id(only for leshi bt mesh)
+	GatewayOta ota=6;				 //Ota path and status
+	reserved 7 to 9;
+	uint32 combo_size=10;
+	repeated combineMsg combo=11;
+}

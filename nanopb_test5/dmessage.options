@@ -1,0 +1,18 @@
+Gatewayinfo.v 	max_size:16
+Gatewayinfo.gw_macaddr 	max_size:16
+GatewayOta.GwOtaPath    max_size:32
+leshiBTmeshDeviceMsg.deviceId 	max_size:16
+leshiBTmeshDeviceMsg.devicePid 	max_size:16
+leshiBTmeshDeviceMsg.deviceVer 	max_size:12
+Datapoint.v_raw 	max_size:24
+Datapoint.v_string 	max_size:24
+btActionMsg.deviceName 	max_size:16
+#commonMessage.combo  type:FT_CALLBACK, callback_datatype:"combineMsg**"
+#type_raw.raw type:FT_CALLBACK, callback_datatype:"char*"
+#type_string.string type:FT_CALLBACK, callback_datatype:"char*"
+#leshiBTmeshDeviceMsg.dp type:FT_CALLBACK, callback_datatype:"Datapoint**"
+commonMessage.combo  max_count:30, fixed_count:true
+leshiBTmeshDeviceMsg.dp   max_count:8, fixed_count:true
+btActionMsg.dp        max_count:4, fixed_count:true
+btActionMsg.deviceId   max_size:16
+btActionMsg.devicePid  max_size:16

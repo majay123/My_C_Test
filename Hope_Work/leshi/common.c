@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-21 14:51:55
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-21 15:41:55
+ * @LastEditTime : 2023-04-04 10:20:19
  * @FilePath     : /My_C_Test/Hope_Work/leshi/common.c
  * @Description  : 
  * 
@@ -956,4 +956,76 @@ uint8_t check_sum_ls(uint8_t *src, size_t ssize)
     }
 
     return sum % 256;
+}
+
+
+void hsv2rgb(float h, float s, float v, int* r, int* g, int* b) 
+{
+    float c = s * v;  // 饱和度 * 明度
+    float x = c * (1 - fabs(fmod(h / 60.0, 2) - 1));  // 计算中间变量
+    float m = v - c;  // 计算中间变量
+
+    if (h >= 0 && h < 60) {
+        *r = round((c + m) * 255);  // 计算红色分量
+        *g = round((x + m) * 255);  // 计算绿色分量
+        *b = round((0 + m) * 255);  // 计算蓝色分量
+    } else if (h >= 60 && h < 120) {
+        *r = round((x + m) * 255);
+        *g = round((c + m) * 255);
+        *b = round((0 + m) * 255);
+    } else if (h >= 120 && h < 180) {
+        *r = round((0 + m) * 255);
+        *g = round((c + m) * 255);
+        *b = round((x + m) * 255);
+    } else if (h >= 180 && h < 240) {
+        *r = round((0 + m) * 255);
+        *g = round((x + m) * 255);
+        *b = round((c + m) * 255);
+    } else if (h >= 240 && h < 300) {
+        *r = round((x + m) * 255);
+        *g = round((0 + m) * 255);
+        *b = round((c + m) * 255);
+    } else {
+        *r = round((c + m) * 255);
+        *g = round((0 + m) * 255);
+        *b = round((x + m) * 255);
+    }
+}
+
+void rgb2hsv(int r, int g, int b, float* h, float* s, float* v) 
+{
+    float red = (float)r / 255;
+    float green = (float)g / 255;
+    float blue = (float)b / 255;
+
+    float max = red > green ? red : green;
+    max = max > blue ? max : blue;
+
+    float min = red < green ? red : green;
+    min = min < blue ? min : blue;
+
+    float delta = max - min;
+
+    if (delta == 0) {  // 灰度图像
+        *h = 0;
+        *s = 0;
+        *v = max;
+    } else {
+        if (max == red) {
+            *h = (green - blue) / delta;
+        } else if (max == green) {
+            *h = 2 + (blue - red) / delta;
+        } else {
+            *h = 4 + (red - green) / delta;
+        }
+
+        *h *= 60;  // 转换为角度值
+
+        if (*h < 0) {
+            *h += 360;
+        }
+
+        *s = delta / max;
+        *v = max;
+    }
 }

@@ -1,0 +1,7 @@
+
+leshiBTmeshGWMsg.deviceName 	max_size:128
+leshiBTmeshGWMsg.devicePid 	max_size:128
+
+#commonMessage.combo max_count:20, fixed_count:true
+combineMsg.lsBTmeshGW_device type:FT_POINTER
+commonMessage.deviceName type:FT_POINTER

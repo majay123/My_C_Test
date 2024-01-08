@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-03-14 16:33:07
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-28 08:51:30
+ * @LastEditTime : 2023-08-22 13:04:16
  * @FilePath     : /My_C_Test/Hope_Work/leshi/main.c
  * @Description  : 
  * 
@@ -75,6 +75,9 @@
 #ifndef APP_SER_NAME
 #define APP_SER_NAME ("leshi_service")
 #endif
+
+#define CURTAIN_OPEN             "3501ffffffffff09"
+#define CURTAIN_CLOSE            "3501ffffffffff08"
 
 /*********************************************************************
 * GLOBAL VARIABLES
@@ -157,6 +160,70 @@ static void _ls_bt_mesh_deinit(void)
     ls_bt_mesh_dev_close(uart_fd);
     llq_close(&llq_uart_send_stream);
     llq_close(&llq_uart_dispatch_stream);
+}
+
+int mqtt_client_get_ota_file(const char *ota_file)
+{
+    // 通过文件路径读取文件的大小，并打印出来
+    int ret = 0, i;
+    int fd = open(ota_file, O_RDONLY);
+    if (fd < 0) {
+        printf("open %s failed\n", ota_file);
+        return -1;
+    }
+    struct stat st;
+    if (fstat(fd, &st) < 0) {
+        printf("fstat %s failed\n", ota_file);
+        close(fd);
+        return -1;
+    }
+    printf("ota file size: %ld\n", st.st_size);
+    char buffer[10];
+    if ((ret = read(fd, buffer, 10)) > 0) {
+        // 发送数据包(buffer)的内容（长度为result）
+        // printf("Packet %ld sent.\n", ret);
+        for (i = 0; i < ret; i++) {
+            printf("%02x ", buffer[i]);
+        }
+    }
+    printf("\n");
+    close(fd);
+    return 0;
+}
+
+int test2(const char *ota_file)
+{
+    FILE *fp;
+    int ret = 0;
+    int i, j;
+
+    fp = fopen(ota_file, "rb");
+    if (fp == NULL) {
+        printf("open ota file failed\n");
+        return ret;
+    }
+
+    // 获取文件大小并计算分包数量
+    fseek(fp, 0, SEEK_END);
+    int file_size = ftell(fp);
+    rewind(fp);
+    printf("\nFile size: %d\n", file_size);
+
+    for(i = 0; i < 10; i++) 
+    {
+        uint8_t buffer[10];
+        if ((ret = fread(buffer, sizeof(char), 10, fp)) > 0) {
+            // 发送数据包(buffer)的内容（长度为result）
+            // printf("Packet %ld sent.\n", ret);
+            for (j = 0; j < ret; j++) {
+                printf("%02x ", buffer[j]);
+            }
+        }
+        printf("\n");
+    }
+    fclose(fp);
+
+    return 0;
 }
 
 #if 0
@@ -323,11 +390,39 @@ ERROUT:
 
     return 0;
 }
-#else 
+#else
 int main(int argc, char const *argv[])
 {
-    leshi_sure_band();
+    float h, s, v;
+    int r = 172;
+    int g = 85;
+    int b = 43;
+    char buf[1024] = {0};
+    // leshi_sure_band();
     // leshi_datapoint_parse();
     // leshi_ctrl_switch_dev();
+    // // hsv2rgb();
+    // rgb2hsv(r, g, b, &h, &s, &v);
+    // printf("h = %f, s = %f, v = %f\n", h, s, v);
+    // // hsv2rgb();
+    // sprintf(buf, "%04x%04x%04x", (int)h, (int)(s * 1000), (int)(v * 1000));
+    // printf("buf: %s, len: %d\n", buf, strlen(buf));
+    // for (size_t i = 0; i < strlen(buf); i++)
+    // {
+    //     printf("%02x ", buf[i]);
+    // }
+    // printf("\n");
+    printf("len = %d\n", sizeof(CURTAIN_CLOSE));
+    printf("len = %d\n", strlen(CURTAIN_CLOSE));
+    leshi_ctrl_switch_dev();
+    // leshi_sum_test();
+    // leshi_delete_one_dev();
+    // mqtt_client_get_ota_file("cJSON.c");
+    // char *str = "hello world";
+    // char str2[32] = {0};
+    // sprintf(str2, "%s", str);
+    // printf("%s\n", str2);
+    // test2("cJSON.c");
+    // leshi_group_ctrl_devs();
 }
 #endif
