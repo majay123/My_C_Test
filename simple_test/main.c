@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2023-03-23 10:09:17
+ * @LastEditTime : 2024-03-18 16:53:52
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -326,30 +326,90 @@ void testp(char *onoff)
     *onoff = on;
 }
 
+
+int get_auth_id(uint8_t *auth_id, uint8_t len)
+{
+    char macaddr[32] = "acd312fcc7d0";    //实际长度 12
+    char devSN[32 * 2] = "44421012387611";  //实际长度 14
+    // deviceSerialNum
+    // macAddress
+
+    // bk_get_env_enhance("macAddress", (void *)macaddr, sizeof(macaddr));
+    // bk_get_env_enhance("deviceSerialNum", (void *)devSN, sizeof(devSN));
+    printf("macaddr: %s\n", macaddr);
+    printf("deviceSerialNum: %s\n", devSN);
+
+    // if (os_strlen(macaddr) > 0) {
+    //     sha1((const uint8_t *)macaddr, os_strlen((const char *)macaddr), auth_id);
+    //     return 0;
+    // }
+    if (strlen(macaddr) > 0 && strlen(devSN) > 0) {
+        snprintf(auth_id, len, "aabbcc%s%s", devSN, macaddr);
+        return 0;
+    }
+
+    return -1;
+}
+
+char *strlowr(char *str)
+{
+    char *orign=str;
+    for (; *str!='\0'; str++)
+        *str = tolower(*str);
+    return orign;
+}
+
+
+#include <stdio.h>
+#include <string.h>
+
+int l_test(void)
+{
+	char *a="近总是失眠16个小时就会醒一次。";
+	char temp[28]={0};
+    char len = strlen(a);
+	strncpy(temp,a,sizeof(temp)-1);
+	printf("%zu\n",strlen(a));
+	printf("%zu %s\n",strlen(temp),temp);
+}
+
+#define SHA1_DIGEST_SIZE (32 + 1)
 int main(int argc, char const *argv[])
 {
-    uint8_t time1[4] = {0x00, 0x01, 0xe0, 0x19};
-    uint8_t data[4] = {0};
-    uint8_t data1[4] = {0};
-    char test1[20] = "00:E0:99:13:C7:62";
-    uint8_t buf[20] = {0};
-    _Bool test = 0;
-    uint8_t data2[10] = {0x03, 0x44, 0x21, 0xdd, 0x1d, 0xa1, 0x4c, 0x4d, 0x1f, 0x00};
-    uint8_t i = 10;
-    // char *end;
-    uint32_t running_time = 10 * 1000;
+    char authid[33] = "AABBCC44460401100026B850D817DB56";
+    uint8_t auth_Id[SHA1_DIGEST_SIZE] = {0};
+    // if(get_auth_id(auth_Id, sizeof(auth_Id)) == 0) {
+    //     auth_Id[SHA1_DIGEST_SIZE - 1] = '\0';
+    //     printf("CSK6 auth ID[%d]: %s\n", strlen((char *)auth_Id), (char *)auth_Id);
+    // }
+    // printf("strlowr: %s\n", (char *)strlowr(authid));
+
+    // char *buf = "test";
+    // printf("strlen: %d\n", strlen(buf));
+
+    l_test();
+    // uint8_t time1[4] = {0x00, 0x01, 0xe0, 0x19};
+    // uint8_t data[4] = {0};
+    // uint8_t data1[4] = {0};
+    // char test1[20] = "00:E0:99:13:C7:62";
+    // uint8_t buf[20] = {0};
+    // _Bool test = 0;
+    // uint8_t data2[10] = {0x03, 0x44, 0x21, 0xdd, 0x1d, 0xa1, 0x4c, 0x4d, 0x1f, 0x00};
+    // uint8_t i = 10;
+    // // char *end;
+    // uint32_t running_time = 10 * 1000;
     // char *text = "Res_test";
 
     // strdup(text "ok");
 
     // i += 3;
     // printf("i = %d\n", i);
-    uint8_t *cmd_data = calloc(10 + 4, sizeof(uint8_t));
-    memcpy(cmd_data, (char *)data2, 10);
-    memcpy(cmd_data + 10, (char *)time1, 4);
-    for(i = 0; i < 10 + 4; i++)
-        printf("%02x ", cmd_data[i]);
-    free(cmd_data);
+    // uint8_t *cmd_data = calloc(10 + 4, sizeof(uint8_t));
+    // memcpy(cmd_data, (char *)data2, 10);
+    // memcpy(cmd_data + 10, (char *)time1, 4);
+    // for(i = 0; i < 10 + 4; i++)
+    //     printf("%02x ", cmd_data[i]);
+    // free(cmd_data);
 
 
 

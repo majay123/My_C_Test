@@ -33,7 +33,10 @@
         "unistd.h": "c",
         "uloop.h": "c",
         "atomic": "c",
-        "pb_decode.h": "c"
+        "pb_decode.h": "c",
+        "hash_map": "c",
+        "hash_set": "c",
+        "chrono": "c"
     },
     "cSpell.words": [
         "arraysize",
