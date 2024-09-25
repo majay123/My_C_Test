@@ -36,13 +36,21 @@
         "pb_decode.h": "c",
         "hash_map": "c",
         "hash_set": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "initializer_list": "c",
+        "utility": "c",
+        "fcntl.h": "c",
+        "functional": "c",
+        "md5.h": "c"
     },
     "cSpell.words": [
+        "ACCESSTOKEN",
+        "APPKEY",
         "arraysize",
         "bytetol",
         "cids",
         "cjson",
+        "DEVICEID",
         "DEVKEY",
         "dpid",
         "EPOLLET",
@@ -60,12 +68,19 @@
         "NBLOCK",
         "nwritten",
         "oldtio",
+        "OPENAPI",
+        "postex",
         "printk",
+        "qqmusic",
+        "QRCODE",
         "readinitb",
         "readlineb",
         "readn",
         "readnb",
+        "realsize",
         "sdata",
+        "SHENGZHEN",
+        "strlens",
         "strlwr",
         "submessage",
         "timerj",
@@ -74,5 +89,8 @@
         "writen"
     ],
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-    "cmake.sourceDirectory": "/home/mcd/MyWorkSpace/MyGithub_Project/My_C_Test/epoll_serials"
+    "cmake.sourceDirectory": "/home/mcd/MyWorkSpace/MyGithub_Project/My_C_Test/epoll_serials",
+    "Lua.diagnostics.globals": [
+        "writefile"
+    ]
 }

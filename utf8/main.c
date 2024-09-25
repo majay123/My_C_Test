@@ -135,7 +135,7 @@ char* remove_substring(const char* str, const char* substr) {
 //     return 0;
 // }
 
-
+char buffer[] = "https:\/\/developer.y.qq.com\/openid\/1\/?a=2000000613&c=auh-O30dw30wWSQJwuGYz6Wu";
 
 int main() {
     // const char utf8_str[] = "路由aac";  // 要转换的UTF-8编码字符串
@@ -180,16 +180,18 @@ int main() {
     printf("Length: %d\n", unicode_len);
 #endif
 
-    char *addr = (char *)malloc(100);
-    printf("Address: %p\n", addr);
-    addr[0] = 0xa;
+    // char *addr = (char *)malloc(100);
+    // printf("Address: %p\n", addr);
+    // addr[0] = 0xa;
     
-    int add_p = &addr[0];
-    printf("Address: %p\n", &add_p);
-    // char *addr2 = add_p;
-    // printf("Address: %x\n", addr2[0]);
+    // int add_p = &addr[0];
+    // printf("Address: %p\n", &add_p);
+    // // char *addr2 = add_p;
+    // // printf("Address: %x\n", addr2[0]);
     
-    free(addr);
+    // free(addr);
+
+    printf("buf: %s\n", buffer);
     return 0;
 }
 

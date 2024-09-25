@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-11-08 16:51:42
  * @LastEditors  : MCD
- * @LastEditTime : 2023-12-07 16:26:56
+ * @LastEditTime : 2024-09-12 17:12:51
  * @FilePath     : /My_C_Test/md5/main.c
  * @Description  : 
  * 
@@ -41,6 +41,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // 左循环移位宏定义
 #define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
@@ -280,48 +281,78 @@ void calculate_md5(const uint8_t *message, size_t length, uint8_t digest[16]) {
 #define LIGHT_TMP_COLOR_MIN      (3000)
 #define LIGHT_TMP_COLOR_MAX      (6400)
 
+#define ROUND(x) ((int)((x) + 0.5))
+
 int main() {
-    const char *text = "Hello, World!";
-    uint8_t md5_hash[16]; // MD5哈希值是16字节
-    uint8_t sha1_hash[SHA1_DIGEST_SIZE];
+    // const char *text = "Hello, World!";
+    // uint8_t md5_hash[16]; // MD5哈希值是16字节
+    // uint8_t sha1_hash[SHA1_DIGEST_SIZE];
     
-    // calculate_md5((const uint8_t *)text, strlen(text), md5_hash);
+    // // calculate_md5((const uint8_t *)text, strlen(text), md5_hash);
     
-    // printf("MD5 Hash: ");
-    // for (int i = 0; i < 16; i++) {
-    //     printf("%02x", md5_hash[i]);
+    // // printf("MD5 Hash: ");
+    // // for (int i = 0; i < 16; i++) {
+    // //     printf("%02x", md5_hash[i]);
+    // // }
+    // // printf("\n");
+
+    // sha1((const uint8_t *)text, strlen(text), sha1_hash);
+
+    // // printf("SHA-1 Hash: ");
+    // // for (int i = 0; i < SHA1_DIGEST_SIZE; i++) {
+    // //     printf("%02x", sha1_hash[i]);
+    // // }
+    // // printf("\n");
+
+    // // 创建一个足够大的字符数组来存储转换后的字符串
+    // char str[100]; // 假设数组不会太大，这里分配足够的空间
+
+    // // 使用 sprintf 将数组元素转换成字符串并以逗号分隔
+    // int pos = 0;
+    // for (int i = 0; i < SHA1_DIGEST_SIZE - 4; i++) {
+    //     pos += sprintf(str + pos, "%02x", sha1_hash[i]);
+    //     // if (i < SHA1_DIGEST_SIZE - 1) {
+    //     //     pos += sprintf(str + pos, ", ");
+    //     // }
     // }
-    // printf("\n");
 
-    sha1((const uint8_t *)text, strlen(text), sha1_hash);
+    // printf("Array as a string: %s\n", str);
+    // int attrValue = 3600;
+    // int result = 0;
+    // int result1 = 0;
 
-    // printf("SHA-1 Hash: ");
-    // for (int i = 0; i < SHA1_DIGEST_SIZE; i++) {
-    //     printf("%02x", sha1_hash[i]);
-    // }
-    // printf("\n");
+    // result = ((attrValue - LIGHT_TMP_COLOR_MIN) * 10000 / (LIGHT_TMP_COLOR_MAX - LIGHT_TMP_COLOR_MIN - 3) + 5) / 10;
 
-    // 创建一个足够大的字符数组来存储转换后的字符串
-    char str[100]; // 假设数组不会太大，这里分配足够的空间
+    // result1 = result * (LIGHT_TMP_COLOR_MAX - LIGHT_TMP_COLOR_MIN) / 1000 + LIGHT_TMP_COLOR_MIN;
+    // printf("result = %d, result1 = %d\n", result, result1);
 
-    // 使用 sprintf 将数组元素转换成字符串并以逗号分隔
-    int pos = 0;
-    for (int i = 0; i < SHA1_DIGEST_SIZE - 4; i++) {
-        pos += sprintf(str + pos, "%02x", sha1_hash[i]);
-        // if (i < SHA1_DIGEST_SIZE - 1) {
-        //     pos += sprintf(str + pos, ", ");
-        // }
-    }
+    char test[] = "eyJleHBpcmF0aW9uIjoiMjAyNC0wOC0wOFQwNDoyMDowMi44MDlaIiwiY29uZGl0aW9ucyI6W1siY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsMTA0ODU3NjAwMF0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJsb2dzL2xpbnV4LyJdXX0=";
 
-    printf("Array as a string: %s\n", str);
-    int attrValue = 3600;
-    int result = 0;
-    int result1 = 0;
+    printf("test = %ld\n", strlen(test));
 
-    result = ((attrValue - LIGHT_TMP_COLOR_MIN) * 10000 / (LIGHT_TMP_COLOR_MAX - LIGHT_TMP_COLOR_MIN - 3) + 5) / 10;
+    char buf[64] = {0};
+    printf("test = %p\n", buf);
+    if(buf == NULL)
+        printf("test = NULL\n");
+    else
+        printf("test = %p\n", buf);
 
-    result1 = result * (LIGHT_TMP_COLOR_MAX - LIGHT_TMP_COLOR_MIN) / 1000 + LIGHT_TMP_COLOR_MIN;
-    printf("result = %d, result1 = %d\n", result, result1);
+    bool test_b = true;
+
+    // test_b = !test_b;
+    test_b = test_b ? false : true;
+
+    printf("test_b = %d\n", test_b);
+
+    int a = 36;
+    int b = 36;
+    int c = 40;
+
+    int d = ROUND((float)(a * b) / (float)c);
+    printf("res = %d\n",d);
+
+    int e = ROUND((float)(d * c) / (float)a);
+    printf("res = %d",e);
 
     return 0;
 }

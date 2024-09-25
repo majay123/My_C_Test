@@ -29,45 +29,20 @@
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2024-03-20 15:19:58
+ * @Date         : 2024-07-25 10:43:00
  * @LastEditors  : MCD
- * @LastEditTime : 2024-04-17 08:44:33
- * @FilePath     : /My_C_Test/file_fs/main.c
+ * @LastEditTime : 2024-07-26 13:10:28
+ * @FilePath     : /My_C_Test/libqqmusic_openapi/qq_music_openapi.h
  * @Description  : 
  * 
  * ******************************************
  */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#ifndef __QQ_MUSIC_OPENAPI_H__
+#define __QQ_MUSIC_OPENAPI_H__
 
-int main(int argc, char *argv[])
-{
-    int fd = 0;
-    char buf[1024] = {0};
-    int len = 0;
+// 需要释放返回数据的内存
+char *qqmusic_openapi_get_qrcode(const char *ip);
+char *qqmusic_openapi_qrcode_auth_poll(const char *ip, const char *auth_code);
 
-    fd = open("hello.txt", O_RDONLY);
-    if (fd < 0) {
-        printf("open");
-        return;
-    }
-
-    while (1) {
-        memset(buf, 0, sizeof(buf));
-        len = read(fd, buf, sizeof(buf));
-        printf("%d\n", len);
-        if (len > 0) {
-            printf("%s\n", buf);
-        }
-        else {
-            break;
-        }
-    }
-
-    close(fd);
-
-    return 1;
-}
+#endif  // !__QQ_MUSIC_OPENAPI_H__
