@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2024-07-22 16:16:22
  * @LastEditors  : MCD
- * @LastEditTime : 2024-09-25 17:07:49
+ * @LastEditTime : 2024-10-14 15:14:15
  * @FilePath     : /My_C_Test/QQMusic/main.c
  * @Description  : 
  * 
@@ -41,7 +41,6 @@
 #include "cJSON.h"
 #include "common.h"
 #include "qq_music_openapi.h"
-
 
 #define SCAN_QRCODE_TIMEOUT (10 * 60)  // 10分钟
 #include <curl/curl.h>
@@ -56,7 +55,29 @@
 #include <time.h>
 #include <unistd.h>
 
+/*
+*描述：此类函数是用于对字符串进行复制（拷贝）。
+*
+*参数： 
+*   [out] strDestination：拷贝完成之后的字符串
+*   [in] numberOfElements： strDestination目标缓冲区长度
+*   [in] strSource：需要拷贝的字符串
+*   [in] count：需要拷贝的字符串长度
+*
+*返回值：返回一个整数，0表示复制成功，返回非0值代表复制不成功，不同的值表示不同的错误，具体内容可以查阅MSDN手册
+*注意：numberOfElenments必须大于等于count，否则拷贝将出现中断。
+*/
+// 如果不支持 memcpy_s，则定义自己的安全拷贝函数
+#ifndef memcpy_s
+#define memcpy_s(dest, destsz, src, count) \
+    ((destsz) < (count) ? (errno = ERANGE, -1) : (memcpy((dest), (src), (count)), 0))
+#endif
 
+// 如果不支持 strcpy_s，则定义自己的安全拷贝函数
+#ifndef strcpy_s
+#define strcpy_s(dest, destsz, src) \
+    ((destsz) < strlen(src) + 1 ? (errno = ERANGE, -1) : (strcpy((dest), (src)), 0))
+#endif
 
 // 定义事件
 typedef enum {
@@ -238,11 +259,6 @@ int http_request_from_hope(const char *url, const char *data, struct MemoryStruc
         return -1;
     }
 
-    // printf("params: %s\n", params);
-    // printf("md5sum: %s\n", md5sum);
-
-    // printf("params: %s\n", params);
-
     curl = curl_easy_init();
     if (!curl) {
         printf("curl_easy_init() failed\n");
@@ -252,6 +268,8 @@ int http_request_from_hope(const char *url, const char *data, struct MemoryStruc
     // printf("full_url:%s\n", full_url);
 
     curl_easy_setopt(curl, CURLOPT_URL, url);
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)response);
 
@@ -505,14 +523,16 @@ void get_access_token(StateMachine *sm)
 
     root = cJSON_CreateObject();
     // TEST_ASSERT_NOT_NULL(root);
-    if(root == NULL) goto clean;
+    if (root == NULL)
+        goto clean;
 
     cJSON_AddStringToObject(root, "authCode", "889330ACE8E248E6900D3DDAECCD5002");
     cJSON_AddStringToObject(root, "deviceId", "1664745890332315648");
-    cJSON_AddStringToObject(root, "code", "code-O7cLlQZIOU3DAKkL4qX");   //
+    cJSON_AddStringToObject(root, "code", "code-O7cLlQZIOU3DAKkL4qX");  //
     char *out = cJSON_PrintUnformatted(root);
     // TEST_ASSERT_OBJECT_NOT_NULL(out,  ret, Cleanup);
-    if(out == NULL) goto clean;
+    if (out == NULL)
+        goto clean;
 
     // free(out);
     printf("out: %s\n", out);
@@ -538,7 +558,7 @@ void get_access_token(StateMachine *sm)
     }
 
 clean:
-    if(out)
+    if (out)
         free(out);
 
     if (root) {
@@ -575,8 +595,8 @@ int refresh_token(StateMachine *sm)
         // strcpy(sm->access_token, "new_simulated_access_token");
         // printf("Access token refreshed: %s\n", sm->access_token);
     }
-#else //
-     printf("start get access token\n");
+#else  //
+    printf("start get access token\n");
     uint8_t des = 0;
     int message_body_len = 0;
     cJSON *root = NULL;
@@ -584,14 +604,16 @@ int refresh_token(StateMachine *sm)
 
     root = cJSON_CreateObject();
     // TEST_ASSERT_NOT_NULL(root);
-    if(root == NULL) goto clean;
+    if (root == NULL)
+        goto clean;
 
     cJSON_AddStringToObject(root, "authCode", "889330ACE8E248E6900D3DDAECCD5002");
     cJSON_AddStringToObject(root, "deviceId", "1664745890332315648");
-    cJSON_AddStringToObject(root, "musicType", "qqmusic");   //
+    cJSON_AddStringToObject(root, "musicType", "qqmusic");  //
     char *out = cJSON_PrintUnformatted(root);
     // TEST_ASSERT_OBJECT_NOT_NULL(out,  ret, Cleanup);
-    if(out == NULL) goto clean;
+    if (out == NULL)
+        goto clean;
 
     // free(out);
     printf("out: %s\n", out);
@@ -616,7 +638,7 @@ int refresh_token(StateMachine *sm)
         // printf("Access token received: %s\n", sm->access_token);
     }
 clean:
-    if(out)
+    if (out)
         free(out);
 
     if (root) {
@@ -626,6 +648,108 @@ clean:
     free(response.memory);
 
     return result;
+}
+
+// 批量获取歌曲
+// fcg_music_custom_get_song_info_batch.fcg
+#define QQMUSIC_OPENID "2562110644155510541"
+#define QQMUSIC_TOKEN  "auh105b2d8318993adeaee3332719f60076b8e0bb8342de68b07e2039ffd2a69c36"
+int get_song_info_batch(StateMachine *sm, char *song_ids)
+{
+    struct MemoryStruct response;
+    char base_data[512] = {0};
+    int result = -1;
+
+    time_t current_time = time(NULL);
+
+    if (current_time == ((time_t)-1)) {
+        // 错误处理
+        fprintf(stderr, "Failed to obtain the current time.\n");
+        return -1;
+    }
+
+    snprintf(base_data, sizeof(base_data), CUSTOM_GET_SONG_INFO_BATCH, QQ_MUSIC_APPID, sm->ip, QQ_MUSIC_DEVICE_ID, QQ_MUSIC_OPENAPI_CMD_CUSTOM_GET_SONG_INFO_BATCH, QQMUSIC_TOKEN, QQ_MUSIC_APPID, QQMUSIC_OPENID, song_ids, current_time);
+
+    if (http_request(QQ_MUSIC_NEW_TEST_NAME, base_data, NULL, &response, false) == 0) {
+        printf("get song info batch\n");
+
+        printf("===result: %s\n", response.memory);
+        free(response.memory);
+        return 0;
+    }
+    free(response.memory);
+    return -1;
+}
+
+// 搜索歌曲
+int search_song(StateMachine *sm, char *content)
+{
+    struct MemoryStruct response;
+    char base_data[512] = {0};
+    char base_data_url[512] = {0};
+    int result = -1;
+
+    time_t current_time = time(NULL);
+
+    printf("current_time = %ld\n", current_time);
+
+    if (current_time == ((time_t)-1)) {
+        // 错误处理
+        fprintf(stderr, "Failed to obtain the current time.\n");
+        return -1;
+    }
+
+    char *content_encode = my_url_encode(content);
+
+    snprintf(base_data_url, sizeof(base_data_url), CUSTOM_SEARCH, QQ_MUSIC_APPID, sm->ip, QQ_MUSIC_DEVICE_ID, QQ_MUSIC_OPENAPI_CMD_CUSTOM_SEARCH, QQMUSIC_TOKEN, QQ_MUSIC_APPID, QQMUSIC_OPENID, current_time, content_encode);
+    snprintf(base_data, sizeof(base_data), CUSTOM_SEARCH, QQ_MUSIC_APPID, sm->ip, QQ_MUSIC_DEVICE_ID, QQ_MUSIC_OPENAPI_CMD_CUSTOM_SEARCH, QQMUSIC_TOKEN, QQ_MUSIC_APPID, QQMUSIC_OPENID, current_time, content);
+
+    printf("base_data: %s\n", base_data);
+    if (http_request(QQ_MUSIC_NEW_TEST_NAME, base_data, base_data_url, &response, false) == 0) {
+        printf("get search songs\n");
+
+        printf("===result: %s\n", response.memory);
+        printf("===size: %d\n", response.size);
+        free(response.memory);
+        free(content_encode);
+        return 0;
+    }
+    free(response.memory);
+    free(content_encode);
+    return -1;
+}
+
+#define BAIDU_WEATHER_URL       "https://api.map.baidu.com/weather/v1/?district_id=%s&data_type=%s&ak=%s"
+#define BAIDU_WEATHER_LINUX_APK "vFZVd7Dc2w07Z6h0lZtC4sNHv7t495DB"
+int get_weather_from_baidu_api(void)
+{
+    struct MemoryStruct response;
+    char base_data[1024] = {0};
+    int result = 0;
+    cJSON *m_root = NULL;
+    int ret = -1;
+
+    snprintf(base_data, MAX_URL_REQUEST_LEN, BAIDU_WEATHER_URL, "330200", "now", BAIDU_WEATHER_LINUX_APK);
+
+    printf("base_data: %s\n", base_data);
+    if (http_request_from_hope(base_data, NULL, &response, false) == 0) {
+        printf("===result: %s\n", response.memory);
+        // m_root = cJSON_Parse(response.memory);
+        // // 处理百度API返回数据
+        // if(m_root == NULL) {
+        // 	print_mcd("cJSON_Parse failed!\n");
+        // 	goto clean;
+        // }
+    }
+
+clean:
+    if (m_root) {
+        cJSON_Delete(m_root);
+    }
+
+    if (response.memory) {
+        free(response.memory);
+    }
 }
 
 // 定时器回调函数：处理二维码超时和轮询
@@ -779,6 +903,37 @@ static int get_config(const char *key, char *value)
 
 // https://test.szhkeji.com/rpc_proxy/music_open_api?app_id=2000002621&client_ip=192.168.110.211&device_id=1662620792859168768&opi_cmd=fcg_music_custom_sdk_get_qr_code.fcg&qqmusic_dev_name=hope&qqmusic_encrypt_auth=%7B%22response_type%22%3A%22code%22%2C%22state%22%3A%2210086%22%7D&qqmusic_open_appid=2000002621&qqmusic_package_name=test.sizheng.com&qqmusic_qrcode_type=universal&sign_version=v2&timestamp=1727230958&sign=5f85ea8fcfa8adbdc3a2aab8346b2bc0
 
+void Malloc_m_memcopy()
+{
+    long src[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    long *dest = (long *)malloc(sizeof(long) * 10);
+
+    memcpy_s(dest, sizeof(long) * 10, src, sizeof(src));
+
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", dest[i]);  // 1 2 3 4 5 6 7 8 9 10
+    }
+}
+
+
+void for_json_test(void)
+{
+    // {"code":100000,"desc":"success!","message":"成功！","object":{"clientIp":"60.179.176.69"}}
+    char *buf = "{\"code\":100000,\"des\":\"success!\",\"message\":\"成功！\",\"object\":{\"clientIp\":\"60.179.176.69\"}}";
+
+    cJSON *root = NULL;
+    root = REQ_JSON_PARSE(buf, root, cleanup);
+
+cleanup:
+    if(root)
+        printf("root = %s\n", cJSON_Print(root));
+    else 
+        printf("root = NULL\n");
+    return;
+
+
+}
+
 int main()
 {
     StateMachine sm = {0};
@@ -786,7 +941,52 @@ int main()
     sm.token_expired_count = 0;
     sm.is_idle = 0;
     sm.total_poll_count = 0;
+    char temp[4] = {0};
 
+    // for_json_test();
+
+    // srand(time(NULL));
+
+    // // 生成指定范围内的随机数，例如 1 到 10
+    // int hmin = 0, hmax = 3;
+    // int random_in_range = (rand() % (hmax - hmin + 1)) + hmin;
+    // printf("Random Number in Range [%d, %d]: %d\n", hmin, hmax, random_in_range);
+
+    // int mmin = 0, mmax = 59;
+    // int random_in_range2 = (rand() % (mmax - mmin + 1)) + mmin;
+    // printf("Random Number in Range [%d, %d]: %d\n", mmin, mmax, random_in_range2);
+
+#if 1
+    curl_global_init(CURL_GLOBAL_ALL);
+    refresh_token(&sm);
+    curl_global_cleanup();
+#endif
+
+    // char *buf = "auh3fc8c797d3ba46b0c965bdafbdcc0be80b244f0985cae8681013f719c55fa72e";
+    // printf("buf: %d\n", strlen(buf));
+#if 0
+
+
+    curl_global_init(CURL_GLOBAL_ALL);
+    get_external_public_ip();
+    // get_external_ip_location();
+    // get_external_weather();
+
+    get_weather_from_baidu_api();
+
+    // memcpy_s()
+
+    char tempNow = -13;
+
+    snprintf(temp, sizeof(temp), "%d", tempNow);
+    printf("temp: %s\n", temp);
+    curl_global_cleanup();
+
+
+    Malloc_m_memcopy();
+#endif
+
+#if 0
     char *ip = get_external_ip();
     printf("ip: %s\n", ip);
     // return 1;
@@ -794,7 +994,7 @@ int main()
     if (ip) {
         memcpy(sm.ip, ip, strlen(ip));
     }
-    strcpy(sm.ip, "60.179.179.6");
+    // strcpy(sm.ip, "60.179.179.6");
     printf("sm ip: %s\n", sm.ip);
 
     curl_global_init(CURL_GLOBAL_ALL);
@@ -821,7 +1021,10 @@ int main()
         // todo 每天定期去获取歌单,获取歌曲信息
     }
 #else 
-    refresh_token(NULL);
+    // get_access_token(NULL);
+    // refresh_token(NULL);
+    // get_song_info_batch(&sm , "000OG0HB2XcvZj");
+    search_song(&sm, "周杰伦");
 #endif
     // // 退出主循环，释放资源
     // stop_timer(&sm.general_timer_id);
@@ -832,7 +1035,7 @@ int main()
 
     // 清理动态内存
     printf("Cleaning up and exiting.\n");
-
+#endif
     return 0;
 }
 

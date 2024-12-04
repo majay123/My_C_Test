@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2024-07-25 10:46:47
  * @LastEditors  : MCD
- * @LastEditTime : 2024-09-25 16:42:36
+ * @LastEditTime : 2024-10-07 14:20:08
  * @FilePath     : /My_C_Test/QQMusic/qq_music_openapi.h
  * @Description  : 
  * 
@@ -78,6 +78,8 @@
 #define QQ_MUSIC_OPENAPI_CMD_CUSTOM_DELETE_ACCOUNT   "fcg_music_custom_delete_account.fcg"
 #define QQ_MUSIC_OPENAPI_CMD_CUSTOM_QUERY_ACCOUNT    "fcg_music_custom_query_account.fcg"
 #define QQ_MUSIC_OPENAPI_CMD_CUSTOM_GET_ACCOUNT_INFO "fcg_music_custom_get_account_info.fcg"
+#define QQ_MUSIC_OPENAPI_CMD_CUSTOM_GET_SONG_INFO_BATCH    "fcg_music_custom_get_song_info_batch.fcg"
+#define QQ_MUSIC_OPENAPI_CMD_CUSTOM_SEARCH    "fcg_music_custom_search.fcg"
 
 #define QQMUSIC_ENCRYPT_AUTH     "{\"response_type\":\"code\",\"state\":\"123456\"}"
 #define QQMUSIC_URL_ENCRYPT_AUTH "%7B%22response_type%22%3A%22code%22%2C%22state%22%3A%22123456%22%7D"
@@ -90,6 +92,10 @@
 
 #define CMD_GET_ACCESS_GET_TOKEN_DATA         "app_id=%s&app_key=%s&client_ip=%s&cmd=getToken&code=%s&device_id=%s&opi_cmd=%s&sign_version=%s&timestamp=%ld"
 #define CMD_GET_ACCESS_GET_REFRESH_TOKEN_DATA "app_id=%s&app_key=%s&client_ip=%s&cmd=refreshToken&code=%s&device_id=%s&opi_cmd=%s&qqmusic_refresh_token=%s&sign_version=%s&timestamp=%ld"
+
+#define CUSTOM_GET_SONG_INFO_BATCH "app_id=%s&client_ip=%s&device_id=%s&login_type=6&opi_cmd=%s&qqmusic_access_token=%s&qqmusic_open_appid=%s&qqmusic_open_id=%s&sign_version=v2&song_mid=%s&timestamp=%ld"
+
+#define CUSTOM_SEARCH "app_id=%s&client_ip=%s&device_id=%s&login_type=6&num=30&opi_cmd=%s&qqmusic_access_token=%s&qqmusic_open_appid=%s&qqmusic_open_id=%s&sign_version=v2&timestamp=%ld&w=%s"
 
 // char *qqmusic_openapi_get_qrcode(const char *ip);
 // char *qqmusic_openapi_qrcode_auth_poll(const char *ip, const char *auth_code);

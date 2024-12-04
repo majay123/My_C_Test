@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2024-07-24 13:01:38
  * @LastEditors  : MCD
- * @LastEditTime : 2024-09-25 17:07:42
+ * @LastEditTime : 2024-10-12 08:32:16
  * @FilePath     : /My_C_Test/QQMusic/common.h
  * @Description  : 
  * 
@@ -55,6 +55,31 @@ extern "C"
 #include <pthread.h>
 
 #include "md5.h"
+
+
+#define REQUIRE(in, tag)                      \
+    do {                                      \
+        if (in) {                             \
+            printf("%s %s", #tag, #in); \
+            goto tag;                         \
+        }                                     \
+    } while (0)
+
+#define REQUIRE_NOLOG(in, tag)                \
+    do {                                      \
+        if (in) {                             \
+            printf("%s %s", #tag, #in); \
+            goto tag;                         \
+        }                                     \
+    } while (0)
+
+#define REQ_JSON_OBJ(des, item, tag) \
+    cJSON_GetObjectItem(des, #item); \
+    REQUIRE((item == NULL), tag)
+
+#define REQ_JSON_PARSE(str, item, tag) \
+    cJSON_Parse(str);                  \
+    REQUIRE((item == NULL), tag)
 
 #define strlens(s) (s == NULL ? 0 : strlen((char *)s))
 #define MAX_URL_HOST_LEN                    (128)
@@ -110,6 +135,9 @@ char *url_encode(const char *str);
 int get_strlen(const char *str);
 uint8_t calc_des(size_t len);
 uint8_t calc_des2(size_t len);
+void get_external_public_ip(void);
+void get_external_ip_location(void);
+void get_external_weather(void);
 
 #ifdef __cplusplus
 }

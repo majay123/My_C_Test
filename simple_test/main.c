@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2024-03-18 16:53:52
+ * @LastEditTime : 2024-11-14 09:23:20
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -374,10 +374,33 @@ int l_test(void)
 }
 
 #define SHA1_DIGEST_SIZE (32 + 1)
+
+static void _test_32t8(uint32_t a) 
+{
+    uint8_t b;
+
+    b = a;
+    printf("%d\n", b);
+}
+
+static void _test_8t32(uint8_t a) 
+{
+    uint8_t b;
+
+    b = a;
+    printf("%d\n", b);
+}
+
 int main(int argc, char const *argv[])
 {
     char authid[33] = "AABBCC44460401100026B850D817DB56";
     uint8_t auth_Id[SHA1_DIGEST_SIZE] = {0};
+
+    uint32_t a = 64;
+    _test_32t8(a);
+    uint8_t a1 = 100;
+    uint32_t b1 = a1;
+    printf("%d\n", b1);
     // if(get_auth_id(auth_Id, sizeof(auth_Id)) == 0) {
     //     auth_Id[SHA1_DIGEST_SIZE - 1] = '\0';
     //     printf("CSK6 auth ID[%d]: %s\n", strlen((char *)auth_Id), (char *)auth_Id);
@@ -387,7 +410,7 @@ int main(int argc, char const *argv[])
     // char *buf = "test";
     // printf("strlen: %d\n", strlen(buf));
 
-    l_test();
+    // l_test();
     // uint8_t time1[4] = {0x00, 0x01, 0xe0, 0x19};
     // uint8_t data[4] = {0};
     // uint8_t data1[4] = {0};

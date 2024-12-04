@@ -6,7 +6,7 @@ local path = "/home/mcd/MyWorkSpace/MyGithub_Project/My_C_Test/QQMusic/music_mat
 local id = path:match("(%d+)$")
 
 -- 打印提取的数字
-print(id)
+-- print(id)
 
 -- -- 定义文件路径和要写入的内容
 -- local filepath = "file.txt"
