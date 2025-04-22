@@ -1,5 +1,20 @@
 --[[
 
+************Copyright 2025 MCD************
+
+version      : 
+Company      : HOPE
+Author       : MCD
+Date         : 2024-01-31 14:39:31
+LastEditors  : MCD
+LastEditTime : 2025-04-22 16:46:41
+FilePath     : /My_C_Test/lua_test/scene_parse.lua
+Description  : 
+
+******************************************
+--]]
+--[[
+
 　　┏┓　　　┏┓+ +
 　┏┛┻━━━┛┻┓ + +
 　┃　　　　　　　┃ 　
@@ -34,6 +49,8 @@ LastEditors  : MCD
 LastEditTime : 2024-01-31 14:39:32
 FilePath     : /My_C_Test/lua_test/scene_parse.lua
 Description  :
+
+
 
 ******************************************
 --]]
