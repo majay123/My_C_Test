@@ -41,7 +41,9 @@
         "utility": "c",
         "fcntl.h": "c",
         "functional": "c",
-        "md5.h": "c"
+        "md5.h": "c",
+        "cstring": "c",
+        "string.h": "c"
     },
     "cSpell.words": [
         "ACCESSTOKEN",

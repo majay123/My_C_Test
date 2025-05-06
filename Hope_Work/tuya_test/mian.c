@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-02-21 10:01:18
  * @LastEditors  : MCD
- * @LastEditTime : 2024-12-04 15:51:14
+ * @LastEditTime : 2024-12-06 11:28:39
  * @FilePath     : /My_C_Test/Hope_Work/tuya_test/mian.c
  * @Description  : 
  * 
@@ -52,6 +52,7 @@
 #include <mbedtls/platform.h>
 
 #include "MQTTClient.h"
+#include "cJSON.h"
 
 #define TUYA_MQTT_CLIENTID_MAXLEN  (128U)
 #define TUYA_MQTT_USERNAME_MAXLEN  (128U)
@@ -184,7 +185,7 @@ static int tuya_mqtt_auth_signature_calculate(const char *deviceId, const char *
         return -1;
     }
     // 获取当前的时间戳
-    time_t timestamp = time(NULL);;
+    time_t timestamp = time(NULL);
 
     /* client ID */
     sprintf(username, "%s|signMethod=hmacSha256,timestamp=%ld,secureMode=1,accessType=1", deviceId, timestamp);
@@ -229,6 +230,20 @@ int messageArrived(void *context, char *topicName, int topicLen, MQTTClient_mess
     printf("Message received -Topic: %s\n", topicName);
     printf("Message content: %s\n", (char *)message->payload);
 
+    cJSON *root = NULL;
+    root = cJSON_Parse((const char *)message->payload);
+
+    if(root == NULL) {
+        printf("Error parse message\n");
+        goto Error;
+    }
+    
+    char *test = cJSON_PrintUnformatted(root);
+    printf("test: %s\n", test);
+    
+
+
+Error:
     MQTTClient_freeMessage(&message);
     MQTTClient_free(topicName);
     return 1;

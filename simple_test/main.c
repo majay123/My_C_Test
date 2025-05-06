@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2024-11-14 09:23:20
+ * @LastEditTime : 2025-05-04 16:49:27
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -326,10 +326,9 @@ void testp(char *onoff)
     *onoff = on;
 }
 
-
 int get_auth_id(uint8_t *auth_id, uint8_t len)
 {
-    char macaddr[32] = "acd312fcc7d0";    //实际长度 12
+    char macaddr[32] = "acd312fcc7d0";      //实际长度 12
     char devSN[32 * 2] = "44421012387611";  //实际长度 14
     // deviceSerialNum
     // macAddress
@@ -353,29 +352,28 @@ int get_auth_id(uint8_t *auth_id, uint8_t len)
 
 char *strlowr(char *str)
 {
-    char *orign=str;
-    for (; *str!='\0'; str++)
+    char *orign = str;
+    for (; *str != '\0'; str++)
         *str = tolower(*str);
     return orign;
 }
-
 
 #include <stdio.h>
 #include <string.h>
 
 int l_test(void)
 {
-	char *a="近总是失眠16个小时就会醒一次。";
-	char temp[28]={0};
+    char *a = "近总是失眠16个小时就会醒一次。";
+    char temp[28] = {0};
     char len = strlen(a);
-	strncpy(temp,a,sizeof(temp)-1);
-	printf("%zu\n",strlen(a));
-	printf("%zu %s\n",strlen(temp),temp);
+    strncpy(temp, a, sizeof(temp) - 1);
+    printf("%zu\n", strlen(a));
+    printf("%zu %s\n", strlen(temp), temp);
 }
 
 #define SHA1_DIGEST_SIZE (32 + 1)
 
-static void _test_32t8(uint32_t a) 
+static void _test_32t8(uint32_t a)
 {
     uint8_t b;
 
@@ -383,24 +381,81 @@ static void _test_32t8(uint32_t a)
     printf("%d\n", b);
 }
 
-static void _test_8t32(uint8_t a) 
+static void _test_8t32(uint8_t a)
 {
     uint8_t b;
 
     b = a;
     printf("%d\n", b);
 }
+
+#define xxxxx "[{\"enable\":true,\"id\":0,\"tunnelName\":\"分区一\",\"volume\":25},{\"enable\":true,\"id\":1,\"tunnelName\":\"分区二\",\"volume\":25}]"
+
+#define MSG_MQTT_MUSIC_VOL_GET "{\"music_volume_get\":\"{\\\"[{\\\"enable\\\":%s,\\\"id\\\":0,\\\"tunnelName\\\":\\\"分区一\\\",\\\"volume\\\":%d},{\\\"enable\\\":%s,\\\"id\\\":1,\\\"tunnelName\\\":\\\"分区二\\\",\\\"volume\\\":%d}]\\\"}\"}"
+
+
+#define MACTRL_MAX_VOLUME (40)
+#define ROUND(x)      ((x) >= 0 ? (unsigned char)((x) + 0.5) : (unsigned char)((x)-0.5))
+#define TYVAL(val)    (double)((100.0 / 40) * (val))
+#define TYVAL1(x, val)    (double)(((double)x / 40) * (val))
+#define LOCALVAL(val) (double)((40.0 / 100) * (val))
+
+#define BVAL(max, val)          (double)(((double)MACTRL_MAX_VOLUME / (double)max) * (val))
 
 int main(int argc, char const *argv[])
 {
-    char authid[33] = "AABBCC44460401100026B850D817DB56";
-    uint8_t auth_Id[SHA1_DIGEST_SIZE] = {0};
+    int ret = 199998;
+    char buf[100] = {0};
+    int res = 0;
+    int mute = 0;
 
-    uint32_t a = 64;
-    _test_32t8(a);
-    uint8_t a1 = 100;
-    uint32_t b1 = a1;
-    printf("%d\n", b1);
+    // printf("ret: %d\n", ret);
+    // memcpy(buf, &ret, sizeof(ret));
+    // memcpy(&res, buf, sizeof(res));
+
+    // printf("res: %d\n", res);
+
+    // printf("mute: %d, %d\n", mute, !mute);
+
+#if 0
+    char time_code[] = "3746068874";
+    // "2147483647"
+
+    char *endptr;
+    uint32_t num = strtoul(time_code, &endptr, 10);  // 10 代表十进制
+    printf("long 型整数: %ld\n", num);
+    time_t timestamp;
+    timestamp = time(NULL);  // 获取当前时间的时间戳（单位：秒）
+
+    if (timestamp == -1) {
+        printf("获取时间戳失败\n");
+        return -1;
+    }
+
+    printf("当前时间戳（秒）: %ld\n", timestamp);
+#endif    
+
+    // // 检测是否有非法字符
+    // if (*endptr != '\0') {
+    //     printf("转换有误，非数字部分: %s\n", endptr);
+    // }
+
+    printf("vol: %d, %d\n", ROUND(TYVAL(36)),  ROUND(BVAL(100, 55)));
+    // char authid[33] = "AABBCC44460401100026B850D817DB56";
+    // uint8_t auth_Id[SHA1_DIGEST_SIZE] = {0};
+
+    // uint32_t a = 64;
+    // _test_32t8(a);
+    // uint8_t a1 = 100;
+    // uint32_t b1 = a1;
+    // printf("%d\n", b1);
+
+    // printf("%s\n", xxxxx);
+    // char test[256] = {0};
+    // sprintf(test, MSG_MQTT_MUSIC_VOL_GET, "true", 100, "true", 100);
+    // printf("%s\n", xxxxx);
+    // printf("%s\n", test);
+
     // if(get_auth_id(auth_Id, sizeof(auth_Id)) == 0) {
     //     auth_Id[SHA1_DIGEST_SIZE - 1] = '\0';
     //     printf("CSK6 auth ID[%d]: %s\n", strlen((char *)auth_Id), (char *)auth_Id);
@@ -433,8 +488,6 @@ int main(int argc, char const *argv[])
     // for(i = 0; i < 10 + 4; i++)
     //     printf("%02x ", cmd_data[i]);
     // free(cmd_data);
-
-
 
     // char ip[20] = "192.168.2.110";
     // char *test11 = strrchr(ip, '.');
@@ -583,3 +636,13 @@ int main(int argc, char const *argv[])
 #endif
     return 0;
 }
+
+// {
+//     "authCode" : "0ECEBFACE056444E9FCE0AC17A89F866", "deviceId" : "1715472539893682176", "deviceSN" : "50143502100207", "userId" : "5610078671406368161"
+// }
+// {
+//     "authCode" : "0ECEBFACE056444E9FCE0AC17A89F866", "deviceId" : "1715472539893682176", "userId" : "5610078671406368161", "musicType" : "qqmusic"
+// }
+// {
+//     "authCode" : "0ECEBFACE056444E9FCE0AC17A89F866", "deviceId" : "1715472539893682176", "musicType" : "qqmusic"
+// }

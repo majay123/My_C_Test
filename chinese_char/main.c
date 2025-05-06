@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2024-03-18 16:59:56
  * @LastEditors  : MCD
- * @LastEditTime : 2024-05-17 14:42:42
+ * @LastEditTime : 2025-03-27 11:00:34
  * @FilePath     : /My_C_Test/chinese_char/main.c
  * @Description  : 
  * 
@@ -46,6 +46,50 @@
 
 #include <stdio.h>
 #include <string.h>
+
+
+#define REFRENCEID_MAX_SIZE     (128)
+#define TYPE_MAX_SIZE           (16)
+#define NAME_MAX_SIZE           (128)
+#define MUSICID_MAX_SIZE        (32)
+#define PIC_URL_MAX_SIZE        (256)
+#define PIC_BIT_MAP_SIZE        (3 * 1024)
+
+#define RANK_MODE       "RankMusic"
+#define LIST_MODE       "SheetMusic"
+#define RADIO_MODE      "RadioMusic"
+
+enum {
+    HOPE_PRO_NULL,
+    HOPE_PRO_BLE_MUSIC,
+    HOPE_PRO_LOCAL_MUSIC,
+    HOPE_PRO_LINEIN_MUSIC,
+    HOPE_PRO_SCENES_MUSIC = 5,
+};
+
+
+typedef struct
+{
+    char refrenceId[REFRENCEID_MAX_SIZE];
+    char type[TYPE_MAX_SIZE];
+    char name[NAME_MAX_SIZE];
+}rank_info_t;
+
+typedef struct
+{
+    char pic_url[PIC_URL_MAX_SIZE];
+    char refrenceId[REFRENCEID_MAX_SIZE];
+    char type[TYPE_MAX_SIZE];
+    char name[NAME_MAX_SIZE];
+    int page;   //1
+    int size;   //100
+    char mode[TYPE_MAX_SIZE];
+    int id;
+    int gid;
+    int sid;
+    char category_id[REFRENCEID_MAX_SIZE * 8];
+}detail_info_t;
+
 int is_chinese_character(uint8_t *ch) {
     if ((ch[0] & 0xE0) == 0xE0 && (ch[1] & 0x80) == 0x80 && (ch[2] & 0x80) == 0x80) {
         return 1;
@@ -115,6 +159,8 @@ int main()
 
     utf8_strncpy(dest, sentence, count + 1);
     printf("p: %s\n", dest);
+
+    printf("%d\n", sizeof(detail_info_t));
 
     return 0;
 }

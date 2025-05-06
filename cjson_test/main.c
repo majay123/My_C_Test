@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2023-04-07 10:09:05
  * @LastEditors  : MCD
- * @LastEditTime : 2023-11-30 16:02:27
+ * @LastEditTime : 2025-04-16 09:17:06
  * @FilePath     : /My_C_Test/cjson_test/main.c
  * @Description  : 
  * 
@@ -78,6 +78,7 @@ static const size_t BASE64_ENCODE_INPUT = 3;
 static const size_t BASE64_ENCODE_OUTPUT = 4;
 static const char base64_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+static const char json_buf[] = "{\"id\":\"3\",\"name\":\"zhuti\",\"list\":[{\"name\":\"音乐人在听\",\"id\":1069},{\"name\":\"KTV金曲\",\"id\":64}]}";
 typedef struct _Datapoint {
     uint32_t dpid;
     char v_string[28];
@@ -763,7 +764,7 @@ int main(int argc, char const *argv[])
         cJSON_Delete(root);
 #endif
 
-    base64_test_data(NULL);
+    // base64_test_data(NULL);
     // base64_test_data1(NULL);
 
     // char str[] = "9aset";
@@ -902,17 +903,34 @@ int main(int argc, char const *argv[])
     // for(int i = 0; i < strlen(buffer); i++) {
     //     printf("0x%02x\n", buffer[i]);
     // }
+#if 1
+    cJSON *root = cJSON_Parse(json_buf);
+    if(root == NULL)
+    {
+        printf("json format err\n");
+    }else{
+        printf("json parse successful\n");
+        // cJSON *list_js = cJSON_GetObjectItem(root, "list");
+        // char *strll = cJSON_PrintUnformatted(list_js);
+        cJSON *name_js = cJSON_GetObjectItem(root, "name");
+        printf("%s, %d\n", name_js->valuestring, strlen(name_js->valuestring));
+        // free(strll);
+    }
 
-    // cJSON *root = cJSON_Parse(test);
-    // if(root == NULL)
-    // {
-    //     printf("json format err\n");
-    // }else{
-    //     printf("json parse successful\n");
-    // }
+    cJSON_Delete(root);
+#endif
+
+    // cJSON *root = cJSON_CreateArray();
+
+    // cJSON_AddItemToArray(root, cJSON_CreateString("hello"));
+    // cJSON_AddItemToArray(root, cJSON_CreateString("hello"));
+    // cJSON_AddItemToArray(root, cJSON_CreateString("hello"));
+
+    // char *str = cJSON_PrintUnformatted(root);
+    // printf("%s\n", str);
+    // free(str);
 
     // cJSON_Delete(root);
-
-    // free(str);
+    
     return 0;
 }
