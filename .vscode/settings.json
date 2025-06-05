@@ -43,7 +43,9 @@
         "functional": "c",
         "md5.h": "c",
         "cstring": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "random": "c",
+        "semaphore": "c"
     },
     "cSpell.words": [
         "ACCESSTOKEN",

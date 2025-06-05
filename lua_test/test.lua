@@ -47,3 +47,19 @@ end
 local k, num = extract_key_and_number("singer-23123")
 print(k)
 print(num, type(num))
+
+local ids = { "qq003QspBx2GGIRv", "003QspBx2GGIRv", "qq001zMQr71F1Qo8" }
+
+for i, id in ipairs(ids) do
+    ids[i] = string.gsub(id, "^qq", "")
+end
+
+for _, id in ipairs(ids) do
+    print(id)
+end
+
+local dir = "/mnt/xfont/current_mlist/"
+local cmd_del = 'rm -rf '..dir..'*'.. ' && sync'
+print(cmd_del)
+-- os.execute(cmd_del)
+

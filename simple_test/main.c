@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2025-05-04 16:49:27
+ * @LastEditTime : 2025-05-27 13:52:50
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -393,14 +393,14 @@ static void _test_8t32(uint8_t a)
 
 #define MSG_MQTT_MUSIC_VOL_GET "{\"music_volume_get\":\"{\\\"[{\\\"enable\\\":%s,\\\"id\\\":0,\\\"tunnelName\\\":\\\"分区一\\\",\\\"volume\\\":%d},{\\\"enable\\\":%s,\\\"id\\\":1,\\\"tunnelName\\\":\\\"分区二\\\",\\\"volume\\\":%d}]\\\"}\"}"
 
-
 #define MACTRL_MAX_VOLUME (40)
-#define ROUND(x)      ((x) >= 0 ? (unsigned char)((x) + 0.5) : (unsigned char)((x)-0.5))
-#define TYVAL(val)    (double)((100.0 / 40) * (val))
-#define TYVAL1(x, val)    (double)(((double)x / 40) * (val))
-#define LOCALVAL(val) (double)((40.0 / 100) * (val))
+#define ROUND(x)          ((x) >= 0 ? (unsigned char)((x) + 0.5) : (unsigned char)((x)-0.5))
+// #define TYVAL(val)    (double)((100.0 / 40) * (val))
+#define TYVAL1(x, val) (double)(((double)x / 40) * (val))
+#define LOCALVAL(val)  (double)((40.0 / 100) * (val))
 
-#define BVAL(max, val)          (double)(((double)MACTRL_MAX_VOLUME / (double)max) * (val))
+#define BVAL(max, val)  (double)(((double)MACTRL_MAX_VOLUME / (double)max) * (val))
+#define TYVAL(max, val) (double)(((double)max / (double)MACTRL_MAX_VOLUME) * (val))
 
 int main(int argc, char const *argv[])
 {
@@ -433,14 +433,14 @@ int main(int argc, char const *argv[])
     }
 
     printf("当前时间戳（秒）: %ld\n", timestamp);
-#endif    
+#endif
 
     // // 检测是否有非法字符
     // if (*endptr != '\0') {
     //     printf("转换有误，非数字部分: %s\n", endptr);
     // }
 
-    printf("vol: %d, %d\n", ROUND(TYVAL(36)),  ROUND(BVAL(100, 55)));
+    printf("vol: %d, %d\n", ROUND(TYVAL(100, 22)), ROUND(BVAL(100, 55)));
     // char authid[33] = "AABBCC44460401100026B850D817DB56";
     // uint8_t auth_Id[SHA1_DIGEST_SIZE] = {0};
 

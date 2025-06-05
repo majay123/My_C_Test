@@ -42,3 +42,6 @@ end
 -- 转换回 JSON 字符串输出
 local output = json.encode(result)
 print(output)
+
+local str = string.gsub('3 Strikes (Explicit)', '%p(.-)', '')
+print(str)

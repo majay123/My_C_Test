@@ -98,8 +98,24 @@ end
 
 local tab = json.decode(json_buf1)
 local result = table.concat(tab, ",")
+-- local result = ""
+
+-- for i = 1, #tab do
+--     result = result .. tab[i]
+--     if i < #tab then
+--         result = result .. ","
+--     end
+-- end
 -- for i, v in pairs(tab) do
 --     print(v)
 -- end
+local ok, err = pcall(function()
+    -- 可能出错的代码
+local result = table.concat(tab, ",")
+    
+end)
+if not ok then
+    print("错误发生:", err)
+end
 print(result)
 
