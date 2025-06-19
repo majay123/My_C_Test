@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2021-10-13 09:17:27
  * @LastEditors  : MCD
- * @LastEditTime : 2025-05-27 13:52:50
+ * @LastEditTime : 2025-06-13 10:20:07
  * @FilePath     : /My_C_Test/simple_test/main.c
  * @Description  : 
  * 
@@ -44,6 +44,11 @@
 #include <string.h>
 #include <time.h>
 // #include "common.h"
+
+struct MemoryStruct {
+    char *memory;
+    size_t size;
+};
 
 #define HI_UINT16(a) (((a) >> 8) & 0xFF)
 #define LO_UINT16(a) ((a)&0xFF)
@@ -402,6 +407,25 @@ static void _test_8t32(uint8_t a)
 #define BVAL(max, val)  (double)(((double)MACTRL_MAX_VOLUME / (double)max) * (val))
 #define TYVAL(max, val) (double)(((double)max / (double)MACTRL_MAX_VOLUME) * (val))
 
+
+int res_test(struct MemoryStruct *response)
+{
+    // memset(response, 0, sizeof(response));
+
+    response->memory = malloc(1);
+    response->size = 0;
+
+    // if(response->memory != NULL) {
+    //     printf("response.memory: %p\n", response->memory);
+    //     printf("response.size: %d\n", response->size);
+    //     free(response->memory);
+    //     response->memory = NULL;
+    // }
+
+    return 0;
+}
+
+
 int main(int argc, char const *argv[])
 {
     int ret = 199998;
@@ -416,6 +440,18 @@ int main(int argc, char const *argv[])
     // printf("res: %d\n", res);
 
     // printf("mute: %d, %d\n", mute, !mute);
+    struct MemoryStruct response;
+
+    memset(&response, 0, sizeof(response));
+    res_test(&response);
+    printf("response.memory: %p\n", response.memory);
+    printf("response.size: %d\n", response.size);
+
+    if(response.memory != NULL) {
+        printf("response.memory: %p\n", response.memory);
+        printf("response.size: %d\n", response.size);
+        free(response.memory);
+    }
 
 #if 0
     char time_code[] = "3746068874";
