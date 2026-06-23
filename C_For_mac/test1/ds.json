@@ -1,0 +1,87 @@
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "sk-40a607d2e6e64769b0f6ac5091a2fed3",
+    "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-pro[1m]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro[1m]",
+    "ANTHROPIC_MODEL": "deepseek-v4-pro[1m]",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "deepseek-v4-pro[1m]",
+    "CLAUDE_CODE_EFFORT_LEVEL": "max",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+  },
+  "permissions": {
+    "allow": [
+      "mcp__codegraph__codegraph_search",
+      "mcp__codegraph__codegraph_context",
+      "mcp__codegraph__codegraph_callers",
+      "mcp__codegraph__codegraph_callees",
+      "mcp__codegraph__codegraph_impact",
+      "mcp__codegraph__codegraph_node",
+      "mcp__codegraph__codegraph_status"
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "claude-hud": {
+      "source": {
+        "source": "github",
+        "repo": "jarrodwatts/claude-hud"
+      }
+    },
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
+      }
+    },
+    "understand-anything": {
+      "source": {
+        "source": "github",
+        "repo": "Lum1104/Understand-Anything"
+      }
+    }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c 'cols=$(stty size </dev/tty 2>/dev/null | awk '\"'\"'{print $2}'\"'\"'); export COLUMNS=$(( ${cols:-120} > 4 ? ${cols:-120} - 4 : 1 )); plugin_dir=$(ls -d \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/plugins/cache/*/claude-hud/*/ 2>/dev/null | awk -F/ '\"'\"'{ print $(NF-1) \"\\t\" $(0) }'\"'\"' | grep -E '\"'\"'^[0-9]+\\.[0-9]+\\.[0-9]+[[:space:]]'\"'\"' | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n | tail -1 | cut -f2-); exec \"/Users/mcd/.bun/bin/bun\" --env-file /dev/null \"${plugin_dir}src/index.ts\"'"
+  },
+  "enabledPlugins": {
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "claude-hud@claude-hud": true,
+    "superpowers@claude-plugins-official": true,
+    "understand-anything@understand-anything": true
+  },
+  "alwaysThinkingEnabled": true,
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "curl -s -X POST http://localhost:59948/claude_code/hooks -H 'Content-Type: application/json' --data-binary @- 2>/dev/null || echo",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "curl -s -X POST http://localhost:59948/claude_code/hooks -H 'Content-Type: application/json' --data-binary @- 2>/dev/null || echo",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "curl -s -X POST http://localhost:59948/claude_code/hooks -H 'Content-Type: application/json' --data-binary @- 2>/dev/null || echo",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  }
+}

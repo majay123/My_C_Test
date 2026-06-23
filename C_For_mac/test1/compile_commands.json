@@ -1,0 +1,28 @@
+[
+  {
+    "file": "test.c",
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wno-multichar",
+      "-fno-exceptions",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-funwind-tables",
+      "-fno-short-enums",
+      "-fno-builtin-sin",
+      "-fmessage-length=0",
+      "-fomit-frame-pointer",
+      "-fno-strict-aliasing",
+      "-flto",
+      "-Wall",
+      "-I.",
+      "-I./include",
+      "-c",
+      "-o",
+      "test.o",
+      "test.c"
+    ],
+    "directory": "/Users/mcd/Desktop/My_Github/My_C_Test/C_For_mac/test1",
+    "output": "test.o"
+  }
+]

@@ -1,5 +1,5 @@
 /*
- * 
+ *
  * 　　┏┓　　　┏┓+ +
  * 　┏┛┻━━━┛┻┓ + +
  * 　┃　　　　　　　┃ 　
@@ -21,39 +21,36 @@
  * 　　　┗┓┓┏━┳┓┏┛ + + + +
  * 　　　　┃┫┫　┃┫┫
  * 　　　　┗┻┛　┗┻┛+ + + +
- * 
- * 
- * 
+ *
+ *
+ *
  * ************Copyright 2023 MCD************
- * 
- * @version      : 
+ *
+ * @version      :
  * @Company      : HOPE
  * @Author       : MCD
  * @Date         : 2023-07-10 09:55:53
  * @LastEditors  : MCD
- * @LastEditTime : 2023-07-12 13:54:03
+ * @LastEditTime : 2026-06-05 10:43:25
  * @FilePath     : /My_C_Test/utf8/main.c
- * @Description  : 
- * 
+ * @Description  :
+ *
  * ******************************************
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <signal.h>
-#include <fcntl.h>
 #include <errno.h>
-#include <sys/stat.h>
+#include <fcntl.h>
+#include <signal.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-
-void utf8_to_unicode(const char *utf8_str, uint16_t *unicode_arr, int *unicode_len) {
+void utf8_to_unicode(const char* utf8_str, uint16_t* unicode_arr, int* unicode_len)
+{
     int len = strlen(utf8_str);
     int i = 0;
     int index = 0;
@@ -68,15 +65,15 @@ void utf8_to_unicode(const char *utf8_str, uint16_t *unicode_arr, int *unicode_l
             bytes = 1;
         } else if ((utf8_str[i] & 0xE0) == 0xC0) {
             // 2-byte UTF-8 encoding
-            unicode = ((utf8_str[i] & 0x1F) << 6) | (utf8_str[i+1] & 0x3F);
+            unicode = ((utf8_str[i] & 0x1F) << 6) | (utf8_str[i + 1] & 0x3F);
             bytes = 2;
         } else if ((utf8_str[i] & 0xF0) == 0xE0) {
             // 3-byte UTF-8 encoding
-            unicode = ((utf8_str[i] & 0x0F) << 12) | ((utf8_str[i+1] & 0x3F) << 6) | (utf8_str[i+2] & 0x3F);
+            unicode = ((utf8_str[i] & 0x0F) << 12) | ((utf8_str[i + 1] & 0x3F) << 6) | (utf8_str[i + 2] & 0x3F);
             bytes = 3;
         } else if ((utf8_str[i] & 0xF8) == 0xF0) {
             // 4-byte UTF-8 encoding
-            unicode = ((utf8_str[i] & 0x07) << 18) | ((utf8_str[i+1] & 0x3F) << 12) | ((utf8_str[i+2] & 0x3F) << 6) | (utf8_str[i+3] & 0x3F);
+            unicode = ((utf8_str[i] & 0x07) << 18) | ((utf8_str[i + 1] & 0x3F) << 12) | ((utf8_str[i + 2] & 0x3F) << 6) | (utf8_str[i + 3] & 0x3F);
             bytes = 4;
         } else {
             printf("Error: Invalid UTF-8 encoding\n");
@@ -90,9 +87,9 @@ void utf8_to_unicode(const char *utf8_str, uint16_t *unicode_arr, int *unicode_l
     *unicode_len = index;
 }
 
-
 /* 从字符串中删除指定的子字符串 */
-char* remove_substring(const char* str, const char* substr) {
+char* remove_substring(const char* str, const char* substr)
+{
     size_t len = strlen(str);
     size_t substr_len = strlen(substr);
 
@@ -137,10 +134,11 @@ char* remove_substring(const char* str, const char* substr) {
 
 char buffer[] = "https:\/\/developer.y.qq.com\/openid\/1\/?a=2000000613&c=auh-O30dw30wWSQJwuGYz6Wu";
 
-int main() {
+int main()
+{
     // const char utf8_str[] = "路由aac";  // 要转换的UTF-8编码字符串
     // for(int i = 0; i < strlen(utf8_str); i++) {
-        
+
     // printf("0x%02x\n", utf8_str[i]);
     // }
     // unsigned int unicode = 0x8DEF;  // 要转换的Unicode编码
@@ -183,16 +181,14 @@ int main() {
     // char *addr = (char *)malloc(100);
     // printf("Address: %p\n", addr);
     // addr[0] = 0xa;
-    
+
     // int add_p = &addr[0];
     // printf("Address: %p\n", &add_p);
     // // char *addr2 = add_p;
     // // printf("Address: %x\n", addr2[0]);
-    
+
     // free(addr);
 
     printf("buf: %s\n", buffer);
     return 0;
 }
-
-

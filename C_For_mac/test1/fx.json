@@ -1,0 +1,79 @@
+model_provider = "custom"
+model = "gpt-5.5"
+disable_response_storage = true
+model_reasoning_effort = "high"
+personality = "pragmatic"
+
+notify = ["/Users/mcd/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+
+[model_providers]
+[projects."/Users/mcd/.codex"]
+trust_level = "untrusted"
+[model_providers.custom]
+name = "custom"
+wire_api = "responses"
+requires_openai_auth = true
+base_url = "https://code.newcli.com/codex/v1"
+
+[projects."/Users/mcd"]
+trust_level = "untrusted"
+
+[projects."/Users/mcd/Desktop/My_Github/serena"]
+trust_level = "untrusted"
+
+[projects."/Users/mcd/Desktop/Massage_Codex"]
+trust_level = "trusted"
+
+[projects."/Users/mcd/Desktop/BH-A300-Code/YA3810BV001005-A300"]
+trust_level = "trusted"
+
+[mcp_servers.context7]
+type = "stdio"
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+
+[mcp_servers.filesystem]
+type = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "/Users/mcd/Desktop"]
+
+[mcp_servers.thinking]
+type = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/Codex.app/Contents/Resources/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = ""
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/mcd/.codex"
+CODEX_HOME = "/Users/mcd/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "0b0d41e7a14a4903d2f95b0b3f427ed796b12c8edca2fa392a03df43997075ae"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[features]
+js_repl = false
+
+[marketplaces.openai-bundled]
+last_updated = "2026-05-30T03:23:57Z"
+source_type = "local"
+source = "/Users/mcd/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[mcp_servers.codegraph]
+command = "codegraph"
+args = ["serve", "--mcp"]

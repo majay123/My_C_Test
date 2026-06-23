@@ -103,5 +103,7 @@
     "cmake.sourceDirectory": "/home/mcd/MyWorkSpace/MyGithub_Project/My_C_Test/epoll_serials",
     "Lua.diagnostics.globals": [
         "writefile"
-    ]
+    ],
+    "cmake.ignoreCMakeListsMissing": true,
+    "clang-format.fallbackStyle": "Google"
 }
